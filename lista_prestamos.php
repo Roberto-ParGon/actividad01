@@ -26,9 +26,14 @@
 </head>
 <body>
   <div class="container">
+    <!-- Header -->
     <header>
+
+      <!-- Hamburguer Menu Button -->
       <nav class="hamburger-menu">
         <span class="material-symbols-outlined md">menu</span>
+
+        <!-- Dropdown -->
         <ul>
           <li>
             <a href="#">
@@ -48,15 +53,30 @@
         </ul>
       </nav>
 
+      <!-- Logo -->
       <span class="logo">Sistema de préstamos</span>
 
+      <!-- User Icon -->
       <div class="user">
         <span class="material-symbols-outlined md">person</span>
       </div>
     </header>
 
+    <!-- Main Section -->
     <main>
-      principal
+      <!-- Title -->
+      <div class="title">
+        <span>Lista de prestamos activos</span>
+      </div>
+
+      <!-- Loans Table -->
+      <div class="loans-container">
+        
+      </div>
+
+      <a class="home-btn" href="#">
+        <span class="material-symbols-outlined md">home</span>
+      </a>
     </main>
   </div>
 

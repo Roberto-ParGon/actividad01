@@ -8,6 +8,29 @@
   background-color: #fafafa;
 }
 
+.container main {
+  display: grid;
+  grid-template-rows: 5% 1fr 10%;
+}
+
+.home-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  text-decoration: none;
+
+  color: #212121;
+  background-color: #fafafa;
+  transition: background-color .3s ease 0s;
+  cursor: default;
+  box-shadow: 3px 0 4px rgba(0, 0, 0, .3);
+}
+
+.home-btn:hover {
+  background-color: #d7d7d7;
+}
+
 /* Icons */
 .material-symbols-outlined {
   font-variation-settings:
