@@ -43,6 +43,8 @@ header {
 }
 
 .hamburger-menu > ul li {
+  display: flex;
+  flex-flow: column;
   background-color: #fafafa;
   transition: background-color .3s ease 0s;
 }
@@ -51,11 +53,19 @@ header {
   background-color: #d7d7d7;
 }
 
-.hamburger-menu > ul li > a {
-  display: block;
+.hamburger-menu > ul li a {
+  align-self: stretch;
+  display: flex;
+  justify-content: center;
   text-decoration: none;
   font-size: 22px;
   color: #212121;
   cursor: default;
   padding: .5rem 2.7rem;
+}
+
+.hamburger-menu > ul li a > span {
+  display: inline-block;
+  height: 100%;
+  text-align: center;
 }

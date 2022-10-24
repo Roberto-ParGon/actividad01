@@ -37,7 +37,7 @@
         <ul>
           <li>
             <a href="#">
-              <span>Opción 1</span>
+              <span>Home</span>
             </a>
           </li>
           <li>
