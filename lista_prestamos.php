@@ -59,6 +59,8 @@
       principal
     </main>
   </div>
+
+  <script src="public/js/lista-prestamos/header.js"></script>
 </body>
 </html>
 

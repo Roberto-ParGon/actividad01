@@ -3,12 +3,33 @@ header {
   justify-content: space-between;
   align-items: center;
 
-  padding: .5rem;
+  padding-right: .5rem;
 
   font-size: 16px;
   font-family: "Roboto", sans-serif;
 }
 
+.hamburger-menu {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  height: 100%;
+  padding: 0 .5rem;
+
+  background-color: #fafafa;
+  transition: background-color .3s ease 0s;
+}
+
+.hamburger-menu:hover {
+  background-color: #d7d7d7;
+}
+
+.hamburger-menu > span {
+  pointer-events: none;
+}
+
+/* Dropdown */
 .hamburger-menu > ul {
   display: none;
   position: fixed;
@@ -21,13 +42,13 @@ header {
   box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
 }
 
-.hamburger-menu > ul li:hover {
+.hamburger-menu > ul li {
   background-color: #fafafa;
   transition: background-color .3s ease 0s;
 }
 
 .hamburger-menu > ul li:hover {
-  background-color: #efefef;
+  background-color: #d7d7d7;
 }
 
 .hamburger-menu > ul li > a {
