@@ -54,7 +54,7 @@
       </nav>
 
       <!-- Logo -->
-      <span class="logo">Sistema de préstamos</span>
+      <span class="title">Sistema de préstamos</span>
 
       <!-- User Icon -->
       <div class="user">
@@ -70,8 +70,38 @@
       </div>
 
       <!-- Loans Table -->
-      <div class="loans-container">
-        
+      <div class="loans-container scrollbar">
+        <table>
+          <tr>
+            <th>Nombre</th>
+            <th>Apellido</th>
+            <th>EE</th>
+            <th>Aula</th>
+            <th>Hora de Inicio</th>
+            <th>Hora de entrega</th>
+            <th>Fecha</th>
+            <th>Dispositivos</th>
+          </tr>
+
+          <?php 
+            for ($i=0; $i < 20; $i++) { 
+              echo "
+                <tr>
+                  <td>Cesar Alejandro</td>
+                  <td>Vallejo Galvan</td>
+                  <td>Programación Avanzada</td>
+                  <td>F102</td>
+                  <td>15:00</td>
+                  <td>17:00</td>
+                  <td>12/12/2022</td>
+                  <td>
+                    <button>Dispositivos</button>
+                  </td>
+                </tr>
+              ";
+            }
+          ?>
+        </table>
       </div>
 
       <a class="home-btn" href="#">
