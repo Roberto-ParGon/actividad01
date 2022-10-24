@@ -1,0 +1,40 @@
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  padding: .5rem;
+
+  font-size: 16px;
+  font-family: "Roboto", sans-serif;
+}
+
+.hamburger-menu > ul {
+  display: none;
+  position: fixed;
+  top: 8vh;
+  left: 1vw;
+  overflow: hidden;
+
+  background-color: #fafafa;
+  border-radius: 5px;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
+}
+
+.hamburger-menu > ul li:hover {
+  background-color: #fafafa;
+  transition: background-color .3s ease 0s;
+}
+
+.hamburger-menu > ul li:hover {
+  background-color: #efefef;
+}
+
+.hamburger-menu > ul li > a {
+  display: block;
+  text-decoration: none;
+  font-size: 22px;
+  color: #212121;
+  cursor: default;
+  padding: .5rem 2.7rem;
+}
