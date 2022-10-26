@@ -1,15 +1,15 @@
 <?php
-  include_once('public/php/lista-prestamos/PrestamosController.php');
+  include_once('public/php/lista-dispositivos/DispositivosController.php');
 
-  $controller = new PrestamosController();
-  $prestamos = $controller->getPrestamosInfo();
+  $controller = new DispositivosController();
+  $dispositivos = $controller->getDispositivosInfo();
 ?>
 
 <!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="utf-8">
-  <title>Lista de préstamos</title>
+  <title>Lista de dispositivos</title>
 
   <!-- Google Icons -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
@@ -68,51 +68,27 @@
     <main>
       <!-- Title -->
       <div class="title">
-        <span>Lista de prestamos activos</span>
+        <span>Lista de dispositivos</span>
       </div>
 
       <!-- Loans Table -->
       <div class="loans-container scrollbar">
         <table>
           <tr>
-            <th>Profesor</th>
-            <th>EE</th>
-            <th>Aula</th>
-            <th>Hora de Inicio</th>
-            <th>Hora de entrega</th>
-            <th>Fecha</th>
-            <th>Dispositivos</th>
-            <th>Alumno</th>
+            <th>ID</th>
+            <th>Nombre</th>
+            <th>Cantidad</th>
+            <th>Observaciones</th>
           </tr>
 
           <?php 
-            foreach ($prestamos as $prestamo) { 
+            foreach ($dispositivos as $dispositivo) { 
               ?>
               <tr>
-                <td><?= $prestamo['profesor'][0]['nombre'] ?> </td>
-                <td><?= $prestamo['materia'] ?> </td>
-                <td><?= $prestamo['aula'] ?> </td>
-                <td><?= $prestamo['horario_entrada'] ?> </td>
-                <td><?= $prestamo['horario_salida'] ?> </td>
-                <td><?= $prestamo['fecha'] ?> </td>
-                <td>
-                  <ul>
-                    <?php 
-                      foreach($prestamo['dispositivos'] as $dispositivo) {
-                        echo "
-                          <li>{$dispositivo['nombre']}</li>
-                        ";
-                      }
-                    ?>
-                  </ul>
-                </td>
-                <td>
-                  <?php 
-                    if($prestamo['id_alumno'] !== NULL) {
-                      echo $prestamo['alumno'][0]['nombre'];
-                    } 
-                  ?> 
-                </td>
+                <td><?= $dispositivo['id'] ?> </td>
+                <td><?= $dispositivo['nombre'] ?> </td>
+                <td><?= $dispositivo['cantidad'] ?> </td>
+                <td><?= $dispositivo['observaciones'] ?> </td>
               </tr>
               <?php
             }

@@ -52,9 +52,13 @@
         $data = $this->db->query($sql);
         return $data -> fetchAll();
       }
-      catch(PDOException $e){
+      catch(PDOException $e) {
         return false;
       }
+    }
+
+    public function close() {
+      $this->database->close();
     }
   }
 ?>
