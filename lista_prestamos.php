@@ -1,21 +1,8 @@
 <?php
-  include_once('public/php/connection.php');
-  
-  $medicos = null;
+  include_once('public/php/lista-prestamos/PrestamosController.php');
 
-  $database = new Connection();
-  $db = $database -> open();
-
-  try {  
-    $sql = 'SELECT * FROM medico';
-    $medicos = $db->query($sql);
-  }
-  catch(PDOException $e){
-    echo "There is some problem in connection: " . $e->getMessage();
-  }
-
-  //cerrar conexión
-  $database->close();
+  $controller = new PrestamosController();
+  $prestamos = $controller->getPrestamosInfo();
 ?>
 
 <!DOCTYPE html>
@@ -88,19 +75,46 @@
       <div class="loans-container scrollbar">
         <table>
           <tr>
-            <th>Nombre</th>
-            <th>Apellido</th>
+            <th>Profesor</th>
             <th>EE</th>
             <th>Aula</th>
             <th>Hora de Inicio</th>
             <th>Hora de entrega</th>
             <th>Fecha</th>
             <th>Dispositivos</th>
+            <th>Alumno</th>
           </tr>
 
           <?php 
-            for ($i=0; $i < 20; $i++) { 
-              
+            foreach ($prestamos as $prestamo) { 
+              ?>
+              <tr>
+                <td><?= $prestamo['profesor'][0]['nombre'] ?> </td>
+                <td><?= $prestamo['materia'] ?> </td>
+                <td><?= $prestamo['aula'] ?> </td>
+                <td><?= $prestamo['horario_entrada'] ?> </td>
+                <td><?= $prestamo['horario_salida'] ?> </td>
+                <td><?= $prestamo['fecha'] ?> </td>
+                <td>
+                  <ul>
+                    <?php 
+                      foreach($prestamo['dispositivos'] as $dispositivo) {
+                        echo "
+                          <li>{$dispositivo['nombre']}</li>
+                        ";
+                      }
+                    ?>
+                  </ul>
+                </td>
+                <td>
+                  <?php 
+                    if($prestamo['id_alumno'] !== NULL) {
+                      echo $prestamo['alumno'][0]['nombre'];
+                    } 
+                  ?> 
+                </td>
+              </tr>
+              <?php
             }
           ?>
         </table>

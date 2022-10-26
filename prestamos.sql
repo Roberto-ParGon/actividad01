@@ -105,3 +105,12 @@ insert into prestamo (
 insert into dispositivo_prestado values (1, "F105");
 insert into dispositivo_prestado values (1, "1212");
 insert into dispositivo_prestado values (1, "1213");
+
+#######################################################################
+
+# Obtener id, nombre, observaciones de los dispositivos en un prestamo con el id del prestamo
+select d.id, d.nombre, d.observaciones
+from dispositivo_prestado as dp
+inner join dispositivo as d on dp.id_dispositivo=d.id
+where dp.id_prestamo=1;
+
