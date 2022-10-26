@@ -1,6 +1,21 @@
 <?php
-
+  include_once('public/php/connection.php');
   
+  $medicos = null;
+
+  $database = new Connection();
+  $db = $database -> open();
+
+  try {  
+    $sql = 'SELECT * FROM medico';
+    $medicos = $db->query($sql);
+  }
+  catch(PDOException $e){
+    echo "There is some problem in connection: " . $e->getMessage();
+  }
+
+  //cerrar conexión
+  $database->close();
 ?>
 
 <!DOCTYPE html>
@@ -85,20 +100,7 @@
 
           <?php 
             for ($i=0; $i < 20; $i++) { 
-              echo "
-                <tr>
-                  <td>Cesar Alejandro</td>
-                  <td>Vallejo Galvan</td>
-                  <td>Programación Avanzada</td>
-                  <td>F102</td>
-                  <td>15:00</td>
-                  <td>17:00</td>
-                  <td>12/12/2022</td>
-                  <td>
-                    <button>Dispositivos</button>
-                  </td>
-                </tr>
-              ";
+              
             }
           ?>
         </table>
