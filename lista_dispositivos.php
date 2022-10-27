@@ -25,6 +25,22 @@
   <link rel="stylesheet" type="text/css" href="public/css/reset.css">
   <link rel="stylesheet" type="text/css" href="public/css/lista-prestamos/lista-prestamos.css">
   <link rel="stylesheet" type="text/css" href="public/css/lista-prestamos/header.css">
+
+  <style type="text/css">
+    .f {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .material-symbols-outlined {
+      font-variation-settings:
+      'FILL' 0,
+      'wght' 400,
+      'GRAD' 0,
+      'opsz' 48
+    }
+  </style>
 </head>
 <body>
   <div class="container">
@@ -79,6 +95,7 @@
             <th>Nombre</th>
             <th>Cantidad</th>
             <th>Observaciones</th>
+            <th></th>
           </tr>
 
           <?php 
@@ -89,6 +106,11 @@
                 <td><?= $dispositivo['nombre'] ?> </td>
                 <td><?= $dispositivo['cantidad'] ?> </td>
                 <td><?= $dispositivo['observaciones'] ?> </td>
+                <td>
+                  <span class="material-symbols-outlined f">
+                    edit_square
+                  </span>
+                </td>
               </tr>
               <?php
             }
