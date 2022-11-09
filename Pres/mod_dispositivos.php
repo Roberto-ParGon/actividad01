@@ -1,10 +1,4 @@
 <?php
-
-include_once('public/php/mod-dispositivos/PrestamosController.php');
-
-$controller = new PrestamosController();
-$prestamos = $controller->getPrestamosInfo();
-
 ?>
 
 <!DOCTYPE html>
@@ -80,39 +74,28 @@ $prestamos = $controller->getPrestamosInfo();
 
         <p>
           <p> Modificar su ID:
-            <input type="text" id ="id" class="form-control" name="id_dispositivo" value="<?php echo $row['id']; ?>"><br></p>
-
-
-
+            <input type="text" id ="id" name="id_dispositivo"><br></p>
             <p>Modificar su nombre:
-              <input type="text" id ="nombre" class="form-control" name="nombre_dispositivo" value="<?php echo $row['nombre']; ?>"><br></p>
-              <!-- Pendiente de adición 
-              <p> Modificar su tipo:
+              <input type="text" id ="nombre" name="nombre_dispositivo"><br></p>
+              <p> 
+               Modificar su tipo:
                <input type="text" id ="tipo" name="tipo"><br></p>
              </p>
-           -->
-           <p> Cantidad disponible:
-             <input type="text" id ="canatidad" name="cantidad_dispositivo" value="<?php echo $row['cantidad']; ?>"><br></p>
-           </p>
 
-           <p> Comentarios:
-             <input type="text" id ="comentarios" name="comentarios_dispositivo" value=""><br></p>
-           </p>
+             <p id="button">
+              <a href="#" class="cancel">Eliminar dispositivo</a>
+              <a href="#" class="edit">Guardar cambios</a>
+            </p>
 
-           <p id="button">
-            <a href="#" class="cancel">Eliminar dispositivo</a>
-            <a href="#" class="edit">Guardar cambios</a>
-          </p>
+          </div>
 
-        </div>
+          <a class="home-btn" href="#">
+            <span class="material-symbols-outlined md">home</span>
+          </a>
+        </main>
+      </div>
 
-        <a class="home-btn" href="#">
-          <span class="material-symbols-outlined md">home</span>
-        </a>
-      </main>
-    </div>
-
-    <script src="public/js/lista-prestamos/header.js"></script>
-  </body>
-  </html>
+      <script src="public/js/lista-prestamos/header.js"></script>
+    </body>
+    </html>
 

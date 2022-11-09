@@ -1,8 +1,6 @@
 <?php
-include_once('public/php/lista-prestamos/PrestamosController.php');
 
-$controller = new PrestamosController();
-$prestamos = $controller->getPrestamosInfo();
+  
 ?>
 
 <!DOCTYPE html>
@@ -25,6 +23,7 @@ $prestamos = $controller->getPrestamosInfo();
   <link rel="stylesheet" type="text/css" href="public/css/reset.css">
   <link rel="stylesheet" type="text/css" href="public/css/lista-prestamos/lista-prestamos.css">
   <link rel="stylesheet" type="text/css" href="public/css/lista-prestamos/header.css">
+  
 </head>
 <body>
   <div class="container">
@@ -75,49 +74,34 @@ $prestamos = $controller->getPrestamosInfo();
       <div class="loans-container scrollbar">
         <table>
           <tr>
-            <th>Profesor</th>
+            <th>Nombre</th>
+            <th>Apellido</th>
             <th>EE</th>
             <th>Aula</th>
             <th>Hora de Inicio</th>
             <th>Hora de entrega</th>
             <th>Fecha</th>
             <th>Dispositivos</th>
-            <th>Alumno</th>
           </tr>
 
           <?php 
-          foreach ($prestamos as $prestamo) { 
-            ?>
-            <tr>
-              <td><?= $prestamo['profesor'][0]['nombre'] ?> </td>
-              <td><?= $prestamo['materia'] ?> </td>
-              <td><?= $prestamo['aula'] ?> </td>
-              <td><?= $prestamo['horario_entrada'] ?> </td>
-              <td><?= $prestamo['horario_salida'] ?> </td>
-              <td><?= $prestamo['fecha'] ?> </td>
-              <td>
-                <ul>
-                  <?php 
-                  foreach($prestamo['dispositivos'] as $dispositivo) {
-                    echo "
-                    <li>{$dispositivo['nombre']}</li>
-                    ";
-                  }
-                  ?>
-                </ul>
-              </td>
-              <td>
-                <?php 
-                if($prestamo['id_alumno'] !== NULL) {
-                  echo $prestamo['alumno'][0]['nombre'];
-                } 
-                ?> 
-              </td>
-            </tr>
-            <?php
-          }
+            for ($i=0; $i < 20; $i++) { 
+              echo "
+                <tr>
+                  <td>Cesar Alejandro</td>
+                  <td>Vallejo Galvan</td>
+                  <td>Programación Avanzada</td>
+                  <td>F102</td>
+                  <td>15:00</td>
+                  <td>17:00</td>
+                  <td>12/12/2022</td>
+                  <td>
+                    <button>Dispositivos</button>
+                  </td>
+                </tr>
+              ";
+            }
           ?>
-          
         </table>
       </div>
 
