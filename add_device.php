@@ -1,4 +1,10 @@
 <!DOCTYPE html>
+<?php
+
+    session_start();
+    include_once('./public/php/connection.php');
+
+?>
 <html lang="es">
 <head>
   <meta charset="utf-8">
@@ -65,11 +71,11 @@
                 <form method="POST" action="<?php echo $_SERVER['PHP_SELF'];?>">
                     <p>
                         ID:
-                        <input type="text" id="id" name="ide">
+                        <input type="text" id="id" name="id">
                     </p>
                     <p>
                         Nombre:
-                        <input type="text" id ="nombre" name="nombre_dispositivo">
+                        <input type="text" id ="nombre" name="nombre">
                     </p>
                     <p> 
                         Cantidad:
@@ -77,7 +83,7 @@
                     </p>
                     <p>
                         Detalles:
-                        <input type="text" id="detalles" name="detalles">
+                        <input type="text" id="detalles" name="observaciones">
                     </p>
 
                     <p id="button">
@@ -99,14 +105,51 @@
 </body>
 </html>
 
+
+
 <?php
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-  // collect value of input field
-  $name = $_POST['detalles'];
+  
+    $database = new Connection();
+    $db = $database->open();
+    
+    try{
+        /*
+        // hacer uso de una declaración preparada para evitar la inyección de sql
+        $stmt = $db->prepare("INSERT INTO dispositivo (id, nombre, cantidad, observaciones) VALUES (:id, :nombre, :cantidad, :observaciones)");
+        // declaración if-else en la ejecución de nuestra declaración preparada
+        $_SESSION['message'] = ( $stmt->execute(array($_POST['id'] , ':nombre' => $_POST['nombre'] , ':cantidad' => $_POST['cantidad'], ':observaciones' => $_POST['observaciones'])) ) ? 'Dispositivo agregado correctamente' : 'Something went wrong. Cannot add member';	
+        
+        */
+    
+        $id = $_POST["id"];   
+        $nombre = $_POST["nombre"];   
+        $cantidad = $_POST["cantidad"];   
+        $observaciones = $_POST["observaciones"];   
+           
+           
+        
+        $_GRABAR_SQL = "INSERT INTO dispositivo  VALUES ('$id','$nombre','$cantidad','$observaciones')";   
+        $data = $db->query( $_GRABAR_SQL);  
+        $hi = $data -> fetchAll();
+        
+    }
+    catch(PDOException $e){
+        
+        $_SESSION['message'] = $e->getMessage();
+        
+    }
+
+    //cerrar conexión
+    $database->close();
+
+
+    // collect value of input field
+  /*$name = $_POST['detalles'];
   if (empty($name)) {
     echo "Name is empty";
   } else {
     echo $name;
-  }
+  }*/
 }
 ?>
