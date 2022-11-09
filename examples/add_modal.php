@@ -11,6 +11,7 @@
             </div>
             <div class="modal-body">
 			<div class="container-fluid">
+			
 			<form method="POST" action="add.php">
 				<div class="row form-group">
 					<div class="col-sm-2">
@@ -42,6 +43,8 @@
                 <button type="button" class="btn btn-default" data-dismiss="modal"><span class="fa fa-close"></span> Cancelar</button>
                 <button type="submit" name="add" class="btn btn-primary"><span class="fa fa-save"></span> Guardar</a>
 			</form>
+
+			
             </div>
 
         </div>

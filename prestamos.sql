@@ -113,4 +113,3 @@ select d.id, d.nombre, d.observaciones
 from dispositivo_prestado as dp
 inner join dispositivo as d on dp.id_dispositivo=d.id
 where dp.id_prestamo=1;
-
