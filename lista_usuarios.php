@@ -1,9 +1,12 @@
 <?php
+/*
+include_once('public/php/lista-usuarios/UsuariosController.php');
+$controller = new UsuariosController();
+$usuarios = $controller->getUsersInfo();
+*/
 
-include_once('public/php/lista-prestamos/PrestamosController.php');
+include_once('public/php/lista-usuarios/UsuariosController.php');
 
-$controller = new PrestamosController();
-$prestamos = $controller->getPrestamosInfo();
 
 ?>
 
@@ -11,7 +14,7 @@ $prestamos = $controller->getPrestamosInfo();
 <html lang="es">
 <head>
   <meta charset="utf-8">
-  <title>Lista de préstamos</title>
+  <title>Lista de usuarios</title>
 
   <!-- Google Icons -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
@@ -81,41 +84,54 @@ $prestamos = $controller->getPrestamosInfo();
         <table>
           <tr>
             <th>Nombre</th>
-           <!-- Correo usuario - Adición pendiente 
+            <th>Apellido</th> 
+           <!-- 
+           Correo usuario - Adición pendiente 
             <th>Correo</th>
           -->
-          <th>Administrador</th>  <!--Rol de usuario-->
+          <th>Rol</th>  <!--Rol de usuario-->
+
         </tr>
 
 
         <?php 
-        foreach ($prestamos as $usuario) { 
+        //Todo los valores pasan a través de $usuarios
+        foreach ($usuarios as $usuario) { 
          ?>
          <tr>
-           <td><?= $prestamo['nombre'] ?> </td>
-           <td><?= $prestamo['is_admin'] ?> </td>
-           <td>
-            <td>
-              <?php 
-              if($prestamo['nom_usuario'] !== NULL) {
-                echo $prestamo['usuario'][0]['nombre'];
-              } 
-              ?> 
-            </td>
-          </tr>
-          <?php
-        }
-        ?>
-        
-      </table>
-    </div>
 
-    <a class="home-btn" href="#">
-      <span class="material-symbols-outlined">person_add</span>
-    </a>
-  </main>
+          <td><?php echo $usuario['nombre']?></td>
+          <td><?php echo $usuario['apellido']?></td>
+          <?php
+          $is_admin = ['is_admin'];
+          if($is_admin){
+            ?>
+            <td><?php echo 'Administrador'?></td>
+            <?php
+          }else{
+            ?>
+            <td><?php echo 'Usuario'?></td>
+
+            <?php
+          }
+          ?>
+
+        </tr>
+        <?php
+
+      }
+      ?>
+
+    </table>
+  </div>
+
+  <a class="home-btn" href="#">
+    <span class="material-symbols-outlined">person_add</span>
+  </a>
+</main>
 </div>
 
 <script src="public/js/lista-prestamos/header.js"></script>
+<script src="jquery-3.6.0.min.js"></script>
 </body>
 </html>

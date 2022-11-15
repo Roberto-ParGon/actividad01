@@ -1,8 +1,10 @@
 <?php
+  session_start();
   include_once('public/php/lista-dispositivos/DispositivosController.php');
 
   $controller = new DispositivosController();
   $dispositivos = $controller->getDispositivosInfo();
+  $_SESSION['DISPOSITIVO']
 ?>
 
 <!DOCTYPE html>
@@ -107,6 +109,13 @@
                 <td><?= $dispositivo['cantidad'] ?> </td>
                 <td><?= $dispositivo['observaciones'] ?> </td>
                 <td>
+<!-- Enviar el formulario a otro documento con $_GET
+
+ -->
+
+                  <a href="<?=>">
+                    
+                  </a>
                   <span class="material-symbols-outlined f">
                     edit_square
                   </span>
