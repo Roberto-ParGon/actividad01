@@ -25,7 +25,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $_SESSION['username'] = $username;
             header("location: lista_prestamos.php");
         }else{
-            echo 'Error';
+            echo 'Usuario y/ó Contraseña incorrectos, o dejaste campos vacios.';
+
         }
 
     }catch(PDOException $e){
