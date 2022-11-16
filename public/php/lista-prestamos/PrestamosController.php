@@ -34,7 +34,6 @@ class PrestamosController {
       }
     }
 
-<<<<<<< HEAD
     if($prestamos[$key]['id_profesor'] !== NULL) {
       $sql = "
       SELECT nombre
@@ -55,21 +54,11 @@ class PrestamosController {
     }
     catch(PDOException $e){
       return false;
-=======
-    private function fetch($sql) {
-      try {
-        $data = $this->db->query($sql);
-        return $data -> fetchAll();
-      }
-      catch(PDOException $e) {
-        return false;
-      }
->>>>>>> 187e55720670067236f6b1c073966c672ae34146
     }
+  }
 
-    public function close() {
-      $this->database->close();
-    }
+  public function close() {
+    $this->database->close();
   }
 }
 ?>

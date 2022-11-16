@@ -107,9 +107,11 @@
                 <td><?= $dispositivo['cantidad'] ?> </td>
                 <td><?= $dispositivo['observaciones'] ?> </td>
                 <td>
-                  <span class="material-symbols-outlined f">
-                    edit_square
-                  </span>
+                  <a href="/prestamos/mod_dispositivos.php?id=<?= $dispositivo['id'] ?>">
+                    <span class="material-symbols-outlined f">
+                      edit_square
+                    </span>
+                  </a>
                 </td>
               </tr>
               <?php

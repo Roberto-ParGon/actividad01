@@ -1,10 +1,31 @@
 <?php
 
-include_once('public/php/mod-dispositivos/PrestamosController.php');
+  include_once('public/php/mod-dispositivos/ModDispositivoController.php');
 
-$controller = new PrestamosController();
-$prestamos = $controller->getPrestamosInfo();
+  $controller = new ModDispositivoController();
+  
+  $idDispositivo = $_GET['id'];
+  $dispositivo = $controller -> getDispositivoInfo($idDispositivo)[0];
 
+  if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    if (isset($_POST['mod_device'])) {
+      $nombre = $_POST['nombre_dispositivo'];
+      $cantidad = $_POST['cantidad_dispositivo'];
+      $observaciones = $_POST['comentarios_dispositivo'];
+
+      $res = $controller -> setDispositivoInfo($nombre, $cantidad, $observaciones, $idDispositivo);
+      if ($res) {
+        header("location: lista_dispositivos.php");
+      }
+      else {
+        var_dump($res);
+      }
+    }
+
+    if (isset($_POST['del_device'])) {
+
+    }    
+  }
 ?>
 
 <!DOCTYPE html>
@@ -77,42 +98,40 @@ $prestamos = $controller->getPrestamosInfo();
 
       <!-- Loans Table -->
       <div class="loans-container scrollbar">
-
-        <p>
+        <form method="POST" action="<?php echo $_SERVER['PHP_SELF'];?>">
           <p> Modificar su ID:
-            <input type="text" id ="id" class="form-control" name="id_dispositivo" value="<?php echo $row['id']; ?>"><br></p>
-
-
-
-            <p>Modificar su nombre:
-              <input type="text" id ="nombre" class="form-control" name="nombre_dispositivo" value="<?php echo $row['nombre']; ?>"><br></p>
-              <!-- Pendiente de adición 
-              <p> Modificar su tipo:
-               <input type="text" id ="tipo" name="tipo"><br></p>
-             </p>
-           -->
-           <p> Cantidad disponible:
-             <input type="text" id ="canatidad" name="cantidad_dispositivo" value="<?php echo $row['cantidad']; ?>"><br></p>
-           </p>
-
-           <p> Comentarios:
-             <input type="text" id ="comentarios" name="comentarios_dispositivo" value=""><br></p>
-           </p>
-
-           <p id="button">
-            <a href="#" class="cancel">Eliminar dispositivo</a>
-            <a href="#" class="edit">Guardar cambios</a>
+            <input type="text" id ="id" class="form-control" name="id_dispositivo" value="<?= $dispositivo['id'] ?>"><br>
           </p>
 
-        </div>
+          <p>
+            Modificar su nombre:
+            <input type="text" id ="nombre" class="form-control" name="nombre_dispositivo" value="<?= $dispositivo['nombre'] ?>">
+            <br>
+          </p>
 
-        <a class="home-btn" href="#">
-          <span class="material-symbols-outlined md">home</span>
-        </a>
-      </main>
-    </div>
+          <p> 
+            Cantidad disponible:
+            <input type="text" id ="canatidad" name="cantidad_dispositivo" value="<?= $dispositivo['cantidad'] ?>"><br></p>
+          </p>
 
-    <script src="public/js/lista-prestamos/header.js"></script>
-  </body>
-  </html>
+          <p> 
+            Comentarios:
+            <input type="text" id ="comentarios" name="comentarios_dispositivo" value="<?= $dispositivo['observaciones'] ?>"><br></p>
+          </p>
+
+          <p id="button">
+            <input class="cancel" type="submit" value="Eliminar Dispositivo" name="del_device">
+            <input class="edit" type="submit" value="Guardar Cambios" name="mod_device">
+          </p>
+        </form>
+      </div>
+
+      <a class="home-btn" href="#">
+        <span class="material-symbols-outlined md">home</span>
+      </a>
+    </main>
+  </div>
+  <script src="public/js/lista-prestamos/header.js"></script>
+</body>
+</html>
 
