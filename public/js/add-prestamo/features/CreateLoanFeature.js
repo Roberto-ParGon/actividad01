@@ -1,5 +1,6 @@
 const CreateLoanFeature = () => {
   const [selectedDevices, setSelectedDevices] = React.useState([]);
+  const [error, setError] = React.useState('');
 
   const onClick = (e) => {
     e.preventDefault();

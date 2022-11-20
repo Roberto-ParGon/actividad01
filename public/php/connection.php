@@ -1,6 +1,5 @@
 <?php
-Class Connection{
-	
+Class Connection {
 	private $server = "mysql:host=localhost;dbname=prestamos";
 	private $username = "root";
 	private $password = "";
@@ -13,7 +12,9 @@ Class Connection{
  			return $this->conn;
  		}
  		catch (PDOException $e){
- 			echo "Ocurrió un problema con la conexión: " . $e->getMessage();
+ 			$response = ['success' => false, 'err0r' => $e->getMessage()];
+ 			echo json_encode($response);
+ 			die;
  		}
   }
  

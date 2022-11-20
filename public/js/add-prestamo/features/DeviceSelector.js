@@ -1,44 +1,31 @@
 const DeviceSelector = ({values, setValues}) => {
-  const [devices, setDevices] = React.useState([
-    { 
-      value: 'chocolate', 
-      stock: 5, 
-      prestado: 0, 
-      isDisabled: false,
-      get label() {
-        return `${this.value} (${this.stock-this.prestado})`;
-      },
-      get labelPrestado() {
-        return `${this.value} (${this.prestado})`;
-      },
-    },
-    { 
-      value: 'strawberry', 
-      stock: 2, 
-      prestado: 0, 
-      isDisabled: false,
-      get label() {
-        return `${this.value} (${this.stock-this.prestado})`;
-      },
-      get labelPrestado() {
-        return `${this.value} (${this.prestado})`;
-      },
-    },
-    { value: 'vanilla', 
-      stock: 3, 
-      prestado: 0, 
-      isDisabled: false,
-      get label() {
-        return `${this.value} (${this.stock-this.prestado})`;
-      },
-      get labelPrestado() {
-        return `${this.value} (${this.prestado})`;
-      },
-    }
-  ]);
+  const [devices, setDevices] = React.useState([]);
 
   React.useEffect(() => {
-    console.log('hi');
+    fetch('public/php/add-loan/getDevices.php')
+    .then(response => response.json())
+    .then(data => {
+      const items = data.devices.map((item) => {
+        return {
+          ...item,
+          value: item.nombre, 
+          stock: item.cantidad, 
+          prestado: 0, 
+          isDisabled: false,
+          get label() {
+            return `${this.value} (${this.stock-this.prestado})`;
+          },
+          get labelPrestado() {
+            return `${this.value} (${this.prestado})`;
+          }
+        };
+      });
+      
+      setDevices(items);
+    })
+    .catch(err => {
+      console.log(err);
+    });
   }, []);
 
   const selectOption = (selected, value)=> {

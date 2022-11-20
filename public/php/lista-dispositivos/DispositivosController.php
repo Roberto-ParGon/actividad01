@@ -1,5 +1,7 @@
 <?php
-  include_once('public/php/connection.php');
+  $PROJECT_NAME = "/prestamos";
+  $INC_DIR = $_SERVER["DOCUMENT_ROOT"] . $PROJECT_NAME ."/public/php/";
+  require_once($INC_DIR.'connection.php');
 
   class DispositivosController {
     private $database = null;
@@ -31,4 +33,3 @@
       $this->database->close();
     }
   }
-?>

@@ -77,7 +77,7 @@ insert into alumno values (
 insert into profesor values ("12345", "Meneses Rico Erika");
 
 # Dispositivos
-insert into dispositivo values ("F105", "control", 1, "Roto, tiene cinta adhesiva");
+insert into dispositivo values ("F105", "control F105", 1, "Roto, tiene cinta adhesiva");
 insert into dispositivo values ("1212", "HDMI", 8, "");
 insert into dispositivo values ("1213", "Adaptador Mac", 3, "");
 
