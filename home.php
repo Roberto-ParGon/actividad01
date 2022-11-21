@@ -1,8 +1,4 @@
 <?php
-  include_once('public/php/lista-dispositivos/DispositivosController.php');
-
-  $controller = new DispositivosController();
-  $dispositivos = $controller->getDispositivosInfo();
 ?>
 
 <!DOCTYPE html>
@@ -120,6 +116,10 @@
 
   <!-- Features -->
   <script src="public/js/add-prestamo/features/DeviceSelector.js" type="text/babel"></script>
+  <script src="public/js/add-prestamo/features/StudentSelector.js" type="text/babel"></script>
+  <script src="public/js/add-prestamo/features/TeacherSelector.js" type="text/babel"></script>
+  <script src="public/js/add-prestamo/features/HoursSelector.js" type="text/babel"></script>
+
   <script src="public/js/add-prestamo/features/CreateLoanFeature.js" type="text/babel"></script>
 
   <!-- App -->

@@ -1,0 +1,28 @@
+const StudentSelector = () => {
+  const [students, setStudents] = React.useState([]);
+
+  React.useEffect(() => {
+    fetch('public/php/add-loan/getStudents.php')
+    .then(response => response.json())
+    .then(data => {
+      const items = data.students.map((student) => {
+        return {
+          ...student,
+          label: `${student.nombre} ${student.apellidoPaterno} ${student.apellidoMaterno}`,
+          value: student.matricula,
+        }
+      });
+
+      setStudents(items);
+    })
+    .catch(err => {
+      console.log(err);
+    });
+  }, []);
+
+  return (
+    <ListInput 
+      placeholder="Estudiante" 
+      optionList={students} />
+  );
+}

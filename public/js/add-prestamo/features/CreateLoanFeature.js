@@ -10,6 +10,9 @@ const CreateLoanFeature = () => {
   return (
     <div>
       <form>
+        <StudentSelector />
+        <TeacherSelector />
+        <HoursSelector />
         <DeviceSelector 
           values={selectedDevices}
           setValues={setSelectedDevices} />
