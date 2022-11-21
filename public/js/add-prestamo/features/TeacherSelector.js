@@ -25,7 +25,7 @@ const TeacherSelector = () => {
       placeholder="Profesor" 
       optionList={teachers} 
       styles={{
-        marginBottom: '.3rem',
+        marginBottom: '.6rem',
       }} 
       clearable />
   );

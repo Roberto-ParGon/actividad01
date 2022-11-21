@@ -121,7 +121,7 @@ $prestamos = $controller->getPrestamosInfo();
         </table>
       </div>
 
-      <a class="home-btn" href="#">
+      <a class="home-btn" href="home.php">
         <span class="material-symbols-outlined md">add</span>
       </a>
     </main>

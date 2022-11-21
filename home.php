@@ -19,6 +19,7 @@
 
   <!-- Misc css -->
   <link rel="stylesheet" type="text/css" href="public/css/reset.css">
+  <link rel="stylesheet" type="text/css" href="public/css/add-prestamo/add-prestamo.css">
   <link rel="stylesheet" type="text/css" href="public/css/lista-prestamos/lista-prestamos.css">
   <link rel="stylesheet" type="text/css" href="public/css/lista-prestamos/header.css">
 
@@ -100,8 +101,8 @@
     <!-- Main Section -->
     <main class="main-container">
       <div id="root"></div>
-      <a class="home-btn" href="#">
-        <span class="material-symbols-outlined md">add</span>
+      <a class="home-btn" href="lista_prestamos.php">
+        <span class="material-symbols-outlined md">list_alt</span>
       </a>
     </main>
   </div>
@@ -109,6 +110,7 @@
   <script src="public/js/lista-prestamos/header.js"></script>
   
   <!-- Components -->
+  <script src="public/js/add-prestamo/components/Input.js" type="text/babel"></script>
   <script src="public/js/add-prestamo/components/ListInput.js" type="text/babel"></script>
   <script src="public/js/add-prestamo/components/MultiSelector.js" type="text/babel"></script>
 
