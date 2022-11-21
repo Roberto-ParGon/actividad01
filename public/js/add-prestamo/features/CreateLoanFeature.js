@@ -8,8 +8,12 @@ const CreateLoanFeature = () => {
   }
 
   return (
-    <div>
-      <form>
+    <div 
+      style={{
+        padding: '1rem .5rem',
+        boxShadow: 'rgba(99, 99, 99, 0.2) 0px 2px 8px 0px',
+      }}>
+      <form style={{width: '25vw'}}>
         <StudentSelector />
         <TeacherSelector />
         <HoursSelector />
@@ -17,9 +21,12 @@ const CreateLoanFeature = () => {
           values={selectedDevices}
           setValues={setSelectedDevices} />
 
-        <MaterialUI.Button variant="contained" disableElevation onClick={onClick}>
-          Disable elevation
-        </MaterialUI.Button>
+        <div
+          style={{display: 'flex', justifyContent: 'center'}}>
+          <MaterialUI.Button variant="contained" disableElevation onClick={onClick}>
+            Prestar
+          </MaterialUI.Button>
+        </div>
       </form>
     </div>
   );

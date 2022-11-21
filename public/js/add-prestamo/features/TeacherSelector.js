@@ -23,6 +23,10 @@ const TeacherSelector = () => {
   return (
     <ListInput 
       placeholder="Profesor" 
-      optionList={teachers} />
+      optionList={teachers} 
+      styles={{
+        marginBottom: '.3rem',
+      }} 
+      clearable />
   );
 }

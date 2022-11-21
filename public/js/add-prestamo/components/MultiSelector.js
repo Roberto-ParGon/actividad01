@@ -8,7 +8,8 @@ const MultiSelector = (props) => {
       border: "1px solid #d1d1d1",
       borderRadius: "4px",
       boxShadow: state.isFocused ? null : null,
-      fontSize: "16px"
+      fontSize: "16px",
+      ...props.styles,
     }),
     valueContainer: (provided, state) => ({
       ...provided,

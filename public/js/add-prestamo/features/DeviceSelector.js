@@ -86,7 +86,10 @@ const DeviceSelector = ({values, setValues}) => {
       name="dispositivos" 
       placeholder="Dispositivos"
       onChange={onChange} 
-      values={values} />
+      values={values} 
+      styles={{
+        marginBottom: '.6rem',
+      }} />
   );
 }
 

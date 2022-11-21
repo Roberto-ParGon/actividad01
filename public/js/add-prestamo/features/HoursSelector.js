@@ -1,6 +1,6 @@
 const HoursSelector = () => {
   return (
-    <div style={{display: 'flex', flexFlow: 'column', padding: '.5rem .2rem'}}>
+    <div style={{display: 'flex', flexFlow: 'column', padding: '.5rem 0 .8rem .0rem'}}>
       <div style={{marginBottom: '.5rem',   display: 'flex', justifyContent: 'center'}}>
         Horario
       </div>

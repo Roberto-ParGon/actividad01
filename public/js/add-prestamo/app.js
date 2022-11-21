@@ -16,7 +16,14 @@ const App = () => {
 
   return (
     <ThemeProvider theme={theme}>
-      <div>
+      <div 
+        style={{
+          height: '100%', 
+          display: 'flex', 
+          justifyContent: 'center', 
+          alignItems: 'center'
+        }}>
+
         <CreateLoanFeature />
       </div>
     </ThemeProvider>

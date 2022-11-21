@@ -99,9 +99,7 @@
 
     <!-- Main Section -->
     <main class="main-container">
-      <div>
-        <div id="root"></div>       
-      </div>
+      <div id="root"></div>
       <a class="home-btn" href="#">
         <span class="material-symbols-outlined md">add</span>
       </a>

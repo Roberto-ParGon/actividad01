@@ -23,6 +23,10 @@ const StudentSelector = () => {
   return (
     <ListInput 
       placeholder="Estudiante" 
-      optionList={students} />
+      optionList={students} 
+      styles={{
+        marginBottom: '.6rem',
+      }} 
+      clearable />
   );
 }
