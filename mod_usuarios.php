@@ -3,7 +3,7 @@
 <?php
     session_start();
     include_once('./public/php/connection.php');
-    $id = 3;
+    $id = 1;
 
     $database = new Connection();
     $db = $database->open();
