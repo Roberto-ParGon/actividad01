@@ -1,109 +1,99 @@
 <?php
-// Include config file
-require_once 'config.php'
+
+session_start();
+ 
+
+if(!isset($_SESSION['nickname']) || empty($_SESSION['nickname'])){
+
+           header("location: login.php");
+  exit;
+}
+
+
+require_once 'config.php';
  
 // Define variables and initialize with empty values
-$username = $password = $confirm_password = $usertype = "";
-$username_err = $password_err = $confirm_password_err = $usertype_err = "";
+$id = $nombre = $apellido = $nickname = $contrasena = /*$is_admin*/ = "";
+$id_err = $nombre_err = $apellido_err = $contrasena_err = /* $is_admin_err = */"";
+
  
-// Processing form data when form is submitted
+
 if($_SERVER["REQUEST_METHOD"] == "POST"){
+    
+
+  
+
+    $input_id = trim($_POST["id"]);
+    if(empty($input_id)){
+        $id_err = "Introduce el ID de tu usuario ";
+    } elseif(!filter_var(trim($_POST["ID"]), FILTER_VALIDATE_REGEXP, array("options"=>array("regexp"=>"/^[a-zA-Z'-.\s ]+$/")))){
+        $id_err = 'Introduce un ID valido';
+    } else{
+        $id = $input_id;
+    }
+    
+     $input_nombre= trim($_POST["nombre"]);
+    if(empty($input_nombre)){
+        $nombre_err = "Introduce el nombre del usuario ";
+    } elseif(!filter_var(trim($_POST["nombre"]), FILTER_VALIDATE_REGEXP, array("options"=>array("regexp"=>"/^[a-zA-Z'-.\s ]+$/")))){
+        $nombre_err = 'Introduce un nombre valido';
+    } else{
+        $nombre = $input_nombre;
+    }
+   
+    $input_apellido = trim($_POST["apellido"]);
+    if(empty($input_apellido)){
+        $apellido_err = "Introduce el apellido del usuario";
+    } elseif(!filter_var(trim($_POST["apellido"]), FILTER_VALIDATE_REGEXP, array("options"=>array("regexp"=>"/^[a-zA-Z'-.\s ]+$/")))){
+        $apellido_err = 'Introduce un apellido valido';
+    } else{
+        $apellido = $input_apellido;
+        
+         $input_nickname = trim($_POST["nickname"]);
+    if(empty($input_nickname)){
+        $nickname_err = "Introduce el nickname";
+    } elseif(!filter_var(trim($_POST["nickname"]), FILTER_VALIDATE_REGEXP, array("options"=>array("regexp"=>"/^[a-zA-Z'-.\s ]+$/")))){
+        $nickname_err = 'Introduce un nickname valido';
+    } else{
+        $nickname = $input_nickname;
+        
+     if(empty(trim($_POST['contraseña']))){
+        $contrasena_err = "Porfavor introduce una contraseña.";     
+    } elseif(strlen(trim($_POST['contraseña'])) < 6){
+        $contrasena_err = "La contraseña debe contener al menos 6 caracteres.";
+    } else{
+        $contrasena = trim($_POST['contrasena']);
+    }
+    
+    /*falta validar el tipo de usurio*/
+  
+    
+   
+    if(empty($id_err) && empty($nombre_err) && empty($apellido_err)&& empty($nickname_err)&& empty($contrasena_err)){
+        $sql = "INSERT INTO prestamos (id, nombre, apellido, nickname, contrasena) VALUES (?, ?, ?, ?, ?)";
+         
+        if($stmt = mysqli_prepare($link, $sql)){
+
+            mysqli_stmt_bind_param($stmt, "sssss", $param_id, $param_nombre, $param_apellido, $param_nickname, $param_contrasena );
+            
+      
+            $param_id= $id;
+            $param_nombre= $nombre;
+            $param_apellido= $apellido;
+            $param_nickname= $nickname;
+            $param_contrasena= $contrasena;
+
+           if(mysqli_stmt_execute($stmt)){
+                header("location: lista_usuarios.php");
+                exit();
+            } else{
+                echo "Por favor intentelo más tarde.";
+            }
+        }
  
-    // Validate username
-    if(empty(trim($_POST["username"]))){
-        $username_err = "Porfavor introduce un nombre de usuario.";
-    } else{
-        // Prepare a select statement
-        $sql = "SELECT id FROM users WHERE username = ?";
-        
-        if($stmt = mysqli_prepare($link, $sql)){
-            // Bind variables to the prepared statement as parameters
-            mysqli_stmt_bind_param($stmt, "s", $param_username);
-            
-            // Set parameters
-            $param_username = trim($_POST["username"]);
-            
-            // Attempt to execute the prepared statement
-            if(mysqli_stmt_execute($stmt)){
-                /* store result */
-                mysqli_stmt_store_result($stmt);
-                
-                if(mysqli_stmt_num_rows($stmt) == 1){
-                    $username_err = "This username is already taken.";
-                } else{
-                    $username = trim($_POST["username"]);
-                }
-            } else{
-                echo "Oops! Something went wrong. Please try again later.";
-            }
-        }
-         
-        // Close statement
         mysqli_stmt_close($stmt);
     }
     
-    // Validate password
-    if(empty(trim($_POST['password']))){
-        $password_err = "Porfavor introduce una contraseña.";     
-    } elseif(strlen(trim($_POST['password'])) < 6){
-        $password_err = "Password must have at least 6 characters.";
-    } else{
-        $password = trim($_POST['password']);
-    }
-    
-    // Validate confirm password
-    if(empty(trim($_POST["confirm_password"]))){
-        $confirm_password_err = 'Porfavor confirma tu contraseña.';     
-    } else{
-        $confirm_password = trim($_POST['confirm_password']);
-        if($password != $confirm_password){
-            $confirm_password_err = 'Password did not match.';
-        }
-    }
-    
-	
-    //
-     // Validate usertype
-    
-    if(empty(trim($_POST['usertype']))){
-        $usertype_err = "Please enter a tipo de usuario 1 ó 2.";     
-    } elseif(!ctype_digit($_POST['usertype'])){
-        $usertype_err = 'Please enter a positive integer value.';
-    } else{
-        $usertype = trim($_POST['usertype']);
-    }
-    
-    
-    // Check input errors before inserting in database
-    if(empty($username_err) && empty($password_err) && empty($confirm_password_err) && empty($usertype_err) ){
-        
-        // Prepare an insert statement
-        $sql = "INSERT INTO users (username, password, tipo_usuario) VALUES (?, ?, ?)";
-         
-        if($stmt = mysqli_prepare($link, $sql)){
-            // Bind variables to the prepared statement as parameters
-            mysqli_stmt_bind_param($stmt, "sss", $param_username, $param_password, $param_usertype);
-            
-            // Set parameters
-            $param_username = $username;
-            $param_password = password_hash($password, PASSWORD_DEFAULT); 
-            $param_usertype = $usertype;
-            // Creates a password hash
-            
-            // Attempt to execute the prepared statement
-            if(mysqli_stmt_execute($stmt)){
-                // Redirect to login page
-                header("location: login.php");
-            } else{
-                echo "Something went wrong. Please try again later.";
-            }
-        }
-         
-        // Close statement
-        mysqli_stmt_close($stmt);
-    }
-    
-    // Close connection
     mysqli_close($link);
 }
 ?>
@@ -112,46 +102,56 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Regístro</title>
+    <title>Agregar usuario</title>
     <link rel="stylesheet" href="bootstrap337/css/bootstrap.css">
     <style type="text/css">
-        body{ font: 14px sans-serif; }
-        .wrapper{ width: 350px; padding: 20px; }
-        <body backgroud="tamales_con_aceite_de_oliva_1"></body>
+        .wrapper{
+            width: 500px;
+            margin: 0 auto;
+        }
     </style>
 </head>
 <body>
     <div class="wrapper">
-        <h2>Regístrate</h2>
-        <p>Por favor llene este formulario para crear una cuenta.</p>
-        <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
-            <div class="form-group <?php echo (!empty($username_err)) ? 'has-error' : ''; ?>">
-                <label>Usuario</label>
-                <input type="text" name="username"class="form-control" value="<?php echo $username; ?>">
-                <span class="help-block"><?php echo $username_err; ?></span>
-            </div>    
-            <div class="form-group <?php echo (!empty($password_err)) ? 'has-error' : ''; ?>">
-                <label>Contraseña</label>
-                <input type="password" name="password" class="form-control" value="<?php echo $password; ?>">
-                <span class="help-block"><?php echo $password_err; ?></span>
-            </div>
-            <div class="form-group <?php echo (!empty($confirm_password_err)) ? 'has-error' : ''; ?>">
-                <label>Confirmar Contraseña</label>
-                <input type="password" name="confirm_password" class="form-control" value="<?php echo $confirm_password; ?>">
-                <span class="help-block"><?php echo $confirm_password_err; ?></span>
-            </div>
-            <div class="form-group <?php echo (!empty($usertype_err)) ? 'has-error' : ''; ?>">
-                <label>Tipo de usuario</label>
-                <input type="text" name="usertype"class="form-control" value="<?php echo $usertype; ?>">
-                <span class="help-block"><?php echo $usertype_err; ?></span>
-            </div> 
-            <div class="form-group">
-                <input type="submit" class="btn btn-primary" value="Enviar">
-				<a href="login.php"  type="Atras" class="btn btn-default" value="Atras">Atras</a>
-            </div>
-            <p>
-¿Ya tienes una cuenta?<a href="login.php"> Entre aquí</a>.</p>
-        </form>
-    </div>    
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="page-header">
+                        <h2>Agregar usuario</h2>
+                    </div>
+                    <p>A continuacion agregaras un usuario </p>
+                    <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
+                        <div class="form-group <?php echo (!empty($id_err)) ? 'has-error' : ''; ?>">
+                            <label>ID</label>
+                            <input type="text" name="id" class="form-control" value="<?php echo $id; ?>">
+                            <span class="help-block"><?php echo $id_err;?></span>
+                        </div>
+                        <div class="form-group <?php echo (!empty($nombre_err)) ? 'has-error' : ''; ?>">
+                            <label>Nombre del usuario</label>
+                            <textarea name="nombre" class="form-control"><?php echo $nombre; ?></textarea>
+                            <span class="help-block"><?php echo $nombre_err;?></span>
+                        </div>
+                        <div class="form-group <?php echo (!empty($apellido_err)) ? 'has-error' : ''; ?>">
+                            <label>Apellido del usuario</label>
+                            <input type="text" name="apellido" class="form-control" value="<?php echo $apellido; ?>">
+                            <span class="help-block"><?php echo $apellido_err;?></span>
+                        </div>
+                        <div class="form-group <?php echo (!empty($nickname_err)) ? 'has-error' : ''; ?>">
+                            <label>Nickname</label>
+                            <input type="text" name="nickname" class="form-control" value="<?php echo $nickname; ?>">
+                            <span class="help-block"><?php echo $nickname_err;?></span>
+                        </div>
+                        <div class="form-group <?php echo (!empty($contrasena_err)) ? 'has-error' : ''; ?>">
+                            <label>Contraseña</label>
+                            <input type="text" name="contrasena" class="form-control" value="<?php echo $contrasena; ?>">
+                            <span class="help-block"><?php echo $contrasena_err;?></span>
+                        </div>
+                        <input type="submit" class="btn btn-primary" value="Submit"> 
+                        <a href="lista_usuarios.php" class="btn btn-default">Cancelar</a>
+                    </form>
+                </div>
+            </div>        
+        </div>
+    </div>
 </body>
 </html>
