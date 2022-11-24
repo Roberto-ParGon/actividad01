@@ -28,7 +28,7 @@ const ListInput = (props) => {
   };
 
   return (
-    <Select.Creatable
+    <Select
       styles={customStyles}
       isClearable={props.clearable}
       options={props.optionList} 
@@ -37,6 +37,8 @@ const ListInput = (props) => {
       onInputChange={inputValue =>
         (inputValue.length <= props.maxLength ? inputValue : inputValue.substr(0, props.maxLength))
       } 
+      values={props.value}
+      onChange={props.onChange}
       searchable />
   );
 }

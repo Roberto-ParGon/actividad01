@@ -1,4 +1,4 @@
-const HoursSelector = () => {
+const HoursSelector = ({horas, setHoras}) => {
   return (
     <div style={{display: 'flex', flexFlow: 'column', padding: '.5rem 0 .8rem .0rem'}}>
       <div style={{marginBottom: '.5rem',   display: 'flex', justifyContent: 'center'}}>
@@ -11,7 +11,15 @@ const HoursSelector = () => {
             width: "6vw",
           }}>
           <ListInput 
+            values={horas.inicio}
+            onChange={(itemSelected) => {
+              setHoras({
+                inicio: itemSelected,
+                fin: horas.fin,
+              });
+            }}
             name="horaInicio" 
+            placeholder="Inicio"
             optionList={[
               {value: 7, label: "07:00"},
               {value: 9, label: "09:00"},
@@ -32,7 +40,15 @@ const HoursSelector = () => {
             width: "6vw",
           }}>
           <ListInput 
+            values={horas.fin}
+            onChange={(itemSelected) => {
+              setHoras({
+                inicio: horas.inicio,
+                fin: itemSelected,
+              });
+            }}
             name="horaFin" 
+            placeholder="Fin"
             optionList={[
               {value: 9, label: "09:00"},
               {value: 11, label: "11:00"},

@@ -8,6 +8,9 @@ const Input = (props) => {
       disabled={props.disabled}
       placeholder={props.placeholder} 
       onClick={props.select ? handleClick: undefined}
-      autoComplete={!props.autocomplete ? "on": props.autocomplete} />
+      autoComplete={!props.autocomplete ? "on": props.autocomplete} 
+      value={props.value}
+      onChange={props.onChange}
+      />
   );
 }

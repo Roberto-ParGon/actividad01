@@ -24,21 +24,33 @@ create table profesor(
   nombre varchar(100) not null
 );
 
+create table aula (
+  id int not null auto_increment primary key,
+  nombre varchar(255) not null
+);
+
+create table materia (
+  nrc varchar(5) not null primary key,
+  nombre varchar(255) not null
+);
+
 # time=hh:mm date=YYYY-MM-DD
 create table prestamo(
   id int not null auto_increment primary key,
-  aula varchar(255) not null,
-  materia varchar(255) not null,
   fecha date not null,
   horario_entrada time not null,
   horario_salida time not null,
   is_active boolean null,
+  nrc_materia varchar(5) not null,
+  id_aula int not null,
   id_usuario int not null,
   id_profesor varchar(5),
   id_alumno varchar(9),
   foreign key (id_usuario) references usuario(id),
   foreign key (id_profesor) references profesor(noPersonal),
-  foreign key (id_alumno) references alumno(matricula)
+  foreign key (id_alumno) references alumno(matricula),
+  foreign key (nrc_materia) references materia(nrc),
+  foreign key (id_aula) references aula(id)
 );
 
 create table dispositivo(
@@ -81,24 +93,40 @@ insert into dispositivo values ("F105", "control F105", 1, "Roto, tiene cinta ad
 insert into dispositivo values ("1212", "HDMI", 8, "");
 insert into dispositivo values ("1213", "Adaptador Mac", 3, "");
 
+# Aulas
+insert into aula (nombre) values ("F101");
+insert into aula (nombre) values ("F102");
+insert into aula (nombre) values ("F103");
+insert into aula (nombre) values ("F104");
+insert into aula (nombre) values ("F105");
+insert into aula (nombre) values ("CC1");
+insert into aula (nombre) values ("CC2");
+
+# materia
+insert into materia values ("12345", "Programacion Avanzada");
+insert into materia values ("23456", "Estadistica Retrospectiva");
+insert into materia values ("34567", "Pensamiento Estructural Complejo");
+insert into materia values ("45678", "Metodologias");
+
 # Prestamos
 insert into prestamo (
-  aula, materia, 
   fecha, 
   horario_entrada, 
   horario_salida, 
   is_active, 
   id_usuario,
-  id_profesor
+  id_profesor,
+  id_aula,
+  nrc_materia
 ) values (
-  "F105",
-  "Programacion",
   "2022-10-23",
   "17:00",
   "19:00",
   true,
   1,
-  "12345"
+  "12345",
+  5,
+  "23456"
 );
 
 # Dispositivos asignados a un prestamo

@@ -1,4 +1,5 @@
 <?php
+  
 ?>
 
 <!DOCTYPE html>
@@ -119,6 +120,8 @@
   <script src="public/js/add-prestamo/features/StudentSelector.js" type="text/babel"></script>
   <script src="public/js/add-prestamo/features/TeacherSelector.js" type="text/babel"></script>
   <script src="public/js/add-prestamo/features/HoursSelector.js" type="text/babel"></script>
+  <script src="public/js/add-prestamo/features/CoursesSelector.js" type="text/babel"></script>
+  <script src="public/js/add-prestamo/features/ClassroomsSelector.js" type="text/babel"></script>
 
   <script src="public/js/add-prestamo/features/CreateLoanFeature.js" type="text/babel"></script>
 

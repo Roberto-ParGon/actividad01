@@ -1,10 +1,39 @@
 const CreateLoanFeature = () => {
   const [selectedDevices, setSelectedDevices] = React.useState([]);
-  const [error, setError] = React.useState('');
+  const [maestro, setMaestro] = React.useState({});
+  const [alumno, setAlumno] = React.useState({});
+  const [aula, setAula] = React.useState('');
+  const [ee, setEE] = React.useState('');
+
+  const [horas, setHoras] = React.useState({
+    inicio: {
+      label: '',
+      value: '',
+    },
+    fin: {
+      label: '',
+      value: '',
+    },
+  });
 
   const onClick = (e) => {
     e.preventDefault();
-    console.log(selectedDevices);
+    const date = new Date();
+    const fecha = `${date.getFullYear()}-${date.getMonth()}-${date.getDate()}`;
+
+    console.log(document.querySelector('#root'))
+
+    console.log({
+      fecha,
+      horario_entrada: horas.inicio.label,
+      horario_salida: horas.fin.label,
+      is_active: true,
+      nrc_materia: ee.nrc,
+      id_aula: aula.id,
+      id_usuario: 1,
+      id_profesor: maestro.noPersonal,
+      id_alumno: alumno.matricula,
+    });
   }
 
   return (
@@ -16,6 +45,7 @@ const CreateLoanFeature = () => {
       }}>
       <form style={{display: 'flex', flexFlow: 'column', width: '25vw'}}>
 
+        {/* Titulo */}
         <div
           style={{
             display: 'flex', 
@@ -27,29 +57,19 @@ const CreateLoanFeature = () => {
         </div>
 
         {/* Horas */}
-        <HoursSelector />
+        <HoursSelector horas={horas} setHoras={setHoras}/>
 
         {/* Nombre del maestro */}
-        <TeacherSelector />
+        <TeacherSelector maestro={maestro} setMaestro={setMaestro} />
 
         {/* Nombre de alumno */}
-        <StudentSelector />
+        <StudentSelector alumno={alumno} setAlumno={setAlumno} />
 
         {/* Experiencia Educativa */}
-        <Input 
-          placeholder="Experiencia Educativa" 
-          autocomplete="off"
-          styles={{
-            marginBottom: '0.6rem',
-          }} />
+        <CoursesSelector ee={ee} setEE={setEE} />
         
         {/* Aula */}
-        <Input 
-          placeholder="Aula" 
-          autocomplete="off"
-          styles={{
-            marginBottom: '0.6rem',
-          }} />
+        <ClassroomsSelector aula={aula} setAula={setAula} />
 
         {/* Dispositivos */}
         <DeviceSelector 

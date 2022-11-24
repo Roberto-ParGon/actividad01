@@ -1,4 +1,4 @@
-const TeacherSelector = () => {
+const TeacherSelector = ({maestro, setMaestro}) => {
   const [teachers, setTeachers] = React.useState([]);
 
   React.useEffect(() => {
@@ -22,6 +22,10 @@ const TeacherSelector = () => {
 
   return (
     <ListInput 
+      values={maestro}
+      onChange={(selectedItem) => {
+        setMaestro(selectedItem);
+      }}
       placeholder="Profesor" 
       optionList={teachers} 
       styles={{
