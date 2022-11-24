@@ -103,8 +103,8 @@ include_once('public/php/lista-usuarios/UsuariosController.php');
           <td><?php echo $usuario['nombre']?></td>
           <td><?php echo $usuario['apellido']?></td>
           <?php
-          $is_admin = ['is_admin'];
-          if($is_admin){
+          $is_admin = $usuario['is_admin'];
+          if($is_admin == 1){
             ?>
             <td><?php echo 'Administrador'?></td>
             <?php
