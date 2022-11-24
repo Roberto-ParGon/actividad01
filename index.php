@@ -16,20 +16,19 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $username = $_POST["username"];
         $contra = $_POST["contra"];
         
-        $_GRABAR_SQL = "SELECT id FROM usuario WHERE nombre = '$username' AND contrasena = '$contra'";
+        $_GRABAR_SQL = "SELECT id, nombre, apellido, nickname, is_admin FROM usuario WHERE nombre = '$username' AND contrasena = '$contra'";
 
         $data = $db->query( $_GRABAR_SQL);  
         $hi = $data -> fetchAll();
 
         if($hi){
-
-            $_SESSION['username'] = $username;
-            header("location: lista_prestamos.php");
-
+            $_SESSION['id'] = $hi[0]['id'];
+            $_SESSION['nombre'] = $hi[0]['nombre'];
+            $_SESSION['apellido'] = $hi[0]['apellido'];
+            $_SESSION['nickname'] = $hi[0]['nickname'];
+            $_SESSION['is_admin'] = $hi[0]['is_admin'];
         }else{
-
             echo "<SCRIPT> alert('USUARIO o CONTRASEÑA incorrectos'); document.location=('login.php'); </SCRIPT>";
-
         }
 
     }catch(PDOException $e){
