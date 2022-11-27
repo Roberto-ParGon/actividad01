@@ -9,7 +9,7 @@
   include_once('public/php/lista-prestamos/PrestamosController.php');
 
   $controller = new PrestamosController();
-  $prestamos = $controller->getPrestamosInfo();
+  $prestamos = $controller->getAllMyPrestamosInfo($idUsuario);
 
   if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $id='';
@@ -90,7 +90,7 @@
     <main>
       <!-- Title -->
       <div class="title">
-        <span>Lista de prestamos activos</span>
+        <span>Mis prestamos</span>
       </div>
 
       <!-- Loans Table -->
@@ -130,16 +130,22 @@
               </td>
               <td>
                 <?php 
-                if($prestamo['id_alumno'] !== NULL) {
-                  echo $prestamo['alumno'];
-                } 
+                  if($prestamo['id_alumno'] !== NULL) {
+                    echo $prestamo['alumno'];
+                  } 
                 ?> 
               </td>
-              <td>
-                <form method="POST" action="<?php echo $_SERVER['PHP_SELF'];?>">
-                  <input type="submit" value="Regresar" name="<?= $prestamo['id'] ?>">
-                </form>
-              </td>
+              <?php 
+                if ($prestamo['is_active'] === 1) {
+                  ?>
+                  <td>
+                    <form method="POST" action="<?php echo $_SERVER['PHP_SELF'];?>">
+                      <input type="submit" value="Regresar" name="<?= $prestamo['id'] ?>">
+                    </form>
+                  </td>
+                  <?php
+                }
+              ?>
             </tr>
             <?php
           }

@@ -1,4 +1,10 @@
 <?php
+  session_start();
+  $idUsuario = $_SESSION['id'];
+
+  if (!isset($idUsuario)) {
+    header('location: index.php');
+  }  
 
   include_once('public/php/mod-dispositivos/ModDispositivoController.php');
 

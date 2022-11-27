@@ -28,7 +28,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             $_SESSION['nickname'] = $hi[0]['nickname'];
             $_SESSION['is_admin'] = $hi[0]['is_admin'];
 
-            header("location: lista_prestamos.php");
+            header("location: home.php");
         }else{
             echo "<SCRIPT> alert('USUARIO o CONTRASEÑA incorrectos'); document.location=('login.php'); </SCRIPT>";
         }

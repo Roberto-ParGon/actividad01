@@ -1,5 +1,10 @@
 <?php
-  
+  session_start();
+  $idUsuario = $_SESSION['id'];
+
+  if (!isset($idUsuario)) {
+    header('location: index.php');
+  }
 ?>
 
 <!DOCTYPE html>
@@ -101,7 +106,7 @@
 
     <!-- Main Section -->
     <main class="main-container">
-      <div id="root"></div>
+      <div id="root" data-usuario="<?= $idUsuario ?>"></div>
       <a class="home-btn" href="lista_prestamos.php">
         <span class="material-symbols-outlined md">list_alt</span>
       </a>

@@ -1,15 +1,22 @@
 <?php
   session_start();
   $idUsuario = $_SESSION['id'];
+  $isAdmin = $_SESSION['is_admin'];
 
   if (!isset($idUsuario)) {
     header('location: index.php');
+    return;
+  }
+
+  if (!$isAdmin) {
+    echo "Solo administradores";
+    return;
   }
 
   include_once('public/php/lista-prestamos/PrestamosController.php');
 
   $controller = new PrestamosController();
-  $prestamos = $controller->getPrestamosInfo();
+  $prestamos = $controller->getAllPrestamosInfo();
 
   if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $id='';
@@ -90,7 +97,7 @@
     <main>
       <!-- Title -->
       <div class="title">
-        <span>Lista de prestamos activos</span>
+        <span>Todos los prestamos</span>
       </div>
 
       <!-- Loans Table -->
@@ -135,11 +142,17 @@
                 } 
                 ?> 
               </td>
-              <td>
-                <form method="POST" action="<?php echo $_SERVER['PHP_SELF'];?>">
-                  <input type="submit" value="Regresar" name="<?= $prestamo['id'] ?>">
-                </form>
-              </td>
+              <?php 
+                if ($prestamo['is_active'] === 1) {
+                  ?>
+                  <td>
+                    <form method="POST" action="<?php echo $_SERVER['PHP_SELF'];?>">
+                      <input type="submit" value="Regresar" name="<?= $prestamo['id'] ?>">
+                    </form>
+                  </td>
+                  <?php
+                }
+              ?>
             </tr>
             <?php
           }

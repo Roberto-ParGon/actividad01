@@ -1,4 +1,11 @@
 <?php
+  session_start();
+  $idUsuario = $_SESSION['id'];
+
+  if (!isset($idUsuario)) {
+    header('location: index.php');
+  }
+  
   include_once('public/php/lista-dispositivos/DispositivosController.php');
 
   $controller = new DispositivosController();
@@ -104,7 +111,7 @@
               <tr>
                 <td><?= $dispositivo['id'] ?> </td>
                 <td><?= $dispositivo['nombre'] ?> </td>
-                <td><?= $dispositivo['cantidad'] ?> </td>
+                <td><?= $dispositivo['cantidad']-$dispositivo['prestado'] ?> </td>
                 <td><?= $dispositivo['observaciones'] ?> </td>
                 <td>
                   <a href="/prestamos/mod_dispositivos.php?id=<?= $dispositivo['id'] ?>">

@@ -2,6 +2,11 @@
 
 <?php
     session_start();
+    $idUsuario = $_SESSION['id'];
+
+    if (!isset($idUsuario)) {
+      header('location: index.php');
+    }
     include_once('./public/php/connection.php');
     $id = 1;
 

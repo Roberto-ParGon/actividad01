@@ -57,12 +57,14 @@ create table dispositivo(
   id varchar(50) not null primary key,
   nombre varchar(255) not null,
   cantidad int not null,
+  prestado int not null,
   observaciones varchar(255)
 );
 
 create table dispositivo_prestado(
   id_prestamo int not null,
   id_dispositivo varchar(50) not null,
+  prestado int not null,
   foreign key (id_prestamo) references prestamo(id),
   foreign key (id_dispositivo) references dispositivo(id)
 );
@@ -89,9 +91,9 @@ insert into alumno values (
 insert into profesor values ("12345", "Meneses Rico Erika");
 
 # Dispositivos
-insert into dispositivo values ("F105", "control F105", 1, "Roto, tiene cinta adhesiva");
-insert into dispositivo values ("1212", "HDMI", 8, "");
-insert into dispositivo values ("1213", "Adaptador Mac", 3, "");
+insert into dispositivo values ("F105", "control F105", 1, 0, "Roto, tiene cinta adhesiva");
+insert into dispositivo values ("1212", "HDMI", 8, 0, "");
+insert into dispositivo values ("1213", "Adaptador Mac", 3, 0, "");
 
 # Aulas
 insert into aula (nombre) values ("F101");
@@ -107,32 +109,6 @@ insert into materia values ("12345", "Programacion Avanzada");
 insert into materia values ("23456", "Estadistica Retrospectiva");
 insert into materia values ("34567", "Pensamiento Estructural Complejo");
 insert into materia values ("45678", "Metodologias");
-
-# Prestamos
-insert into prestamo (
-  fecha, 
-  horario_entrada, 
-  horario_salida, 
-  is_active, 
-  id_usuario,
-  id_profesor,
-  id_aula,
-  nrc_materia
-) values (
-  "2022-10-23",
-  "17:00",
-  "19:00",
-  true,
-  1,
-  "12345",
-  5,
-  "23456"
-);
-
-# Dispositivos asignados a un prestamo
-insert into dispositivo_prestado values (1, "F105");
-insert into dispositivo_prestado values (1, "1212");
-insert into dispositivo_prestado values (1, "1213");
 
 #######################################################################
 

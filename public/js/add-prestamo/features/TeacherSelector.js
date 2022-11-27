@@ -30,7 +30,6 @@ const TeacherSelector = ({maestro, setMaestro}) => {
       optionList={teachers} 
       styles={{
         marginBottom: '.6rem',
-      }} 
-      clearable />
+      }} />
   );
 }

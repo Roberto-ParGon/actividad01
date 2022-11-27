@@ -4,10 +4,14 @@ include_once('public/php/lista-usuarios/UsuariosController.php');
 $controller = new UsuariosController();
 $usuarios = $controller->getUsersInfo();
 */
+  session_start();
+  $idUsuario = $_SESSION['id'];
 
-include_once('public/php/lista-usuarios/UsuariosController.php');
-
-
+  if (!isset($idUsuario)) {
+    header('location: index.php');
+  }
+  
+  include_once('public/php/lista-usuarios/UsuariosController.php');
 ?>
 
 <!DOCTYPE html>

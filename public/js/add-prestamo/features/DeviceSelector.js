@@ -10,17 +10,18 @@ const DeviceSelector = ({values, setValues}) => {
           ...item,
           value: item.nombre, 
           stock: item.cantidad, 
-          prestado: 0, 
-          isDisabled: false,
+          prestado: item.prestado, 
+          localPrestado: 0,
+          isDisabled: !(item.cantidad-item.prestado),
           get label() {
-            return `${this.value} (${this.stock-this.prestado})`;
+            return `${this.value} (${this.stock-this.prestado-this.localPrestado})`;
           },
           get labelPrestado() {
-            return `${this.value} (${this.prestado})`;
+            return `${this.value} (${this.localPrestado})`;
           }
         };
       });
-      
+
       setDevices(items);
     })
     .catch(err => {
@@ -30,7 +31,7 @@ const DeviceSelector = ({values, setValues}) => {
 
   const selectOption = (selected, value)=> {
     // Se aumenta la cantidad prestada
-    selected[selected.length-1].prestado += 1;
+    selected[selected.length-1].localPrestado += 1;
 
     // Verificar si existe el ultimo item en el array value
     const [result] = value.filter((item) => item.value === selected[selected.length-1].value);
@@ -39,7 +40,7 @@ const DeviceSelector = ({values, setValues}) => {
       value.map((item) => {
         return (item.value !== selected[selected.length-1].value) ? item: {
           ...item,
-          prestado: item.prestado+1,
+          localPrestado: item.localPrestado+1,
           value: item.value,
           label: selected[selected.length-1].labelPrestado,
         };
@@ -49,8 +50,12 @@ const DeviceSelector = ({values, setValues}) => {
       value: selected[selected.length-1].value,
       label: selected[selected.length-1].value,
     }]);
+
+    const stock = selected[selected.length-1].stock;
+    const prestado = selected[selected.length-1].prestado;
+    const localPrestado = selected[selected.length-1].localPrestado;
     
-    if (selected[selected.length-1].stock-selected[selected.length-1].prestado === 0) selected[selected.length-1].isDisabled = true;
+    if (stock-prestado-localPrestado === 0) selected[selected.length-1].isDisabled = true;
 
     return tags;
   } 
@@ -61,7 +66,7 @@ const DeviceSelector = ({values, setValues}) => {
     // Actualizar la opción eliminada
     options = options.map((option) => {
       return option.value !== itemDeleted.value ? (option): (
-        option.prestado = 0,
+        option.localPrestado = 0,
         option.isDisabled = false,
         option
       );

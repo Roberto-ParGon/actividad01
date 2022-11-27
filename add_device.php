@@ -1,9 +1,14 @@
 <!DOCTYPE html>
 <?php
+  session_start();
+  
+  $idUsuario = $_SESSION['id'];
+  if (!isset($idUsuario)) {
+    header('location: index.php');
+    return;
+  }
 
-    session_start();
-    include_once('./public/php/connection.php');
-
+  include_once('./public/php/connection.php');
 ?>
 <html lang="es">
 <head>
@@ -92,7 +97,7 @@
                     </p>
                 </form>
         </main>
-            <a class="home-btn" href="#">
+            <a class="home-btn" href="home.php">
                 <span class="material-symbols-outlined md">home</span>
             </a>
     </div>
@@ -129,7 +134,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
            
            
         
-        $_GRABAR_SQL = "INSERT INTO dispositivo  VALUES ('$id','$nombre','$cantidad','$observaciones')";   
+        $_GRABAR_SQL = "INSERT INTO dispositivo VALUES ('{$id}','{$nombre}','{$cantidad}', 0, '{$observaciones}')";   
         $data = $db->query( $_GRABAR_SQL);  
         $hi = $data -> fetchAll();
         
