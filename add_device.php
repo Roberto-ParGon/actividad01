@@ -97,16 +97,12 @@
                     </p>
                 </form>
         </main>
-            <a class="home-btn" href="home.php">
-                <span class="material-symbols-outlined md">home</span>
-            </a>
+        <a class="home-btn" href="lista_dispositivos.php">
+            <span class="material-symbols-outlined md">arrow_back_ios</span>
+        </a>
     </div>
 
     <script src="public/js/lista-prestamos/header.js"></script>
-    <script>
-        const btnEnviar = document.querySelector('.send');
-       // btnEnviar.addEventListener("click", (e) => e.preventDefault());
-    </script>
 </body>
 </html>
 

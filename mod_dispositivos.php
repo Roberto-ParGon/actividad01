@@ -9,8 +9,14 @@
   include_once('public/php/mod-dispositivos/ModDispositivoController.php');
 
   $controller = new ModDispositivoController();
-  
-  $idDispositivo = $_GET['id'];
+  $idDispositivo;
+
+  try {
+    $idDispositivo = $_GET['id'];
+  } catch (Exception $e) {
+    $idDispositivo = $_POST['id'];
+  }
+
   $dispositivo = $controller -> getDispositivoInfo($idDispositivo)[0];
 
   if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -18,19 +24,19 @@
       $nombre = $_POST['nombre_dispositivo'];
       $cantidad = $_POST['cantidad_dispositivo'];
       $observaciones = $_POST['comentarios_dispositivo'];
+      $id = $_POST['id'];
 
-      $res = $controller -> setDispositivoInfo($nombre, $cantidad, $observaciones, $idDispositivo);
-      if ($res) {
-        header("location: lista_dispositivos.php");
-      }
-      else {
-        var_dump($res);
-      }
+      $res = $controller -> setDispositivoInfo($nombre, $cantidad, $observaciones, $id);
+
+      header("location: lista_dispositivos.php");
     }
 
     if (isset($_POST['del_device'])) {
+      $id = $_POST['id'];
 
-    }    
+      $res = $controller -> delDispositivo($id);
+      header("location: lista_dispositivos.php");
+    }
   }
 ?>
 
@@ -125,6 +131,7 @@
             <input type="text" id ="comentarios" name="comentarios_dispositivo" value="<?= $dispositivo['observaciones'] ?>"><br></p>
           </p>
 
+          <input type="hidden" name="id" value="<?= $dispositivo['id'] ?>" />
           <p id="button">
             <input class="cancel" type="submit" value="Eliminar Dispositivo" name="del_device">
             <input class="edit" type="submit" value="Guardar Cambios" name="mod_device">
@@ -132,8 +139,8 @@
         </form>
       </div>
 
-      <a class="home-btn" href="#">
-        <span class="material-symbols-outlined md">home</span>
+      <a class="home-btn" href="lista_dispositivos.php">
+          <span class="material-symbols-outlined md">arrow_back_ios</span>
       </a>
     </main>
   </div>

@@ -6,7 +6,7 @@ include_once('public/php/connection.php');
 $database = new Connection();
 $db = $database->open();
 
-$consulta = "SELECT nombre, apellido, is_admin from usuario";
+$consulta = "SELECT * from usuario";
 $result = $db->prepare($consulta);
 $result->execute();
 //La variable $usuarios es la que lleva la información de los usuarios

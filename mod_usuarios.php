@@ -248,8 +248,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         </div>
 
-        <a class="home-btn" href="#">
-          <span class="material-symbols-outlined md">home</span>
+        <a class="home-btn" href="lista_usuarios.php">
+          <span class="material-symbols-outlined md">arrow_back_ios</span>
         </a>
 
       </main>
@@ -257,11 +257,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     </div>
 
     <script src="public/js/lista-prestamos/header.js"></script>
-    <script>
-        const btnEnviar = document.querySelector('.send');
-       // btnEnviar.addEventListener("click", (e) => e.preventDefault());
-    </script>
-
   </body>
 
 </html>

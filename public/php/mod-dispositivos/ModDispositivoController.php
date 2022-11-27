@@ -24,15 +24,26 @@ class ModDispositivoController {
 		try{
 			$sql = "
 				UPDATE dispositivo 
-				SET nombre='$nombre', cantidad='$cantidad', comentarios='$comentarios' 
+				SET nombre='$nombre', cantidad={$cantidad}, observaciones='$comentarios' 
 				WHERE id='$id'
 			";
 
-			$this->db->query($sql);
+			$this->fetch($sql);
 			return true;
 		} catch(PDOException $e) {
 			return false;
 		}
+	}
+
+	public function delDispositivo ($id) {
+		try{
+			$sql = "DELETE FROM dispositivo WHERE id='$id'";
+
+			$this->fetch($sql);
+			return true;
+		} catch(PDOException $e) {
+			return false;
+		}	
 	}
 
   private function fetch($sql) {

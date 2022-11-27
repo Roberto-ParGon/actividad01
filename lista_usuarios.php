@@ -103,7 +103,6 @@ $usuarios = $controller->getUsersInfo();
         foreach ($usuarios as $usuario) { 
          ?>
          <tr>
-
           <td><?php echo $usuario['nombre']?></td>
           <td><?php echo $usuario['apellido']?></td>
           <?php
@@ -119,8 +118,15 @@ $usuarios = $controller->getUsersInfo();
             <?php
           }
           ?>
-
+          <td>
+            <a href="/prestamos/mod_usuarios.php?id=<?= $usuario['id'] ?>">
+              <span class="material-symbols-outlined f">
+                edit_square
+              </span>
+            </a>
+          </td>
         </tr>
+
         <?php
 
       }

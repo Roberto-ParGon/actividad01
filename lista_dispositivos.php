@@ -127,7 +127,7 @@
         </table>
       </div>
 
-      <a class="home-btn" href="#">
+      <a class="home-btn" href="add_device.php">
         <span class="material-symbols-outlined md">add</span>
       </a>
     </main>
