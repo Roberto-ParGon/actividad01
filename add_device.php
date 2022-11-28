@@ -1,10 +1,15 @@
 <!DOCTYPE html>
 <?php
   session_start();
-  
-  $idUsuario = $_SESSION['id'];
-  if (!isset($idUsuario)) {
+  $isAdmin = $_SESSION['is_admin'];
+
+  if (!isset($isAdmin)) {
     header('location: index.php');
+    return;
+  }
+
+  if (!boolval($isAdmin)) {
+    echo "Solo administradores";
     return;
   }
 
@@ -43,21 +48,43 @@
 
                 <!-- Dropdown -->
                 <ul>
-                <li>
-                    <a href="#">
-                    <span>Home</span>
+                  <li>
+                    <a href="home.php">
+                      <span>Home</span>
                     </a>
-                </li>
-                <li>
-                    <a href="#">
-                    <span>Opción 2</span>
+                  </li>
+                  <li>
+                    <a href="mis_prestamos.php">
+                      <span>Mis prestamos</span>
                     </a>
-                </li>
-                <li>
-                    <a href="#">
-                    <span>Opción 3</span>
+                  </li>
+                  <li>
+                    <a href="lista_prestamos.php">
+                      <span>Prestamos activos</span>
                     </a>
-                </li>
+                  </li>
+
+                  <?php 
+                    if (boolval($isAdmin)) {
+                      ?>
+                      <li>
+                        <a href="all_prestamos.php">
+                          <span>Todos los prestamos</span>
+                        </a>
+                      </li>
+                      <li>
+                        <a href="lista_dispositivos.php">
+                          <span>Dispositivos</span>
+                        </a>
+                      </li>
+                      <li>
+                        <a href="lista_usuarios.php">
+                          <span>Usuarios</span>
+                        </a>
+                      </li>
+                      <?php
+                    }
+                  ?>
                 </ul>
             </nav>
 

@@ -1,14 +1,13 @@
 <?php
   session_start();
-  $idUsuario = $_SESSION['id'];
   $isAdmin = $_SESSION['is_admin'];
 
-  if (!isset($idUsuario)) {
+  if (!isset($isAdmin)) {
     header('location: index.php');
     return;
   }
 
-  if (!$isAdmin) {
+  if (!boolval($isAdmin)) {
     echo "Solo administradores";
     return;
   }
@@ -67,20 +66,42 @@
         <!-- Dropdown -->
         <ul>
           <li>
-            <a href="#">
+            <a href="home.php">
               <span>Home</span>
             </a>
           </li>
           <li>
-            <a href="#">
-              <span>Opción 2</span>
+            <a href="mis_prestamos.php">
+              <span>Mis prestamos</span>
             </a>
           </li>
           <li>
-            <a href="#">
-              <span>Opción 3</span>
+            <a href="lista_prestamos.php">
+              <span>Prestamos activos</span>
             </a>
           </li>
+
+          <?php 
+            if (boolval($isAdmin)) {
+              ?>
+              <li>
+                <a href="all_prestamos.php">
+                  <span>Todos los prestamos</span>
+                </a>
+              </li>
+              <li>
+                <a href="lista_dispositivos.php">
+                  <span>Dispositivos</span>
+                </a>
+              </li>
+              <li>
+                <a href="lista_usuarios.php">
+                  <span>Usuarios</span>
+                </a>
+              </li>
+              <?php
+            }
+          ?>
         </ul>
       </nav>
 
