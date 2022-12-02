@@ -1,6 +1,7 @@
 <?php
   session_start();
   $isAdmin = $_SESSION['is_admin'];
+  $idUsuario = $_SESSION['id'];
 
   if (!isset($isAdmin)) {
     header('location: index.php');
