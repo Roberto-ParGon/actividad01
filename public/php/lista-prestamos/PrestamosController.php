@@ -10,6 +10,7 @@ class PrestamosController {
     $this->db = $this->database->open();
   }
 
+  // Funcion recibe id
   public function regresarPrestamo($id) {
     try {
       // Cambiar estado del prestamo

@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 
 <?php
+    session_start();
     $isAdmin = $_SESSION['is_admin'];
 
     if (!isset($isAdmin)) {
@@ -236,7 +237,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <p>
 
               <p> Modificar su ID:
-                <input type="text" value="<?= $id ?>" id ="id" name="id_usuario" disabled><br>
+                <input type="hidden" value="<?= $id ?>" id ="id" name="id_usuario" disabled><br>
               </p>
 
               <p>Modificar su nombre:
@@ -252,7 +253,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
               </p>
 
               <p>Modificar su contraseña:
-                <input type="text" id ="contraseña" name="contra_usuario" value="<?=$contraid?>"><br>
+                <input type="hidden" id ="contraseña" name="contra_usuario" value="<?=$contraid?>"><br>
               </p>
 
               <p>¿Es administrador?

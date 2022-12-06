@@ -158,7 +158,7 @@
     </table>
   </div>
 
-  <a class="home-btn" href="#">
+  <a class="home-btn" href="add_usuario.php">
     <span class="material-symbols-outlined">person_add</span>
   </a>
 </main>
