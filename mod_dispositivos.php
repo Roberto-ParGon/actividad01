@@ -122,7 +122,9 @@
 
       <!-- User Icon -->
       <div class="user">
-        <span class="material-symbols-outlined md">person</span>
+        <a href="logout.php" style="color: #212121;">
+          <span class="material-symbols-outlined md">logout</span>
+        </a>
       </div>
     </header>
 

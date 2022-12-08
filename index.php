@@ -30,7 +30,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
             header("location: home.php");
         }else{
-            echo "<SCRIPT> alert('USUARIO o CONTRASEÑA incorrectos'); document.location=('login.php'); </SCRIPT>";
+            echo "<SCRIPT> alert('USUARIO o CONTRASEÑA incorrectos'); document.location=('index.php'); </SCRIPT>";
         }
 
     }catch(PDOException $e){
@@ -208,8 +208,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                             </div>
 
                             <input type="submit" value="Entrar" class="btn btn-primary btn-large btn-block"/>
-                            <a class="login-link" href="#">Olvidé mi Contraseña</a>
-
                         </form>
 
                     </main>
