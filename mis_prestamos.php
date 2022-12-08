@@ -9,10 +9,7 @@
   }
 
   include_once('public/php/lista-prestamos/PrestamosController.php');
-
   $controller = new PrestamosController();
-  $prestamos = $controller->getAllMyPrestamosInfo($idUsuario);
-
   if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $id='';
     foreach($_POST as $name => $content) {
@@ -23,10 +20,14 @@
 
     if (!$res) {
        echo "<SCRIPT> alert('Algo salió mal'); document.location=('home.php'); </SCRIPT>";
+       return;
     }
 
-    header("location: lista_prestamos.php");
+    header("location: mis_prestamos.php");
+    return;
   }
+
+  $prestamos = $controller->getAllMyPrestamosInfo($idUsuario);
 ?>
 
 <!DOCTYPE html>

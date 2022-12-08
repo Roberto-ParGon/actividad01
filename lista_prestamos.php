@@ -1,18 +1,14 @@
 <?php
   session_start();
   $idUsuario = $_SESSION['id'];
+  $isAdmin = $_SESSION['is_admin'];
 
   if (!isset($idUsuario)) {
     header('location: index.php');
   }
 
-  $isAdmin = $_SESSION['is_admin'];
-
   include_once('public/php/lista-prestamos/PrestamosController.php');
-
   $controller = new PrestamosController();
-  $prestamos = $controller->getPrestamosInfo();
-
   if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $id='';
     foreach($_POST as $name => $content) {
@@ -23,10 +19,14 @@
 
     if (!$res) {
        echo "<SCRIPT> alert('Algo salió mal'); document.location=('home.php'); </SCRIPT>";
+       return;
     }
 
     header("location: lista_prestamos.php");
+    return;
   }
+  
+  $prestamos = $controller->getPrestamosInfo();
 ?>
 
 <!DOCTYPE html>
