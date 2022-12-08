@@ -57,7 +57,7 @@ class PrestamosController {
 
     foreach($prestamos as $key => $prestamo) {
       $sql = "
-      SELECT d.id, d.nombre, d.observaciones
+      SELECT d.id, d.nombre, d.observaciones, dp.prestado
       FROM dispositivo_prestado AS dp
       INNER JOIN dispositivo AS d ON dp.id_dispositivo=d.id
       WHERE dp.id_prestamo={$prestamo['id']}

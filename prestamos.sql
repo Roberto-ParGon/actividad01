@@ -71,29 +71,128 @@ create table dispositivo_prestado(
 
 # Usuario
 insert into usuario (nombre, apellido, nickname, contrasena, is_admin) values (
-  "luis",
-  "ramirez",
-  "admin",
+  "luan",
+  "avila",
+  "luvi",
   "1234",
   true
 );
 
+insert into usuario (nombre, apellido, nickname, contrasena, is_admin) values (
+  "marin",
+  "aristeo",
+  "goodboy",
+  "1234",
+  false
+);
+
 # Alumno
 insert into alumno values (
+  "s18014519",
+  "CRISTIAN YAIR",
+  "PENA",
+  "CABRERA",
+  "Tecnologias Computacionales"
+);
+
+insert into alumno values (
+  "s19016407",
+  "ROBERTO",
+  "GONZALEZ",
+  "PARTIDA",
+  "Tecnologias Computacionales"
+);
+
+insert into alumno values (
+  "s20022111",
+  "OMAR ALFREDO",
+  "HIDALGO",
+  "JACINTO",
+  "Tecnologias Computacionales"
+);
+
+insert into alumno values (
+  "s19016388",
+  "ANA PAULA",
+  "ALVAN",
+  "ARGUELLES",
+  "Tecnologias Computacionales"
+);
+
+insert into alumno values (
+  "s19023888",
+  "AMAYRANI PAOLA",
+  "MARTINEZ",
+  "VILLA",
+  "Tecnologias Computacionales"
+);
+
+insert into alumno values (
+  "s19030171",
+  "RICARDO",
+  "MARTINEZ",
+  "OLIVO",
+  "Tecnologias Computacionales"
+);
+
+insert into alumno values (
+  "s20018152",
+  "MAILENE GABRIELA",
+  "ALPUCHE",
+  "VELAZQUEZ",
+  "Tecnologias Computacionales"
+);
+
+insert into alumno values (
+  "s20018150",
+  "MATTAI",
+  "MARTINEZ",
+  "MONTERO",
+  "Tecnologias Computacionales"
+);
+
+insert into alumno values (
+  "s18019963",
+  "EDGAR ANTONIO",
+  "JIMENEZ",
+  "LOPEZ",
+  "Tecnologias Computacionales"
+);
+
+insert into alumno values (
+  "s19016410",
+  "JOYCE ENID",
+  "GARCIA",
+  "LOPEZ",
+  "Tecnologias Computacionales"
+);
+
+insert into alumno values (
   "s18014489",
-  "Cesar Alejandro",
-  "Vallejo",
-  "Galvan",
+  "CESAR ALEJANDRO",
+  "VALLEJO",
+  "GALVAN",
   "Tecnologias Computacionales"
 );
 
 #profesor
-insert into profesor values ("12345", "Meneses Rico Erika");
+insert into profesor values ("12310", "MA. DE LOS ANGELES NAVARRO GUERRERO");
+insert into profesor values ("12345", "MA. DEL CARMEN MEZURA GODOY");
+insert into profesor values ("12346", "ERIKA MENESES RICO");
+insert into profesor values ("12347", "MAX WILLIAM MILLAN MARTINEZ");
+insert into profesor values ("12348", "JOSE GUILLERMO HERNANDEZ CALDERON");
+insert into profesor values ("12349", "ALICIA YAZMIN ROJAS LUNA");
 
 # Dispositivos
+insert into dispositivo values ("F101", "control F101", 1, 0, "Un boton no sirve");
+insert into dispositivo values ("F102", "control F102", 1, 0, "");
+insert into dispositivo values ("F103", "control F103", 1, 0, "Restos de chocolate");
+insert into dispositivo values ("F104", "control F104", 1, 0, "");
 insert into dispositivo values ("F105", "control F105", 1, 0, "Roto, tiene cinta adhesiva");
-insert into dispositivo values ("1212", "HDMI", 8, 0, "");
+insert into dispositivo values ("1212", "HDMI", 5, 0, "");
 insert into dispositivo values ("1213", "Adaptador Mac", 3, 0, "");
+insert into dispositivo values ("1214", "Adaptador GBA", 4, 0, "Pines rotos");
+insert into dispositivo values ("1215", "Laptop", 2, 0, "Sin procesadores");
 
 # Aulas
 insert into aula (nombre) values ("F101");
@@ -109,7 +208,8 @@ insert into materia values ("12345", "Programacion Avanzada");
 insert into materia values ("23456", "Estadistica Retrospectiva");
 insert into materia values ("34567", "Pensamiento Estructural Complejo");
 insert into materia values ("45678", "Metodologias");
-
+insert into materia values ("45679", "Investigacion de computadores");
+insert into materia values ("45680", "Como atender un ciber 1");
 #######################################################################
 
 # Obtener id, nombre, observaciones de los dispositivos en un prestamo con el id del prestamo
