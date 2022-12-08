@@ -15,13 +15,7 @@
   include_once('public/php/mod-dispositivos/ModDispositivoController.php');
 
   $controller = new ModDispositivoController();
-  $idDispositivo;
-
-  try {
-    $idDispositivo = $_GET['id'];
-  } catch (Exception $e) {
-    $idDispositivo = $_POST['id'];
-  }
+  $idDispositivo = array_key_exists("id", $_GET) ? $_GET['id']: $_POST['id'];
 
   $dispositivo = $controller -> getDispositivoInfo($idDispositivo)[0];
 
@@ -32,9 +26,12 @@
       $observaciones = $_POST['comentarios_dispositivo'];
       $id = $_POST['id'];
 
-      $res = $controller -> setDispositivoInfo($nombre, $cantidad, $observaciones, $id);
-
-      header("location: lista_dispositivos.php");
+      if (empty($nombre) || empty($cantidad)) {
+        echo "<SCRIPT> alert('No dejes campos vacios'); document.location=('mod_dispositivos.php?id={$id}'); </SCRIPT>";
+      } else {
+        $res = $controller -> setDispositivoInfo($nombre, $cantidad, $observaciones, $id);
+        header("location: lista_dispositivos.php");
+      }
     }
 
     if (isset($_POST['del_device'])) {
@@ -139,10 +136,6 @@
       <!-- Loans Table -->
       <div class="loans-container scrollbar">
         <form method="POST" action="<?php echo $_SERVER['PHP_SELF'];?>">
-          <p> Modificar su ID:
-            <input type="text" id ="id" class="form-control" name="id_dispositivo" value="<?= $dispositivo['id'] ?>"><br>
-          </p>
-
           <p>
             Modificar su nombre:
             <input type="text" id ="nombre" class="form-control" name="nombre_dispositivo" value="<?= $dispositivo['nombre'] ?>">
@@ -151,19 +144,20 @@
 
           <p> 
             Cantidad disponible:
-            <input type="text" id ="canatidad" name="cantidad_dispositivo" value="<?= $dispositivo['cantidad'] ?>"><br></p>
+            <input type="number" id ="canatidad" name="cantidad_dispositivo" value="<?= $dispositivo['cantidad'] ?>">
           </p>
 
           <p> 
             Comentarios:
-            <input type="text" id ="comentarios" name="comentarios_dispositivo" value="<?= $dispositivo['observaciones'] ?>"><br></p>
+            <input type="text" id ="comentarios" name="comentarios_dispositivo" value="<?= $dispositivo['observaciones'] ?>">
           </p>
-
-          <input type="hidden" name="id" value="<?= $dispositivo['id'] ?>" />
           <p id="button">
             <input class="cancel" type="submit" value="Eliminar Dispositivo" name="del_device">
             <input class="edit" type="submit" value="Guardar Cambios" name="mod_device">
           </p>
+
+          <input type="hidden" name="id" value="<?= $dispositivo['id'] ?>" />
+          <input type="hidden" id ="id" class="form-control" name="id_dispositivo" value="<?= $dispositivo['id'] ?>">
         </form>
       </div>
 

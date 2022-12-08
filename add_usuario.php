@@ -1,17 +1,18 @@
 <!DOCTYPE html>
 
 <?php
-    /*$isAdmin = $_SESSION['is_admin'];
+  session_start();
+  $isAdmin = $_SESSION['is_admin'];
 
-    if (!isset($isAdmin)) {
-      header('location: index.php');
-      return;
-    }
+  if (!isset($isAdmin)) {
+    header('location: index.php');
+    return;
+  }
 
-    if (!boolval($isAdmin)) {
-      echo "Solo administradores";
-      return;
-    }*/
+  if (!boolval($isAdmin)) {
+    echo "Solo administradores";
+    return;
+  }
 ?>
 
 <?php
@@ -24,31 +25,27 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   $db = $database->open();
 
   if (isset($_POST['add_device'])) {
-
     try{
-    
-        $nombre = $_POST["nombre_usuario"];
-        $apellido = $_POST["apellido_usuario"];
-        $nickname = $_POST["nickname_usuario"];
-        $contra = $_POST["contra_usuario"];
-        $admin = $_POST["is_admin"];
-        
+      $nombre = $_POST["nombre_usuario"];
+      $apellido = $_POST["apellido_usuario"];
+      $nickname = $_POST["nickname_usuario"];
+      $contra = $_POST["contra_usuario"];
+      $admin = $_POST["is_admin"];
+
+      if (empty($nombre) || empty($apellido) || empty($nickname) || empty($contra) || empty($admin)) {
+        echo "<SCRIPT> alert('No dejes campos vacios'); document.location=('add_usuario.php'); </SCRIPT>";
+      } else {
         $_GRABAR_SQL = "INSERT INTO usuario (nombre, apellido, nickname, contrasena, is_admin) VALUES('$nombre', '$apellido', '$nickname', '$contra', '$admin')";
-        $data = $db->query( $_GRABAR_SQL);  
+        $data = $db->query( $_GRABAR_SQL);
         $hi = $data -> fetchAll();
 
         if(!$hi){
-
-            header("location: lista_usuarios.php");
-
+          header("location: lista_usuarios.php");
         } else{
-
-            echo "<SCRIPT> alert('Error'); document.location=('mod_usuarios.php'); </SCRIPT>";
-
+          echo "<SCRIPT> alert('Error'); document.location=('mod_usuarios.php'); </SCRIPT>";
         }
-        
+      }
     } catch(PDOException $e){
-        
       $_SESSION['message'] = $e->getMessage();   
     }
   }

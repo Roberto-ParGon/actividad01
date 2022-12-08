@@ -21,21 +21,13 @@
     $db = $database->open();
     
     try{
-        /*
-        // hacer uso de una declaración preparada para evitar la inyección de sql
-        $stmt = $db->prepare("INSERT INTO dispositivo (id, nombre, cantidad, observaciones) VALUES (:id, :nombre, :cantidad, :observaciones)");
-        // declaración if-else en la ejecución de nuestra declaración preparada
-        $_SESSION['message'] = ( $stmt->execute(array($_POST['id'] , ':nombre' => $_POST['nombre'] , ':cantidad' => $_POST['cantidad'], ':observaciones' => $_POST['observaciones'])) ) ? 'Dispositivo agregado correctamente' : 'Something went wrong. Cannot add member'; 
-        
-        */
-    
         $id = $_POST["id"];   
         $nombre = $_POST["nombre"];   
         $cantidad = $_POST["cantidad"];   
         $observaciones = $_POST["observaciones"];   
            
         if (trim($id) === "" || trim($nombre) === "" || trim($cantidad) === "") {
-          echo "No dejes campos vacios";
+          echo "<SCRIPT> alert('No dejes campos vacios'); document.location=('add_device.php'); </SCRIPT>";
         } else {
           $_GRABAR_SQL = "INSERT INTO dispositivo VALUES ('{$id}','{$nombre}','{$cantidad}', 0, '{$observaciones}')";   
           $data = $db->query( $_GRABAR_SQL);  
@@ -169,7 +161,7 @@
 
                     <p id="button">
                         <input class="send" type="submit" value="Añadir" name="add_device">
-                        <a href="#" class="edit">Cancelar</a>
+                        <a href="lista_dispositivos.php" class="edit">Cancelar</a>
                     </p>
                 </form>
         </main>

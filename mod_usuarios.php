@@ -1,123 +1,105 @@
-<!DOCTYPE html>
-
 <?php
-    session_start();
-    $isAdmin = $_SESSION['is_admin'];
+  session_start();
+  $isAdmin = $_SESSION['is_admin'];
 
-    if (!isset($isAdmin)) {
-      header('location: index.php');
-      return;
-    }
+  if (!isset($isAdmin)) {
+    header('location: index.php');
+    return;
+  }
 
-    if (!boolval($isAdmin)) {
-      echo "Solo administradores";
-      return;
-    }
-
-    include_once('./public/php/connection.php');
-    $id = 1;
-
-    $database = new Connection();
-    $db = $database->open();
-
-    $consulta = "SELECT * FROM usuario WHERE id='$id'";
-    $datos = $db->query( $consulta);  
-    $result = $datos->fetchALL();
-
-    $nombreid = $result[0]["nombre"];
-    $apellidoid = $result[0]["apellido"];
-    $nicknameid = $result[0]["nickname"];
-    $contraid = $result[0]["contrasena"];
-    $adminid = $result[0]["is_admin"];
-
-    if($adminid == 1){
-
-      $value1 = 1;
-      $var1 = "Sí";
-      $value2 = 0;
-      $var2 = "No";
-
-    } else{
-
-      $value1 = 0;
-      $var1 = "No";
-      $value2 = 1;
-      $var2 = "Sí";
-    }
-?>
-
-
-<?php
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-
-  if (isset($_POST['add_device'])) {
-
-    try{
+  if (!boolval($isAdmin)) {
+    echo "Solo administradores";
+    return;
+  }
     
-        $nombre = $_POST["nombre_usuario"];
-        $apellido = $_POST["apellido_usuario"];
-        $nickname = $_POST["nickname_usuario"];
-        $contra = $_POST["contra_usuario"];
-        $admin = $_POST["is_admin"];
-           
-           
-        
-        $_GRABAR_SQL = "UPDATE usuario SET nombre='$nombre', apellido='$apellido', nickname='$nickname', contrasena='$contra', is_admin='$admin' WHERE id='$id'";
+  include_once('./public/php/connection.php');
+  $database = new Connection();
+  $db = $database->open();
+
+  if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    if (isset($_POST['add_device'])) {
+      try{
+          $id = $_POST["id_usuario"];
+          $nombre = $_POST["nombre_usuario"];
+          $apellido = $_POST["apellido_usuario"];
+          $nickname = $_POST["nickname_usuario"];
+          $contra = $_POST["contra_usuario"];
+          $admin = $_POST["is_admin"];
+             
+          if (empty($nombre) || empty($apellido) || empty($nickname)) {
+            echo "<SCRIPT>alert('No dejes campos vacios'); document.location=('mod_usuarios.php?id={$id}'); </SCRIPT>";
+          } else {
+            $_GRABAR_SQL = "UPDATE usuario SET nombre='$nombre', apellido='$apellido', nickname='$nickname', contrasena='$contra', is_admin='$admin' WHERE id='$id'";
+            $data = $db->query( $_GRABAR_SQL);  
+            $hi = $data->fetchAll();
+
+            if(!$hi){
+              header("location: lista_usuarios.php");
+            } else{
+              echo "<SCRIPT> alert('Error'); document.location=('lista_usuarios.php'); </SCRIPT>";
+            }
+          }
+      } catch(PDOException $e){
+          echo "<SCRIPT> alert('Algo salió mal'); document.location=('lista_usuarios.php'); </SCRIPT>";
+      }
+    }
+
+    if (isset($_POST['del_device'])) {
+
+      try{
+
+        $_GRABAR_SQL = "DELETE FROM usuario WHERE id='$id'";
         $data = $db->query( $_GRABAR_SQL);  
         $hi = $data -> fetchAll();
 
         if(!$hi){
-
-            header("location: lista_usuarios.php");
-
+          header("location: lista_usuarios.php");
         } else{
-
-            echo "<SCRIPT> alert('Error'); document.location=('mod_usuarios.php'); </SCRIPT>";
-
+          echo "<SCRIPT> alert('Error'); document.location=('lista_usuarios.php'); </SCRIPT>";
         }
-        
-    } catch(PDOException $e){
-        
-      $_SESSION['message'] = $e->getMessage();   
+          
+      } catch(PDOException $e){
+          
+        $_SESSION['message'] = $e->getMessage();   
+      }
     }
   }
-
-  if (isset($_POST['del_device'])) {
-
-    try{
-
-      $_GRABAR_SQL = "DELETE FROM usuario WHERE id='$id'";
-      $data = $db->query( $_GRABAR_SQL);  
-      $hi = $data -> fetchAll();
-
-      if(!$hi){
-
-            header("location: lista_usuarios.php");
-
-        } else{
-
-            echo "<SCRIPT> alert('Error'); document.location=('mod_usuarios.php'); </SCRIPT>";
-
-        }
-        
-    } catch(PDOException $e){
-        
-      $_SESSION['message'] = $e->getMessage();   
-    }
-  }
-
-  /*
-  insert into usuario (nombre, apellido, nickname, contrasena, is_admin) values (
-  "cesar",
-  "vallejo",
-  "admin2",
-  "1234",
-  true
-);
-  */
-}
 ?>
 
+<?php
+    $idUsuario = array_key_exists("id", $_GET) ? $_GET['id']: $_POST['id'];
+
+    try {
+      $consulta = "SELECT * FROM usuario WHERE id='$idUsuario'";
+      $datos = $db->query( $consulta);  
+      $result = $datos->fetchALL();
+
+      $nombreid = $result[0]["nombre"];
+      $apellidoid = $result[0]["apellido"];
+      $nicknameid = $result[0]["nickname"];
+      $contraid = $result[0]["contrasena"];
+      $adminid = $result[0]["is_admin"];
+
+      if($adminid == 1){
+
+        $value1 = 1;
+        $var1 = "Sí";
+        $value2 = 0;
+        $var2 = "No";
+
+      } else{
+
+        $value1 = 0;
+        $var1 = "No";
+        $value2 = 1;
+        $var2 = "Sí";
+      }
+    } catch (Exception $e) {
+      echo "<SCRIPT> alert('Algo salió mal'); document.location=('lista_usuarios.php'); </SCRIPT>";
+    }
+?>
+
+<!DOCTYPE html>
 <html lang="es">
 
   <head>
@@ -234,43 +216,32 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
           <form method="POST" action="<?php echo $_SERVER['PHP_SELF'];?>">
 
+            <p>Modificar su nombre:
+              <input type="text" id ="nombre" name="nombre_usuario" value="<?=$nombreid?>"><br>
+            </p>
+
+            <p>Modificar su apellido:
+              <input type="text" id ="apellido" name="apellido_usuario" value="<?=$apellidoid?>"><br>
+            </p>
+
+            <p>Modificar su nickname:
+              <input type="text" id ="nickmane" name="nickname_usuario" value="<?=$nicknameid?>"><br>
+            </p>
+
             <p>
+              ¿Es administrador?
+              <select name="is_admin">
+                <option value="<?=$value1?>"><?=$var1?></option>
+                <option value="<?=$value2?>"><?=$var2?></option>
+              </select><br>
+            </p>
 
-              <p> Modificar su ID:
-                <input type="hidden" value="<?= $id ?>" id ="id" name="id_usuario" disabled><br>
-              </p>
+            <input type="hidden" id ="contraseña" name="contra_usuario" value="<?=$contraid?>">
+            <input type="hidden" value="<?= $idUsuario ?>" id ="id" name="id_usuario"><br>
 
-              <p>Modificar su nombre:
-                <input type="text" id ="nombre" name="nombre_usuario" value="<?=$nombreid?>"><br>
-              </p>
-
-              <p>Modificar su apellido:
-                <input type="text" id ="apellido" name="apellido_usuario" value="<?=$apellidoid?>"><br>
-              </p>
-
-              <p>Modificar su nickname:
-                <input type="text" id ="nickmane" name="nickname_usuario" value="<?=$nicknameid?>"><br>
-              </p>
-
-              <p>Modificar su contraseña:
-                <input type="hidden" id ="contraseña" name="contra_usuario" value="<?=$contraid?>"><br>
-              </p>
-
-              <p>¿Es administrador?
-
-                <select name="is_admin">
-                  <option value="<?=$value1?>"><?=$var1?></option>
-                  <option value="<?=$value2?>"><?=$var2?></option>
-                </select><br>
-
-              </p>
-
-              <p id="button">
-                <input class="enviar" type="submit" value="Guardar Cambios" name="add_device">
-
-                <input class="cancel" type="submit" value="Eliminar Usuario" name="del_device">
-              </p>
-
+            <p id="button">
+              <input class="enviar" type="submit" value="Guardar Cambios" name="add_device">
+              <input class="cancel" type="submit" value="Eliminar Usuario" name="del_device">
             </p>
 
           </form>
