@@ -14,6 +14,55 @@
   }
 
   include_once('./public/php/connection.php');
+
+  if ($_SERVER["REQUEST_METHOD"] == "POST") {
+  
+    $database = new Connection();
+    $db = $database->open();
+    
+    try{
+        /*
+        // hacer uso de una declaración preparada para evitar la inyección de sql
+        $stmt = $db->prepare("INSERT INTO dispositivo (id, nombre, cantidad, observaciones) VALUES (:id, :nombre, :cantidad, :observaciones)");
+        // declaración if-else en la ejecución de nuestra declaración preparada
+        $_SESSION['message'] = ( $stmt->execute(array($_POST['id'] , ':nombre' => $_POST['nombre'] , ':cantidad' => $_POST['cantidad'], ':observaciones' => $_POST['observaciones'])) ) ? 'Dispositivo agregado correctamente' : 'Something went wrong. Cannot add member'; 
+        
+        */
+    
+        $id = $_POST["id"];   
+        $nombre = $_POST["nombre"];   
+        $cantidad = $_POST["cantidad"];   
+        $observaciones = $_POST["observaciones"];   
+           
+        if (trim($id) === "" || trim($nombre) === "" || trim($cantidad) === "") {
+          echo "No dejes campos vacios";
+        } else {
+          $_GRABAR_SQL = "INSERT INTO dispositivo VALUES ('{$id}','{$nombre}','{$cantidad}', 0, '{$observaciones}')";   
+          $data = $db->query( $_GRABAR_SQL);  
+          $hi = $data -> fetchAll();
+
+          header("location: lista_dispositivos.php");
+        }
+        
+    }
+    catch(PDOException $e){
+        
+        $_SESSION['message'] = $e->getMessage();
+        
+    }
+
+    //cerrar conexión
+    $database->close();
+
+
+    // collect value of input field
+  /*$name = $_POST['detalles'];
+  if (empty($name)) {
+    echo "Name is empty";
+  } else {
+    echo $name;
+  }*/
+}
 ?>
 <html lang="es">
 <head>
@@ -132,52 +181,3 @@
     <script src="public/js/lista-prestamos/header.js"></script>
 </body>
 </html>
-
-
-
-<?php
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-  
-    $database = new Connection();
-    $db = $database->open();
-    
-    try{
-        /*
-        // hacer uso de una declaración preparada para evitar la inyección de sql
-        $stmt = $db->prepare("INSERT INTO dispositivo (id, nombre, cantidad, observaciones) VALUES (:id, :nombre, :cantidad, :observaciones)");
-        // declaración if-else en la ejecución de nuestra declaración preparada
-        $_SESSION['message'] = ( $stmt->execute(array($_POST['id'] , ':nombre' => $_POST['nombre'] , ':cantidad' => $_POST['cantidad'], ':observaciones' => $_POST['observaciones'])) ) ? 'Dispositivo agregado correctamente' : 'Something went wrong. Cannot add member';	
-        
-        */
-    
-        $id = $_POST["id"];   
-        $nombre = $_POST["nombre"];   
-        $cantidad = $_POST["cantidad"];   
-        $observaciones = $_POST["observaciones"];   
-           
-           
-        
-        $_GRABAR_SQL = "INSERT INTO dispositivo VALUES ('{$id}','{$nombre}','{$cantidad}', 0, '{$observaciones}')";   
-        $data = $db->query( $_GRABAR_SQL);  
-        $hi = $data -> fetchAll();
-        
-    }
-    catch(PDOException $e){
-        
-        $_SESSION['message'] = $e->getMessage();
-        
-    }
-
-    //cerrar conexión
-    $database->close();
-
-
-    // collect value of input field
-  /*$name = $_POST['detalles'];
-  if (empty($name)) {
-    echo "Name is empty";
-  } else {
-    echo $name;
-  }*/
-}
-?>

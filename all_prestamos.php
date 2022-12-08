@@ -150,7 +150,7 @@
                   <?php 
                   foreach($prestamo['dispositivos'] as $dispositivo) {
                     echo "
-                    <li>{$dispositivo['nombre']}</li>
+                    <li>{$dispositivo['nombre']} ({$dispositivo['prestado']})</li>
                     ";
                   }
                   ?>
