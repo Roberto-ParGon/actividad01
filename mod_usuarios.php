@@ -47,7 +47,8 @@
     if (isset($_POST['del_device'])) {
 
       try{
-
+        $id = $_POST["id_usuario"];
+        
         $_GRABAR_SQL = "DELETE FROM usuario WHERE id='$id'";
         $data = $db->query( $_GRABAR_SQL);  
         $hi = $data -> fetchAll();

@@ -26,7 +26,7 @@ const ClassroomsSelector = ({aula, setAula}) => {
       onChange={(selectedItem) => {
         setAula(selectedItem);
       }}
-      placeholder="Materia" 
+      placeholder="Salón" 
       optionList={classrooms} 
       styles={{
         marginBottom: '.6rem',

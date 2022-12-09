@@ -32,7 +32,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       $contra = $_POST["contra_usuario"];
       $admin = $_POST["is_admin"];
 
-      if (empty($nombre) || empty($apellido) || empty($nickname) || empty($contra) || empty($admin)) {
+      if (empty($nombre) || empty($apellido) || empty($nickname) || empty($contra)) {
         echo "<SCRIPT> alert('No dejes campos vacios'); document.location=('add_usuario.php'); </SCRIPT>";
       } else {
         $_GRABAR_SQL = "INSERT INTO usuario (nombre, apellido, nickname, contrasena, is_admin) VALUES('$nombre', '$apellido', '$nickname', '$contra', '$admin')";
