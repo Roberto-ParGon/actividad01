@@ -25,22 +25,48 @@
           $nickname = $_POST["nickname_usuario"];
           $contra = $_POST["contra_usuario"];
           $admin = $_POST["is_admin"];
-             
-          if (empty($nombre) || empty($apellido) || empty($nickname)) {
-            echo "<SCRIPT>alert('No dejes campos vacios'); document.location=('mod_usuarios.php?id={$id}'); </SCRIPT>";
-          } else {
-            $_GRABAR_SQL = "UPDATE usuario SET nombre='$nombre', apellido='$apellido', nickname='$nickname', contrasena='$contra', is_admin='$admin' WHERE id='$id'";
-            $data = $db->query( $_GRABAR_SQL);  
-            $hi = $data->fetchAll();
 
-            if(!$hi){
-              header("location: lista_usuarios.php");
-            } else{
-              echo "<SCRIPT> alert('Error'); document.location=('lista_usuarios.php'); </SCRIPT>";
+          $actualNombre = $_POST["actual_nombre_usuario"];
+          $actualApellido = $_POST["actual_apellido_usuario"];
+          $actualNickname = $_POST["actual_nickname_usuario"];
+          $actualContra = $_POST["actual_contra_usuario"];
+          $actualAdmin = $_POST["actual_is_admin"];
+
+          if ($actualNombre === $nombre && $actualApellido === $apellido && $actualNickname === $nickname && $actualContra === $contra && $actualAdmin === $admin) {
+            $_SESSION['actualID'] = $id;
+            $_SESSION['message'] = "No se modificó algún campo";
+          } else {
+            if (empty($nombre) || empty($apellido) || empty($nickname)) {
+              $_SESSION['actualID'] = $id;
+              $_SESSION['message'] = "No dejes campos vacios";
+            } else {
+              /* Revisar si existe el nickname */
+              $_GRABAR_SQL = "SELECT * FROM usuario WHERE nickname='$nickname' AND id!='$id'";
+              $data = $db->query( $_GRABAR_SQL);
+              $hi = $data -> fetchAll();
+
+              if(sizeof($hi) === 0){
+                $_GRABAR_SQL = "UPDATE usuario SET nombre='$nombre', apellido='$apellido', nickname='$nickname', contrasena='$contra', is_admin='$admin' WHERE id='$id'";
+                $data = $db->query( $_GRABAR_SQL);  
+                $hi = $data->fetchAll();
+
+                if(!$hi){
+                  $_SESSION['actualID'] = $id;
+                  $_SESSION['message'] = "Usuario modificado con éxito";
+                  $_SESSION['success'] = true;
+                } else{
+                  $_SESSION['actualID'] = $id;
+                  $_SESSION['message'] = "Error al intentar modificar un usuario";
+                }
+              } else{
+                $_SESSION['actualID'] = $id;
+                $_SESSION['message'] = "El nickname que intentó usar, ya se encuentra ocupado";
+              }
             }
           }
       } catch(PDOException $e){
-          echo "<SCRIPT> alert('Algo salió mal'); document.location=('lista_usuarios.php'); </SCRIPT>";
+          $_SESSION['actualID'] = $id;
+          $_SESSION['message'] = "Error al conectar con el servidor";
       }
     }
 
@@ -54,21 +80,30 @@
         $hi = $data -> fetchAll();
 
         if(!$hi){
-          header("location: lista_usuarios.php");
+          $_SESSION['actualID'] = $id;
+          $_SESSION['message'] = "Usuario eliminado con éxito";
+          $_SESSION['success'] = true;
         } else{
-          echo "<SCRIPT> alert('Error'); document.location=('lista_usuarios.php'); </SCRIPT>";
+          $_SESSION['actualID'] = $id;
+          $_SESSION['message'] = "Error al eliminar el usuario";
         }
           
       } catch(PDOException $e){
-          
-        $_SESSION['message'] = $e->getMessage();   
+        $_SESSION['actualID'] = $id;
+        $_SESSION['message'] = "Error al conectar con la base de datos";   
       }
     }
   }
 ?>
 
 <?php
-    $idUsuario = array_key_exists("id", $_GET) ? $_GET['id']: $_POST['id'];
+    $idUsuario;
+
+    if (!isset($_GET['id']) && !isset($_POST['id'])) {
+      $idUsuario = $_SESSION['actualID'];
+    } else {
+      $idUsuario = array_key_exists("id", $_GET) ? $_GET['id']: $_POST['id'];
+    }
 
     try {
       $consulta = "SELECT * FROM usuario WHERE id='$idUsuario'";
@@ -118,6 +153,8 @@
     <!-- Google Roboto Font -->
     <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
 
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+
     <!-- Misc css -->
     <link rel="stylesheet" type="text/css" href="public/css/reset.css">
     <link rel="stylesheet" type="text/css" href="public/css/lista-prestamos/lista-prestamos.css">
@@ -125,141 +162,200 @@
     <link rel="stylesheet" type="text/css" href="public/css/mod-dispositivos/mod-dispositivos.css">
     
     <style>
-      .cancel {
-        margin-left: .5rem;
+      .container-main {
+        background: linear-gradient(0deg, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("./images/ocean.png");
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center;
+        background-attachment: fixed;
       }
 
-      .enviar {
-        display: flex;
-        background-color:#5cc23a;
-        display:inline-block;
-        cursor:pointer;
-        color:#ffffff;
-        font-family:Arial;
-        font-size:18px;
-        padding:10px 14px;
-        text-decoration:none;
-        text-shadow:-1px 2px 1px #810e05;
+      .btn-salir {
+        background: #355C7D;  /* fallback for old browsers */
+        background: -webkit-linear-gradient(to right, #C06C84, #6C5B7B, #355C7D);  /* Chrome 10-25, Safari 5.1-6 */
+        background: linear-gradient(to right, #C06C84, #6C5B7B, #355C7D); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
       }
     </style>
   </head>
 
   <body>
 
-    <div class="container">
+    <div class="container-main">
       <!-- Header -->
       <header>
+        <div class="title-wrapper f-start">
+            <span>
+                <button type="button" class="btn-atras mrgn-left" onclick="location.href='home.php'">Atrás</button>
+            </span>
+        </div>
 
-        <!-- Hamburguer Menu Button -->
-        <nav class="hamburger-menu">
-          <span class="material-symbols-outlined md">menu</span>
+        <div class="title-wrapper f-center">
+            <span class="t-medium">
+                Modificar Usuario
+            </span>
+        </div>
 
-          <!-- Dropdown -->
-          <ul>
-            <li>
-              <a href="home.php">
-                <span>Home</span>
-              </a>
-            </li>
-            <li>
-              <a href="mis_prestamos.php">
-                <span>Mis prestamos</span>
-              </a>
-            </li>
-            <li>
-              <a href="lista_prestamos.php">
-                <span>Prestamos activos</span>
-              </a>
-            </li>
-
-            <?php 
-              if (boolval($isAdmin)) {
-                ?>
-                <li>
-                  <a href="all_prestamos.php">
-                    <span>Todos los prestamos</span>
-                  </a>
-                </li>
-                <li>
-                  <a href="lista_dispositivos.php">
-                    <span>Dispositivos</span>
-                  </a>
-                </li>
-                <li>
-                  <a href="lista_usuarios.php">
-                    <span>Usuarios</span>
-                  </a>
-                </li>
-                <?php
-              }
-            ?>
-          </ul>
-        </nav>
-
-        <!-- Logo -->
-        <span class="title-header">Sistema de préstamos</span>
-
-        <!-- User Icon -->
-        <div class="user">
-          <a href="logout.php" style="color: #212121;">
-            <span class="material-symbols-outlined md">logout</span>
-          </a>
+        <div class="title-wrapper f-end">
+            <span>
+                <button type="button" class="btn-salir mrgn-right" onclick="location.href='logout.php'">Cerrar Sesión</button>
+            </span>
         </div>
       </header>
 
       <!-- Main Section -->
       <main>
-        <!-- Title -->
-        <div class="title" id="ventana">
-          <span>Modificar Usuarios</span>
-        </div>
-
         <!-- Loans Table -->
-        <div class="loans-container scrollbar">
+        <div class="loans-container scrollbar f-center">
+          <div class="add-card">
+            <form method="POST" action="<?php echo $_SERVER['PHP_SELF'];?>">
 
-          <form method="POST" action="<?php echo $_SERVER['PHP_SELF'];?>">
+              <div class="field">
+                <label class="label">Nombre</label>
+                <div class="control">
+                  <input class="input" type="text"name="nombre_usuario" placeholder="Nombre" value="<?=$nombreid?>">
+                </div>
+              </div>
 
-            <p>Modificar su nombre:
-              <input type="text" id ="nombre" name="nombre_usuario" value="<?=$nombreid?>"><br>
-            </p>
+              <div class="field">
+                <label class="label">Apellido</label>
+                <div class="control">
+                  <input class="input" type="text" name="apellido_usuario" placeholder="Apellido" value="<?=$apellidoid?>">
+                </div>
+              </div>
 
-            <p>Modificar su apellido:
-              <input type="text" id ="apellido" name="apellido_usuario" value="<?=$apellidoid?>"><br>
-            </p>
+              <div class="field">
+                <label class="label">Nickname</label>
+                <div class="control">
+                  <input class="input" type="text" name="nickname_usuario" placeholder="Nickname" value="<?=$nicknameid?>">
+                </div>
+              </div>
 
-            <p>Modificar su nickname:
-              <input type="text" id ="nickmane" name="nickname_usuario" value="<?=$nicknameid?>"><br>
-            </p>
+              <div class="field">
+                <label class="label">Contraseña</label>
+                <div class="control">
+                  <input class="input" type="text" name="contra_usuario" placeholder="Contraseña" value="<?=$contraid?>">
+                </div>
+              </div>
 
-            <p>
-              ¿Es administrador?
-              <select name="is_admin">
+              <div class="field control-selector">
+                <label class="label" style="margin: 0;">¿Dar permisos de admin?</label>
+                <div class="control">
+                  <div class="select">
+                    <select name="is_admin">
+                      <option value="<?=$value1?>"><?=$var1?></option>
+                      <option value="<?=$value2?>"><?=$var2?></option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+
+              <div class="f-center">
+                <input class="btn-salir" type="submit" value="Modificar" name="add_device">
+                <!-- 
+                  <input class="btn-atras" type="submit" value="Eliminar Usuario" name="del_device">
+                -->
+              </div>
+
+              <!-- Actual Values -->
+              <input type="hidden" name="id_usuario" value="<?=$idUsuario?>">
+              <input type="hidden" name="actual_nombre_usuario" value="<?=$nombreid?>">
+              <input type="hidden" name="actual_apellido_usuario" value="<?=$apellidoid?>">
+              <input type="hidden" name="actual_nickname_usuario" value="<?=$nicknameid?>">
+              <input type="hidden" name="actual_contra_usuario" value="<?=$contraid?>">
+              <select name="actual_is_admin" hidden>
                 <option value="<?=$value1?>"><?=$var1?></option>
                 <option value="<?=$value2?>"><?=$var2?></option>
-              </select><br>
-            </p>
-
-            <input type="hidden" id ="contraseña" name="contra_usuario" value="<?=$contraid?>">
-            <input type="hidden" value="<?= $idUsuario ?>" id ="id" name="id_usuario"><br>
-
-            <p id="button">
-              <input class="enviar" type="submit" value="Guardar Cambios" name="add_device">
-              <input class="cancel" type="submit" value="Eliminar Usuario" name="del_device">
-            </p>
-
-          </form>
-
+              </select>
+            </form>
+          </div>
         </div>
-
-        <a class="home-btn" href="lista_usuarios.php">
-          <span class="material-symbols-outlined md">arrow_back_ios</span>
-        </a>
-
       </main>
-
     </div>
 
-    <script src="public/js/lista-prestamos/header.js"></script>
+    <?php 
+        if(isset($_SESSION['message'])){
+            ?>
+              <!-- Intento de modal -->
+              <div class="modal is-active">
+                <div class="modal-background"></div>
+                <div class="modal-content">
+                  <header class="modal-card-head">
+                    <p class="modal-card-title">Alerta</p>
+                    <button class="delete" aria-label="close"></button>
+                  </header>
+                  <section class="modal-card-body">
+                    <?php echo $_SESSION['message']; ?>
+                  </section>
+                  <footer class="modal-card-foot">
+                    <?php 
+                      if(isset($_SESSION['success'])){
+                        ?>
+                          <button class="button is-success" onclick="location.href='home.php'">Aceptar</button>
+                        <?php
+                        unset($_SESSION['success']);
+                      } else {
+                        ?>
+                          <button class="button is-danger">Cerrar</button>
+                        <?php
+                      }
+                    ?>
+                  </footer>
+                </div>
+                <button class="modal-close is-large" aria-label="close"></button>
+              </div>
+            <?php
+
+            unset($_SESSION['message']);
+            unset($_SESSION['actualID']);
+        }
+    ?>
+
+    <script type="text/javascript">
+      document.addEventListener('DOMContentLoaded', () => {
+        // Functions to open and close a modal
+        function openModal($el) {
+          $el.classList.add('is-active');
+        }
+
+        function closeModal($el) {
+          $el.classList.remove('is-active');
+        }
+
+        function closeAllModals() {
+          (document.querySelectorAll('.modal') || []).forEach(($modal) => {
+            closeModal($modal);
+          });
+        }
+
+        // Add a click event on buttons to open a specific modal
+        (document.querySelectorAll('.js-modal-trigger') || []).forEach(($trigger) => {
+          const modal = $trigger.dataset.target;
+          const $target = document.getElementById(modal);
+
+          $trigger.addEventListener('click', () => {
+            openModal($target);
+          });
+        });
+
+        // Add a click event on various child elements to close the parent modal
+        (document.querySelectorAll('.modal-background, .modal-close, .modal-card-head .delete, .modal-card-foot .button') || []).forEach(($close) => {
+          const $target = $close.closest('.modal');
+
+          $close.addEventListener('click', () => {
+            closeModal($target);
+          });
+        });
+
+        // Add a keyboard event to close all modals
+        document.addEventListener('keydown', (event) => {
+          const e = event || window.event;
+
+          if (e.keyCode === 27) { // Escape key
+            closeAllModals();
+          }
+        });
+      });
+    </script>
   </body>
 
 </html>
