@@ -25,7 +25,7 @@
 
             <div class="title-wrapper f-end">
                 <span class="t-medium">
-                    <button type="button" class="btn-salir mrgn-right" onclick="location.href='logout.php'">Salir</button>
+                    <button type="button" class="btn-salir mrgn-right" onclick="location.href='logout.php'">Cerrar Sesión</button>
                 </span>
             </div>
         </div>    
