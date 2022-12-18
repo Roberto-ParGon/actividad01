@@ -14,7 +14,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $username = $_POST["username"];
         $contra = $_POST["contra"];
         
-        $_GRABAR_SQL = "SELECT id, nombre, apellido, nickname, is_admin FROM usuario WHERE nombre = '$username' AND contrasena = '$contra'";
+        $_GRABAR_SQL = "SELECT id, nombre, apellido, nickname, is_admin FROM usuario WHERE nickname = '$username' AND contrasena = '$contra'";
 
         $data = $db->query( $_GRABAR_SQL);  
         $hi = $data -> fetchAll();
@@ -189,7 +189,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                         <form method="POST" action="">
 
                             <div class="app-title">
-                                <h2>Usuario</h2>
+                                <h2>Nickname</h2>
                             </div>
 
                             <div class="control-group">
