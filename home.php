@@ -1,162 +1,101 @@
-<?php
-  session_start();
-  $idUsuario = $_SESSION['id'];
-
-  if (!isset($idUsuario)) {
-    header('location: index.php');
-  }
-
-  $isAdmin = $_SESSION['is_admin'];
-?>
-
-<!DOCTYPE html>
 <html lang="es">
+
 <head>
-  <meta charset="utf-8">
-  <title>Lista de dispositivos</title>
+    <meta charset="UTF-8">
+    <title>Préstamos UV</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
 
-  <!-- Google Icons -->
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
-  
-  <!-- Google Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
-  <!-- Google Roboto Font -->
-  <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
-
-  <!-- Misc css -->
-  <link rel="stylesheet" type="text/css" href="public/css/reset.css">
-  <link rel="stylesheet" type="text/css" href="public/css/add-prestamo/add-prestamo.css">
-  <link rel="stylesheet" type="text/css" href="public/css/lista-prestamos/lista-prestamos.css">
-  <link rel="stylesheet" type="text/css" href="public/css/lista-prestamos/header.css">
-
-  <!-- React -->
-  <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
-  <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
-
-  <!-- React Select -->
-  <script src="https://unpkg.com/prop-types@15.7.2/prop-types.js"></script>
-  <script src="https://unpkg.com/classnames@2.2.6/index.js"></script>
-  <script src="https://unpkg.com/react-input-autosize@2.2.2/dist/react-input-autosize.js"></script>
-  <script src="https://unpkg.com/emotion@10.0.27/dist/emotion.umd.min.js"></script>
-  <script src="https://unpkg.com/react-select@2.4.4/dist/react-select.js"></script>
-
-  <!-- MUI Components -->
-  <script src="https://unpkg.com/@mui/material@latest/umd/material-ui.production.min.js"></script>
-  
-  <!-- Babel -->
-  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-
-  <style type="text/css">
-    .f {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-    
-    .material-symbols-outlined {
-      font-variation-settings:
-      'FILL' 0,
-      'wght' 400,
-      'GRAD' 0,
-      'opsz' 48
-    }
-
-    .main-container {
-      grid-template-rows: 82vh 1fr !important;
-    }
-  </style>
+    <link rel="stylesheet" type="text/css" href="public/css/reset.css">
+    <link rel="stylesheet" type="text/css" href="public/css/home.css">
 </head>
 <body>
-  <div class="container">
-    <!-- Header -->
-    <header>
+    <div class="container-home">
+        <div class="header">
+            <div class="title-wrapper">
+                <span class="logo-op">
+                    
+                </span>
+            </div>
 
-      <!-- Hamburguer Menu Button -->
-      <nav class="hamburger-menu">
-        <span class="material-symbols-outlined md">menu</span>
+            <div class="title-wrapper f-center">
+                <span class="t-medium">
+                    Inicio
+                </span>
+            </div>
 
-        <!-- Dropdown -->
-        <ul>
-          <li>
-            <a href="home.php">
-              <span>Home</span>
-            </a>
-          </li>
-          <li>
-            <a href="mis_prestamos.php">
-              <span>Mis prestamos</span>
-            </a>
-          </li>
-          <li>
-            <a href="lista_prestamos.php">
-              <span>Prestamos activos</span>
-            </a>
-          </li>
+            <div class="title-wrapper f-end">
+                <span class="t-medium">
+                    <button type="button" class="btn-salir mrgn-right" onclick="location.href='logout.php'">Salir</button>
+                </span>
+            </div>
+        </div>    
+        
+        <main>
+            <div class="card br-10">
+                <header class="purple-pink">
+                    <span class="t-medium">
+                        Préstamos
+                    </span>
+                </header>
 
-          <?php 
-            if (boolval($isAdmin)) {
-              ?>
-              <li>
-                <a href="all_prestamos.php">
-                  <span>Todos los prestamos</span>
-                </a>
-              </li>
-              <li>
-                <a href="lista_dispositivos.php">
-                  <span>Dispositivos</span>
-                </a>
-              </li>
-              <li>
-                <a href="lista_usuarios.php">
-                  <span>Usuarios</span>
-                </a>
-              </li>
-              <?php
-            }
-          ?>
-        </ul>
-      </nav>
+                <section class="option-list-container">
+                    <ul>
+                        <li>
+                            <a class="purple-pink-hover purple-pink-border" href="add_prestamo.php">Crear Préstamo </a>
+                        </li>
+                        <li>
+                            <a class="purple-pink-hover purple-pink-border" href="mis_prestamos.php">Ver Mis Préstamos</a>
+                        </li>
+                        <li>
+                            <a class="purple-pink-hover purple-pink-border" href="lista_prestamos.php">Ver Préstamos Activos</a>
+                        </li>
+                        <li>
+                            <a class="purple-pink-hover purple-pink-border" href="all_prestamos.php">Ver Todos los Préstamos</a>
+                        </li>
+                    </ul>
+                </section>
+            </div>
 
-      <!-- Logo -->
-      <span class="title">Sistema de préstamos</span>
+            <div class="card br-10">
+                <header class="purple">
+                    <span class="t-medium">
+                        Usuarios
+                    </span>
+                </header>
 
-      <!-- User Icon -->
-      <div class="user">
-        <a href="logout.php" style="color: #212121;">
-          <span class="material-symbols-outlined md">logout</span>
-        </a>
-      </div>
-    </header>
+                <section class="option-list-container">
+                    <ul>
+                        <li>
+                            <a class="purple-hover purple-border" href="add_usuario.php">Crear Usuario</a>
+                        </li>
+                        <li>
+                            <a class="purple-hover purple-border" href="lista_usuarios.php">Ver Lista de Usuarios</a>
+                        </li>
+                    </ul>
+                </section>
+            </div>
 
-    <!-- Main Section -->
-    <main class="main-container">
-      <div id="root" data-usuario="<?= $idUsuario ?>"></div>
-      <a class="home-btn" href="lista_prestamos.php">
-        <span class="material-symbols-outlined md">list_alt</span>
-      </a>
-    </main>
-  </div>
+            <div class="card br-10">
+                <header class="pink">
+                    <span class="t-medium">
+                        Dispositivos
+                    </span>
+                </header>
 
-  <script src="public/js/lista-prestamos/header.js"></script>
-  
-  <!-- Components -->
-  <script src="public/js/add-prestamo/components/Input.js" type="text/babel"></script>
-  <script src="public/js/add-prestamo/components/ListInput.js" type="text/babel"></script>
-  <script src="public/js/add-prestamo/components/MultiSelector.js" type="text/babel"></script>
-
-  <!-- Features -->
-  <script src="public/js/add-prestamo/features/DeviceSelector.js" type="text/babel"></script>
-  <script src="public/js/add-prestamo/features/StudentSelector.js" type="text/babel"></script>
-  <script src="public/js/add-prestamo/features/TeacherSelector.js" type="text/babel"></script>
-  <script src="public/js/add-prestamo/features/HoursSelector.js" type="text/babel"></script>
-  <script src="public/js/add-prestamo/features/CoursesSelector.js" type="text/babel"></script>
-  <script src="public/js/add-prestamo/features/ClassroomsSelector.js" type="text/babel"></script>
-
-  <script src="public/js/add-prestamo/features/CreateLoanFeature.js" type="text/babel"></script>
-
-  <!-- App -->
-  <script src="public/js/add-prestamo/app.js" type="text/babel"></script>
+                <section class="option-list-container">
+                    <ul>
+                        <li>
+                            <a class="pink-hover pink-border" href="add_device.php">Crear Dispositivo</a>
+                        </li>
+                        <li>
+                            <a class="pink-hover pink-border" href="lista_dispositivos.php">Ver Lista de Dispositivos</a>
+                        </li>
+                    </ul>
+                </section>
+            </div>
+        </main>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js" integrity="sha384-cuYeSxntonz0PPNlHhBs68uyIAVpIIOZZ5JqeqvYYIcEL727kskC66kF92t6Xl2V" crossorigin="anonymous"></script>
 </body>
 </html>

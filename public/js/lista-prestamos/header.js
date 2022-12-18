@@ -14,3 +14,8 @@ hamMenu.addEventListener('mouseleave', (e) => {
     e.target.children[1].style.display = 'none';
   }
 });
+
+const alert = (msg) => {
+  console.log(msg);
+  
+}
