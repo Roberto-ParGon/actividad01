@@ -176,12 +176,37 @@ insert into alumno values (
 );
 
 #profesor
-insert into profesor values ("12310", "MA. DE LOS ANGELES NAVARRO GUERRERO");
-insert into profesor values ("12345", "MA. DEL CARMEN MEZURA GODOY");
-insert into profesor values ("12346", "ERIKA MENESES RICO");
-insert into profesor values ("12347", "MAX WILLIAM MILLAN MARTINEZ");
-insert into profesor values ("12348", "JOSE GUILLERMO HERNANDEZ CALDERON");
-insert into profesor values ("12349", "ALICIA YAZMIN ROJAS LUNA");
+insert into profesor values ("12310", "ALONSO RAMIREZ LORENA");
+insert into profesor values ("12311", "ALONSO RAMIREZ OSCAR");
+insert into profesor values ("12312", "CASTAÑEDA SANCHEZ FREDY");
+insert into profesor values ("12313", "CORDOBA TLAXCALTECO MARIA LUISA");
+insert into profesor values ("12314", "DELGADO RAMIREZ ATANASIO HERMILO");
+insert into profesor values ("12315", "DIAZ GASPAR PATRICIA");
+insert into profesor values ("12316", "GARCIA MENIER EVERARDO FRANCISCO");
+insert into profesor values ("12317", "GARCIA VEGA VIRGINIA ANGELICA");
+insert into profesor values ("12318", "GOMEZ ROMERO RAMON");
+insert into profesor values ("12319", "GONZALEZ GASPAR PATRICIA");
+insert into profesor values ("12320", "GUTIERREZ MENDEZ JUAN MANUEL");
+insert into profesor values ("12321", "HERNANDEZ CALDERON JOSE GUILLERMO");
+insert into profesor values ("12322", "HERNANDEZ OLIVERA VICTOR MANUEL");
+insert into profesor values ("12323", "HERNANDEZ RODRIGUEZ MARIA DE LOURDES");
+insert into profesor values ("12324", "MARINERO AGUILAR ULISES");
+insert into profesor values ("12325", "MARTINEZ GUEVARA NIELS");
+insert into profesor values ("12326", "MENESES RICO ERIKA");
+insert into profesor values ("12327", "MILLAN MARTINEZ MAX WILLIAM");
+insert into profesor values ("12328", "MONTANE JIMENEZ LUIS GERARDO");
+insert into profesor values ("12329", "NAVARRO GUERRERO MARIA DE LOS ANGELES");
+insert into profesor values ("12330", "OCHOA MARTINEZ OCTAVIO ENRIQUE");
+insert into profesor values ("12331", "ORDUÑA GONZALEZ AQUILES");
+insert into profesor values ("12332", "ORTEGA GIJON YOSELYN NOHEMI");
+insert into profesor values ("12333", "REYES ESTUDILLO YANETH");
+insert into profesor values ("12334", "REYES FLORES ITZEL ALESSANDRA");
+insert into profesor values ("12335", "RODRIGUEZ RAMIREZ RUTH");
+insert into profesor values ("12336", "ROJAS LUNA ALICIA YAZMIN");
+insert into profesor values ("12337", "SANCHEZ OREA ALFONSO");
+insert into profesor values ("12338", "SARMIENTO CERVANTES RAMON DAVID");
+insert into profesor values ("12339", "SOTO ORTIZ JOSE LUIS");
+insert into profesor values ("12340", "VALDERRABANO PEDRAZA DIANA ELIZABETH");
 
 # Dispositivos
 insert into dispositivo values ("F101", "control F101", 1, 0, "Un boton no sirve");
@@ -195,21 +220,64 @@ insert into dispositivo values ("1214", "Adaptador GBA", 4, 0, "Pines rotos");
 insert into dispositivo values ("1215", "Laptop", 2, 0, "Sin procesadores");
 
 # Aulas
+insert into aula (nombre) values ("102");
+insert into aula (nombre) values ("103");
+insert into aula (nombre) values ("104");
+insert into aula (nombre) values ("105");
+insert into aula (nombre) values ("106");
+insert into aula (nombre) values ("111");
+insert into aula (nombre) values ("112");
+insert into aula (nombre) values ("113");
 insert into aula (nombre) values ("F101");
 insert into aula (nombre) values ("F102");
 insert into aula (nombre) values ("F103");
 insert into aula (nombre) values ("F104");
 insert into aula (nombre) values ("F105");
+insert into aula (nombre) values ("F402");
+insert into aula (nombre) values ("F403");
+insert into aula (nombre) values ("FTC");
 insert into aula (nombre) values ("CC1");
 insert into aula (nombre) values ("CC2");
+insert into aula (nombre) values ("CC3");
+insert into aula (nombre) values ("CC4");
 
 # materia
-insert into materia values ("12345", "Programacion Avanzada");
-insert into materia values ("23456", "Estadistica Retrospectiva");
-insert into materia values ("34567", "Pensamiento Estructural Complejo");
-insert into materia values ("45678", "Metodologias");
-insert into materia values ("45679", "Investigacion de computadores");
-insert into materia values ("45680", "Como atender un ciber 1");
+insert into materia values ("12346", "Administración de servidores");
+insert into materia values ("12347", "Algebra lineal para computación");
+insert into materia values ("12348", "Bases de datos");
+insert into materia values ("12349", "Bases de datos avanzadas");
+insert into materia values ("12350", "Computación básica");
+insert into materia values ("12351", "Desarrollo de software");
+insert into materia values ("12352", "Desarollo movil");
+insert into materia values ("12353", "Estructura de datos");
+insert into materia values ("12354", "Ética y legislación informática");
+insert into materia values ("12355", "Fundamentos de matemáticas");
+insert into materia values ("12356", "Gestión de proyectos de tecnologías de información");
+insert into materia values ("12357", "Habilidades del pensamiento crítico y creativo");
+insert into materia values ("12358", "Habilidades directivas");
+insert into materia values ("12359", "Ingeniería de software");
+insert into materia values ("12360", "Inglés I");
+insert into materia values ("12361", "Inglés II");
+insert into materia values ("12362", "Integración de soluciones");
+insert into materia values ("12363", "Interación humano computadora");
+insert into materia values ("12364", "Introducción a la programación");
+insert into materia values ("12365", "Matemáticas discretas");
+insert into materia values ("12366", "Metodología de la Investigacion");
+insert into materia values ("12367", "Metodologias de desarollo");
+insert into materia values ("12368", "Organización de compuadoras");
+insert into materia values ("12369", "Probabilidad y estadística para computación");
+insert into materia values ("12370", "Programación");
+insert into materia values ("12371", "Programación avanzada");
+insert into materia values ("12372", "Proyecto integrador");
+insert into materia values ("12373", "Redes");
+insert into materia values ("12374", "Seguridad");
+insert into materia values ("12375", "Sistemas inteligentes");
+insert into materia values ("12376", "Sistemas operativos");
+insert into materia values ("12377", "Sistemas web");
+insert into materia values ("12378", "Tecnologías de información para la innovación");
+insert into materia values ("12379", "Tecnologías para la integración de soluciones");
+insert into materia values ("12380", "Tecnologías web");
+
 #######################################################################
 
 # Obtener id, nombre, observaciones de los dispositivos en un prestamo con el id del prestamo
