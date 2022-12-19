@@ -11,7 +11,24 @@
     echo "Solo administradores";
     return;
   }
-  
+
+  if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    if (isset($_POST['del_device'])) {
+      $id = $_POST['id'];
+
+      include_once('public/php/mod-dispositivos/ModDispositivoController.php');
+      $controllerMod = new ModDispositivoController();
+      $res = $controllerMod -> delDispositivo($id);
+
+      if ($res['success']) {
+        $_SESSION['message'] = $res['msg'];
+        $_SESSION['success'] = true;
+      } else {
+        $_SESSION['message'] = $res['msg'];
+      }
+    }
+  }
+
   include_once('public/php/lista-dispositivos/DispositivosController.php');
 
   $controller = new DispositivosController();
@@ -34,136 +51,178 @@
   <!-- Google Roboto Font -->
   <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
 
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+
   <!-- Misc css -->
   <link rel="stylesheet" type="text/css" href="public/css/reset.css">
   <link rel="stylesheet" type="text/css" href="public/css/lista-prestamos/lista-prestamos.css">
   <link rel="stylesheet" type="text/css" href="public/css/lista-prestamos/header.css">
 
   <style type="text/css">
-    .f {
-      display: flex;
-      align-items: center;
-      justify-content: center;
+    .container-main {
+      background: linear-gradient(0deg, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("./images/flower2.jpg");
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-position: center;
+      background-attachment: fixed;
     }
-    
-    .material-symbols-outlined {
-      font-variation-settings:
-      'FILL' 0,
-      'wght' 400,
-      'GRAD' 0,
-      'opsz' 48
+
+    .btn-salir {
+      background: #B24592;  /* fallback for old browsers */
+      background: -webkit-linear-gradient(to right, #F15F79, #B24592);  /* Chrome 10-25, Safari 5.1-6 */
+      background: linear-gradient(to right, #F15F79, #B24592); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
     }
   </style>
 </head>
 <body>
-  <div class="container">
+  <div class="container-main">
     <!-- Header -->
     <header>
+      <div class="title-wrapper f-start">
+          <span>
+              <button type="button" class="btn-atras mrgn-left" onclick="location.href='home.php'">Atrás</button>
+          </span>
+      </div>
 
-      <!-- Hamburguer Menu Button -->
-      <nav class="hamburger-menu">
-        <span class="material-symbols-outlined md">menu</span>
+      <div class="title-wrapper f-center">
+          <span class="t-medium">
+              Lista de dispositivos
+          </span>
+      </div>
 
-        <!-- Dropdown -->
-        <ul>
-          <li>
-            <a href="home.php">
-              <span>Home</span>
-            </a>
-          </li>
-          <li>
-            <a href="mis_prestamos.php">
-              <span>Mis prestamos</span>
-            </a>
-          </li>
-          <li>
-            <a href="lista_prestamos.php">
-              <span>Prestamos activos</span>
-            </a>
-          </li>
-
-          <?php 
-            if (boolval($isAdmin)) {
-              ?>
-              <li>
-                <a href="all_prestamos.php">
-                  <span>Todos los prestamos</span>
-                </a>
-              </li>
-              <li>
-                <a href="lista_dispositivos.php">
-                  <span>Dispositivos</span>
-                </a>
-              </li>
-              <li>
-                <a href="lista_usuarios.php">
-                  <span>Usuarios</span>
-                </a>
-              </li>
-              <?php
-            }
-          ?>
-        </ul>
-      </nav>
-
-      <!-- Logo -->
-      <span class="title">Sistema de préstamos</span>
-
-      <!-- User Icon -->
-      <div class="user">
-        <a href="logout.php" style="color: #212121;">
-          <span class="material-symbols-outlined md">logout</span>
-        </a>
+      <div class="title-wrapper f-end">
+          <span>
+              <button type="button" class="btn-salir mrgn-right" onclick="location.href='logout.php'">Cerrar Sesión</button>
+          </span>
       </div>
     </header>
 
     <!-- Main Section -->
     <main>
-      <!-- Title -->
-      <div class="title">
-        <span>Lista de dispositivos</span>
-      </div>
-
       <!-- Loans Table -->
-      <div class="loans-container scrollbar">
-        <table>
-          <tr>
-            <th>ID</th>
-            <th>Nombre</th>
-            <th>Cantidad</th>
-            <th>Observaciones</th>
-            <th></th>
-          </tr>
+      <div class="loans-container">
+        <div class="table-background scrollbar">
+          <table>
+            <tr>
+              <th style="width: 10%;">ID</th>
+              <th style="width: 22%;">Nombre</th>
+              <th style="width: 18%;">Cantidad</th>
+              <th style="width: 22%;">Observaciones</th>
+              <th style="width: 18%;">Acciones</th>
+            </tr>
 
-          <?php 
-            foreach ($dispositivos as $dispositivo) { 
-              ?>
-              <tr>
-                <td><?= $dispositivo['id'] ?> </td>
-                <td><?= $dispositivo['nombre'] ?> </td>
-                <td><?= $dispositivo['cantidad']-$dispositivo['prestado'] ?> </td>
-                <td><?= $dispositivo['observaciones'] ?> </td>
-                <td>
-                  <a href="/prestamos/mod_dispositivos.php?id=<?= $dispositivo['id'] ?>">
-                    <span class="material-symbols-outlined f">
-                      edit_square
-                    </span>
-                  </a>
-                </td>
-              </tr>
-              <?php
-            }
-          ?>
-        </table>
+            <?php 
+              foreach ($dispositivos as $dispositivo) { 
+                ?>
+                <tr>
+                  <td><?= $dispositivo['id'] ?> </td>
+                  <td><?= $dispositivo['nombre'] ?> </td>
+                  <td><?= $dispositivo['cantidad']-$dispositivo['prestado'] ?> </td>
+                  <td><?= $dispositivo['observaciones'] ?> </td>
+                  <td>
+                    <form method="POST" action="<?php echo $_SERVER['PHP_SELF'];?>">
+                      <input type="hidden" name="id" value="<?php echo $dispositivo['id']?>">
+
+                      <button type="button" class="btn-salir mrgn-right" onclick="location.href='/prestamos/mod_dispositivos.php?id=<?= $dispositivo['id'] ?>'">Editar</button>
+                      <button type="submit" class="btn-atras" name="del_device">Borrar</button>
+                    </form>
+                  </td>
+                </tr>
+                <?php
+              }
+            ?>
+          </table>
+        </div>
       </div>
-
-      <a class="home-btn" href="add_device.php">
-        <span class="material-symbols-outlined md">add</span>
-      </a>
     </main>
   </div>
 
-  <script src="public/js/lista-prestamos/header.js"></script>
+  <!-- Modal -->
+  <?php 
+      if(isset($_SESSION['message'])){
+          ?>
+            <!-- Intento de modal -->
+            <div class="modal is-active">
+              <div class="modal-background"></div>
+              <div class="modal-content">
+                <header class="modal-card-head">
+                  <p class="modal-card-title">Alerta</p>
+                  <button class="delete" aria-label="close"></button>
+                </header>
+                <section class="modal-card-body">
+                  <?php echo $_SESSION['message']; ?>
+                </section>
+                <footer class="modal-card-foot">
+                  <?php 
+                    if(isset($_SESSION['success'])){
+                      ?>
+                        <button class="button is-success">Aceptar</button>
+                      <?php
+                      unset($_SESSION['success']);
+                    } else {
+                      ?>
+                        <button class="button is-danger">Cerrar</button>
+                      <?php
+                    }
+                  ?>
+                </footer>
+              </div>
+              <button class="modal-close is-large" aria-label="close"></button>
+            </div>
+          <?php
+
+          unset($_SESSION['message']);
+      }
+  ?>
+
+  <!-- Modal Script -->
+  <script type="text/javascript">
+    document.addEventListener('DOMContentLoaded', () => {
+      // Functions to open and close a modal
+      function openModal($el) {
+        $el.classList.add('is-active');
+      }
+
+      function closeModal($el) {
+        $el.classList.remove('is-active');
+      }
+
+      function closeAllModals() {
+        (document.querySelectorAll('.modal') || []).forEach(($modal) => {
+          closeModal($modal);
+        });
+      }
+
+      // Add a click event on buttons to open a specific modal
+      (document.querySelectorAll('.js-modal-trigger') || []).forEach(($trigger) => {
+        const modal = $trigger.dataset.target;
+        const $target = document.getElementById(modal);
+
+        $trigger.addEventListener('click', () => {
+          openModal($target);
+        });
+      });
+
+      // Add a click event on various child elements to close the parent modal
+      (document.querySelectorAll('.modal-background, .modal-close, .modal-card-head .delete, .modal-card-foot .button') || []).forEach(($close) => {
+        const $target = $close.closest('.modal');
+
+        $close.addEventListener('click', () => {
+          closeModal($target);
+        });
+      });
+
+      // Add a keyboard event to close all modals
+      document.addEventListener('keydown', (event) => {
+        const e = event || window.event;
+
+        if (e.keyCode === 27) { // Escape key
+          closeAllModals();
+        }
+      });
+    });
+  </script>
 </body>
 </html>
 

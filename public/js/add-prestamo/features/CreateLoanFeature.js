@@ -88,10 +88,11 @@ const CreateLoanFeature = () => {
     <div 
       style={{
         padding: '1rem .5rem',
-        boxShadow: 'rgba(99, 99, 99, 0.2) 0px 2px 8px 0px',
-        borderRadius: '10px'
+        boxShadow: 'rgba(99, 99, 99, 0.5) 0px 2px 8px 0px',
+        borderRadius: '10px',
+        backgroundColor: '#fafafa'
       }}>
-      <form style={{display: 'flex', flexFlow: 'column', width: '25vw'}}>
+      <form style={{display: 'flex', flexFlow: 'column', width: '22vw'}}>
 
         {/* Titulo */}
         <div

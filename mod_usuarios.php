@@ -32,10 +32,12 @@
           $actualContra = $_POST["actual_contra_usuario"];
           $actualAdmin = $_POST["actual_is_admin"];
 
+          // si no se modificó algún campo
           if ($actualNombre === $nombre && $actualApellido === $apellido && $actualNickname === $nickname && $actualContra === $contra && $actualAdmin === $admin) {
             $_SESSION['actualID'] = $id;
             $_SESSION['message'] = "No se modificó algún campo";
           } else {
+            // Si hay campos vacios
             if (empty($nombre) || empty($apellido) || empty($nickname)) {
               $_SESSION['actualID'] = $id;
               $_SESSION['message'] = "No dejes campos vacios";
@@ -185,7 +187,7 @@
       <header>
         <div class="title-wrapper f-start">
             <span>
-                <button type="button" class="btn-atras mrgn-left" onclick="location.href='home.php'">Atrás</button>
+                <button type="button" class="btn-atras mrgn-left" onclick="location.href='lista_usuarios.php'">Atrás</button>
             </span>
         </div>
 

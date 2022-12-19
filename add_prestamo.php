@@ -54,92 +54,56 @@
       align-items: center;
       justify-content: center;
     }
-    
-    .material-symbols-outlined {
-      font-variation-settings:
-      'FILL' 0,
-      'wght' 400,
-      'GRAD' 0,
-      'opsz' 48
-    }
 
     .main-container {
       grid-template-rows: 82vh 1fr !important;
     }
+
+    .container-main {
+      background: linear-gradient(0deg, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("./images/nynight.jpg");
+      background-size: cover;
+      background-repeat: no-repeat;
+      background-position: center;
+      background-attachment: fixed;
+    }
+
+    .btn-salir {
+background: #C33764;  /* fallback for old browsers */
+background: -webkit-linear-gradient(to left, #1D2671, #C33764);  /* Chrome 10-25, Safari 5.1-6 */
+background: linear-gradient(to left, #1D2671, #C33764); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
+
+
+    }
   </style>
 </head>
 <body>
-  <div class="container">
-    <!-- Header -->
+  <div class="container-main">
     <header>
+      <div class="title-wrapper f-start">
+          <span>
+              <button type="button" class="btn-atras mrgn-left" onclick="location.href='home.php'">Atrás</button>
+          </span>
+      </div>
 
-      <!-- Hamburguer Menu Button -->
-      <nav class="hamburger-menu">
-        <span class="material-symbols-outlined md">menu</span>
+      <div class="title-wrapper f-center">
+          <span class="t-medium">
+              Agregar Dispositivo
+          </span>
+      </div>
 
-        <!-- Dropdown -->
-        <ul>
-          <li>
-            <a href="home.php">
-              <span>Home</span>
-            </a>
-          </li>
-          <li>
-            <a href="mis_prestamos.php">
-              <span>Mis prestamos</span>
-            </a>
-          </li>
-          <li>
-            <a href="lista_prestamos.php">
-              <span>Prestamos activos</span>
-            </a>
-          </li>
-
-          <?php 
-            if (boolval($isAdmin)) {
-              ?>
-              <li>
-                <a href="all_prestamos.php">
-                  <span>Todos los prestamos</span>
-                </a>
-              </li>
-              <li>
-                <a href="lista_dispositivos.php">
-                  <span>Dispositivos</span>
-                </a>
-              </li>
-              <li>
-                <a href="lista_usuarios.php">
-                  <span>Usuarios</span>
-                </a>
-              </li>
-              <?php
-            }
-          ?>
-        </ul>
-      </nav>
-
-      <!-- Logo -->
-      <span class="title">Sistema de préstamos</span>
-
-      <!-- User Icon -->
-      <div class="user">
-        <a href="logout.php" style="color: #212121;">
-          <span class="material-symbols-outlined md">logout</span>
-        </a>
+      <div class="title-wrapper f-end">
+          <span>
+              <button type="button" class="btn-salir mrgn-right" onclick="location.href='logout.php'">Cerrar Sesión</button>
+          </span>
       </div>
     </header>
 
     <!-- Main Section -->
     <main class="main-container">
       <div id="root" data-usuario="<?= $idUsuario ?>"></div>
-      <a class="home-btn" href="lista_prestamos.php">
-        <span class="material-symbols-outlined md">list_alt</span>
-      </a>
     </main>
   </div>
-
-  <script src="public/js/lista-prestamos/header.js"></script>
   
   <!-- Components -->
   <script src="public/js/add-prestamo/components/Input.js" type="text/babel"></script>

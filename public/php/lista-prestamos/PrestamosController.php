@@ -13,24 +13,31 @@ class PrestamosController {
   // Funcion recibe id
   public function regresarPrestamo($id) {
     try {
-      // Cambiar estado del prestamo
-      $sql = "UPDATE prestamo SET is_active=false WHERE id={$id}";
-      $this->fetch($sql);
+      $sql = "SELECT is_active from prestamo WHERE id={$id}";
+      $isActive = $this->fetch($sql);
 
-      // Obtener dispositivos asignados al prestamo
-      $sql = "SELECT * from dispositivo_prestado WHERE id_prestamo={$id}";
-      $dispositivosPrestados = $this->fetch($sql);
-
-      foreach($dispositivosPrestados as $key => $dispositivoPrestado) {
-        $idDispositivo = $dispositivoPrestado['id_dispositivo'];
-        $sql = "
-          UPDATE dispositivo 
-          SET prestado=prestado-{$dispositivoPrestado['prestado']} 
-          WHERE id='{$idDispositivo}'";
+      if ($isActive[0]['is_active'] === 1) {
+        // Cambiar estado del prestamo
+        $sql = "UPDATE prestamo SET is_active=false WHERE id={$id}";
         $this->fetch($sql);
-      }
 
-      return true;
+        // Obtener dispositivos asignados al prestamo
+        $sql = "SELECT * from dispositivo_prestado WHERE id_prestamo={$id}";
+        $dispositivosPrestados = $this->fetch($sql);
+
+        foreach($dispositivosPrestados as $key => $dispositivoPrestado) {
+          $idDispositivo = $dispositivoPrestado['id_dispositivo'];
+          $sql = "
+            UPDATE dispositivo 
+            SET prestado=prestado-{$dispositivoPrestado['prestado']} 
+            WHERE id='{$idDispositivo}'";
+          $this->fetch($sql);
+        }
+
+        return true;
+      } else {
+        return NULL;
+      }
     }
     catch(Exception $e) {
       return false;

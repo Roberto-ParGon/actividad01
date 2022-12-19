@@ -147,21 +147,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
               <div class="field">
                 <label class="label">Apellido</label>
                 <div class="control">
-                  <input class="input" type="text" id="apellido" name="apellido_usuario" placeholder="Nombre">
+                  <input class="input" type="text" id="apellido" name="apellido_usuario" placeholder="Apellido">
                 </div>
               </div>
 
               <div class="field">
                 <label class="label">Nickname</label>
                 <div class="control">
-                  <input class="input" type="text" id="nickmane" name="nickname_usuario" placeholder="Nombre">
+                  <input class="input" type="text" id="nickmane" name="nickname_usuario" placeholder="Nickname">
                 </div>
               </div>
 
               <div class="field">
                 <label class="label">Contraseña</label>
                 <div class="control">
-                  <input class="input" type="text" id ="contraseña" name="contra_usuario" placeholder="Nombre">
+                  <input class="input" type="text" id ="contraseña" name="contra_usuario" placeholder="Contraseña">
                 </div>
               </div>
 

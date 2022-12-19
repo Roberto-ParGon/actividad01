@@ -40,9 +40,13 @@ class ModDispositivoController {
 			$sql = "DELETE FROM dispositivo WHERE id='$id'";
 
 			$this->fetch($sql);
-			return true;
+			return ["success" => true, "msg" => "Dispositivo eliminado con éxito"];
 		} catch(PDOException $e) {
-			return false;
+			if (str_contains($e -> getMessage(), 'Integrity constraint violation')) {
+        return ["success" => false, "msg" => "No se puede eliminar un dispositivo si hay préstamos asignados al mismo"];
+      } else {
+      	return ["success" => false, "msg" => "Error en el servidor al intentar eliminar el dispositivo"];
+      }
 		}	
 	}
 
@@ -52,9 +56,24 @@ class ModDispositivoController {
       return $data -> fetchAll();
     }
     catch(PDOException $e){
-      return false;
+      throw new PDOException($e -> getMessage());
     }
   }
+
+  public function existNombre($nombre, $id) {
+		try{
+			$sql = "SELECT * FROM dispositivo WHERE nombre='$nombre' AND id!='$id'";
+	    $dispositivo = $this -> fetch($sql);
+
+	    if (sizeof($dispositivo) > 0) {
+	    	return ["exist" => true, "msg" => "El nombre que intentó usar, ya se encuentra ocupado"];
+	    } else {
+	    	return ["exist" => false, "msg" => "Algo salió mal al intentar modificar el dispositivo"];
+	    }
+		} catch(PDOException $e){
+			return ["exist" => true, "msg" => "Algo salió mal al intentar modificar el dispositivo"];;
+		}
+	}
 }
 
 ?>

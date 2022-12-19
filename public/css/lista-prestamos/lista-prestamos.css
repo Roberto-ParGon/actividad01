@@ -31,26 +31,6 @@ html {
   color: #212121;
 }
 
-.loans-container {
-  overflow: auto;
-  padding: 0 2rem;
-}
-
-.loans-container table {
-  width: 100%;
-  border-collapse: collapse;
-}
-
-.loans-container table td, th {
-  border: 1px solid #dddddd;
-  text-align: left;
-  padding: 8px;
-}
-
-tr:nth-child(even) {
-  background-color: #dddddd;
-}
-
 .home-btn {
   display: flex;
   justify-content: center;
@@ -129,19 +109,65 @@ tr:nth-child(even) {
 */
 
 .scrollbar::-webkit-scrollbar {
-  width: 12px;               /* width of the entire scrollbar */
+  width: 10px;               /* width of the entire scrollbar */
 }
 
 .scrollbar::-webkit-scrollbar-track {
-  background: #fafafa;        /* color of the tracking area */
+  background: rgba(0, 0, 0, .8);        /* color of the tracking area */
 }
 
 .scrollbar::-webkit-scrollbar-thumb {
-  background-color: #a1a1a1;
-  border-radius: 20px;
-  border: 2px solid #fafafa;
+  background: #485563;
+  border-radius: 15px;
 }
 
 .scrollbar::-webkit-scrollbar-thumb:hover {
-  border: 2px solid #a1a1a1;
+  background: #39434f;
+}
+
+/*table*/
+.table-background {
+  border-radius: 8px;
+  overflow-x: auto;
+  height: 100%;
+  backdrop-filter: blur(3px);
+  background-color: rgba(0, 0, 0, .3);
+}
+
+.loans-container {
+  overflow: auto;
+  padding: 0 2rem;
+}
+
+.loans-container table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.loans-container table td, th {
+  text-align: left;
+  padding: 2vh 2.5vh;
+  color: #fafafa;
+}
+
+.loans-container table tr {
+  transition: all .17s ease-out 0s;
+}
+
+.loans-container table tr:hover {
+  background-color: rgba(0, 0, 0, .5);
+}
+
+.loans-container table tbody tr td {
+  vertical-align: middle;
+}
+
+.loans-container table tbody tr th {
+  color: #fafafa;
+  background-color: rgba(0, 0, 0, 0.6);
+  vertical-align: middle;
+}
+
+tr:nth-child(odd) {
+  background-color: rgba(0, 0, 0, 0.3);
 }

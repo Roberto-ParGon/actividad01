@@ -32,6 +32,25 @@
         
         <main>
             <div class="card br-10">
+                <header class="purple">
+                    <span class="t-medium">
+                        Usuarios
+                    </span>
+                </header>
+
+                <section class="option-list-container">
+                    <ul>
+                        <li>
+                            <a class="purple-hover purple-border" href="add_usuario.php">Crear Usuario</a>
+                        </li>
+                        <li>
+                            <a class="purple-hover purple-border" href="lista_usuarios.php">Ver Lista de Usuarios</a>
+                        </li>
+                    </ul>
+                </section>
+            </div>
+
+            <div class="card br-10">
                 <header class="purple-pink">
                     <span class="t-medium">
                         Préstamos
@@ -51,25 +70,6 @@
                         </li>
                         <li>
                             <a class="purple-pink-hover purple-pink-border" href="all_prestamos.php">Ver Todos los Préstamos</a>
-                        </li>
-                    </ul>
-                </section>
-            </div>
-
-            <div class="card br-10">
-                <header class="purple">
-                    <span class="t-medium">
-                        Usuarios
-                    </span>
-                </header>
-
-                <section class="option-list-container">
-                    <ul>
-                        <li>
-                            <a class="purple-hover purple-border" href="add_usuario.php">Crear Usuario</a>
-                        </li>
-                        <li>
-                            <a class="purple-hover purple-border" href="lista_usuarios.php">Ver Lista de Usuarios</a>
                         </li>
                     </ul>
                 </section>
