@@ -30,6 +30,6 @@ const App = () => {
   );
 }
 
-const container = document.getElementById('root');
+const container = document.getElementById('app');
 const root = ReactDOM.createRoot(container);
 root.render(<App />);

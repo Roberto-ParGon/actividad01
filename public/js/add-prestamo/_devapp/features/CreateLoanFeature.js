@@ -23,7 +23,7 @@ const CreateLoanFeature = () => {
 
     const date = new Date();
     const fecha = `${date.getFullYear()}-${date.getMonth()}-${date.getDate()}`;
-    const rootDoc = document.querySelector('#root');
+    const rootDoc = document.querySelector('#app');
 
     if(!horas.inicio.label || !horas.fin.label || !ee.nrc || !aula.id || !maestro.noPersonal || !selectedDevices.length) {
       alert("No dejes campos vacios");
