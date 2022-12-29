@@ -90,7 +90,7 @@
           <?php 
             if (sizeof($prestamos) == 0) {
               ?>
-                <span class="t-medium" style="color: #28AD56; font-size: 20px;">No hay préstamos activos para mostrar</span>
+                <span class="t-medium" style="color: #28AD56; font-size: 20px;">No hay historial de préstamos</span>
               <?php                
             }
           ?>
