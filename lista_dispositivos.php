@@ -60,18 +60,47 @@
 
   <style type="text/css">
     .container-main {
-      background: linear-gradient(0deg, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("./images/flower2.jpg");
-      background-size: cover;
-      background-repeat: no-repeat;
-      background-position: center;
-      background-attachment: fixed;
+      background-color: #e2edfa;
     }
 
-    .btn-salir {
-      background: #B24592;  /* fallback for old browsers */
-      background: -webkit-linear-gradient(to right, #F15F79, #B24592);  /* Chrome 10-25, Safari 5.1-6 */
-      background: linear-gradient(to right, #F15F79, #B24592); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    /* lighten 90% */
+    .table-background {
+      background-color: #e2edfa;
+    }
 
+    /* lighten 80% */
+    tr:nth-child(odd) {
+      background-color: #c5dbf6;
+    }
+
+    .loans-container table td, th {
+      color: #616161;
+    }
+
+    /* lighten 75% */
+    .loans-container table tr:hover {
+      background-color: #b7d2f4;
+    }
+
+    /* lighten 70% */
+    .loans-container table tbody tr th {
+      background-color: #70a5e9;
+    }
+
+    /* lighten 70% */
+    .scrollbar::-webkit-scrollbar-track {
+      background: #a9c9f1;
+    }
+
+    /* lighten 50% */
+    .scrollbar::-webkit-scrollbar-thumb {
+      background: #70a5e9;
+      border-radius: 15px;
+    }
+
+    /* lighten 40% */
+    .scrollbar::-webkit-scrollbar-thumb:hover {
+      background: #5393e4;
     }
   </style>
 </head>
@@ -124,8 +153,8 @@
                     <form method="POST" action="<?php echo $_SERVER['PHP_SELF'];?>">
                       <input type="hidden" name="id" value="<?php echo $dispositivo['id']?>">
 
-                      <button type="button" class="btn-salir mrgn-right" onclick="location.href='/prestamos/mod_dispositivos.php?id=<?= $dispositivo['id'] ?>'">Editar</button>
-                      <button type="submit" class="btn-atras" name="del_device">Borrar</button>
+                      <button style="background: #fafafa;color: #616161;border: 1px solid #e0e0e0;" type="button" class="btn-atras mrgn-right" onclick="location.href='/prestamos/mod_dispositivos.php?id=<?= $dispositivo['id'] ?>'">Editar</button>
+                      <button type="submit" class="btn-salir" name="del_device">Borrar</button>
                     </form>
                   </td>
                 </tr>

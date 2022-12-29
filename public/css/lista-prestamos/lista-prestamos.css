@@ -12,12 +12,11 @@ html {
   display: grid;
   grid-template-rows: 10vh 1fr;
   height: 100vh;
-  background-color: #fafafa;
+  background-color: #cef3db;
 }
 
 .container-main main {
   display: grid;
-  grid-template-rows: 80vh 1fr;
 
   font-size: 16px;
   font-family: 'Roboto', sans-serif;
@@ -113,30 +112,35 @@ html {
 }
 
 .scrollbar::-webkit-scrollbar-track {
-  background: rgba(0, 0, 0, .8);        /* color of the tracking area */
+  background: #cef3db; /* 80 */        /* color of the tracking area */
 }
 
 .scrollbar::-webkit-scrollbar-thumb {
-  background: #485563;
+  background: #6edd94; /* 40 */
   border-radius: 15px;
 }
 
 .scrollbar::-webkit-scrollbar-thumb:hover {
-  background: #39434f;
+  background: #56d783; /* 30 */
 }
 
 /*table*/
 .table-background {
   border-radius: 8px;
-  overflow-x: auto;
-  height: 100%;
-  backdrop-filter: blur(3px);
-  background-color: rgba(0, 0, 0, .3);
+  overflow-y: auto;
+  height: 85vh;
+  /* 85 */
+  background-color: transparent;
+  box-shadow: rgb(100 100 111 / 20%) 0px 7px 29px 0px;
 }
 
 .loans-container {
-  overflow: auto;
-  padding: 0 2rem;
+    display: flex;
+    flex-flow: column;
+    align-items: stretch;
+    justify-content: center;
+    overflow: auto;
+    padding: 0 2rem 0 2rem;
 }
 
 .loans-container table {
@@ -147,7 +151,7 @@ html {
 .loans-container table td, th {
   text-align: left;
   padding: 2vh 2.5vh;
-  color: #fafafa;
+  color: #616161;
 }
 
 .loans-container table tr {
@@ -155,19 +159,27 @@ html {
 }
 
 .loans-container table tr:hover {
-  background-color: rgba(0, 0, 0, .5);
+  /* 65 */
+  background-color: #aaebc1;
 }
 
 .loans-container table tbody tr td {
   vertical-align: middle;
+  font-size: 18px;
+}
+
+.loans-container table tbody tr td form {
+  display: flex;
 }
 
 .loans-container table tbody tr th {
   color: #fafafa;
-  background-color: rgba(0, 0, 0, 0.6);
+  background-color: #62da8b;
   vertical-align: middle;
+  font-size: 18px;
 }
 
 tr:nth-child(odd) {
-  background-color: rgba(0, 0, 0, 0.3);
+  /* lighten 70 */
+  background-color: #b6eec9;
 }

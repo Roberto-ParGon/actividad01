@@ -5,12 +5,11 @@ session_start();
 include_once('./public/php/connection.php');
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
-
     $database = new Connection();
     $db = $database->open();
     
     try{
-    
+        
         $username = $_POST["username"];
         $contra = $_POST["contra"];
         
@@ -19,7 +18,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $data = $db->query( $_GRABAR_SQL);  
         $hi = $data -> fetchAll();
 
-        if($hi){
+        if(empty($username) || empty($contra)) {
+            $_SESSION['message'] = "No dejes campos vacios";
+        }else if($hi){
             $_SESSION['id'] = $hi[0]['id'];
             $_SESSION['nombre'] = $hi[0]['nombre'];
             $_SESSION['apellido'] = $hi[0]['apellido'];
@@ -28,11 +29,11 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
             header("location: home.php");
         }else{
-            alertMessage("Usuario y/o usuario incorrectos");
+            $_SESSION['message'] = "Contraseña y/o usuario incorrectos";
         }
 
     }catch(PDOException $e){
-        alertMessage("Algo salió mal al conectarse con la base de datos");
+        $_SESSION['message'] = "Algo salió mal al conectarse con la base de datos";
     }
 
     $database->close();
@@ -44,201 +45,136 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
 <head>
     <meta charset="UTF-8">
-    <title>Préstamos UV</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Préstamos de dispositivos UV</title>
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
 
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+    
+    <link rel="stylesheet" type="text/css" href="public/css/reset.css">
+    <link rel="stylesheet" type="text/css" href="public/css/lista-prestamos/lista-prestamos.css">
+    <link rel="stylesheet" type="text/css" href="public/css/mod-dispositivos/mod-dispositivos.css">
 
-    <style>
-        * {
-            margin: 0;
-            box-sizing: border-box;
-        }
-
-        *:focus {
-            outline: none;
-        }
-
-        body {
-            font-family: Arial;
-        }
-
-        .principal {
-            display: flex;
-        }
-
-        .imagen {
-            text-align: center;
-            
-            height: 100vh;
-            width: 55vw;
-        }
-
-        .fondo{
-            margin-top: 17%;
-            width: 100%;
-        }
-
-        .login {
-            text-align: center;
-            background-color: #a1a1a1;
-            height: 100vh;
-            width: 45vw;
-        }
-
-        .user{
-            margin-top: 5%;
-            margin-bottom: 5%;
-            width: 30%;
-            height: 25%;
-        }
-
-        .login-screen {
-            
-            margin-left: 20px;
-            margin-right: 20px;
-            margin-top: 6%;
-            background-color: white;
-            padding: 10px;
-            border-radius: 25px
-            
-        }
-
-        .app-title {
-            text-align: left;
-            margin-left: 0;
-            color: black;
-        }
-
-        .login-form {
-            text-align: center;
-        }
-
-        .control-group {
-            margin-bottom: 10px;
-        }
-
-        input {
-            text-align: left;
-            background-color: #ECF0F1;
-            border: 2px solid transparent;
-            border-radius: 10px;
-            font-size: 16px;
-            font-weight: 200px;
-            padding: 10px 0;
-            width: 38vw;
-            transition: border .5s;
-            
-        }
-
-        input:focus {
-            border: 2px solid #3498DB;
-            box-shadow: none;
-        }
-
-        .btn {
-            text-align: center;
-            border: 2px solid transparent;
-            background: #3498DB;
-            color: white;
-            font-size: 20px;
-            line-height: 15px;
-            padding: 10px 0;
-            text-decoration: none;
-            text-shadow: none;
-            border-radius: 10px;
-            box-shadow: none;
-            transition: 0.25s;
-            display: block;
-            width: 100px;
-            margin: 0 auto;
-        }
-
-        .btn:hover {
-            background-color: #2980B9;
-        }
-
-        .login-link {
-            text-align: center;
-            font-size: 12px;
-            color: #444;
-            display: block;
-            margin-top: 12px;
-        }
+    <style type="text/css">
     </style>
 </head>
 
 <body>
-    <div class="principal">
 
-        <div class="imagen">
-            <img src="images/fondo.png" alt="fondo" class="fondo">
-        </div>
-        
+    <section class="hero is-fullheight">
+      <div class="hero-body has-text-centered">
         <div class="login">
-            
-            <img src="images/user.png" alt="user" class="user">
-
-            <h1>Iniciar Sesión</h1>
-
-            <div class="login-screen">
-
-                <div class="login-form">
-
-                    <main>
-
-                        <form method="POST" action="">
-
-                            <div class="app-title">
-                                <h2>Nickname</h2>
-                            </div>
-
-                            <div class="control-group">
-                                <input type="text" class="login-field" id="login-name" name="username">
-                                <label class="login-field-icon fui-user" for="login-name"></label>
-                            </div>
-
-                            <div class="app-title">
-                                <h2>Contraseña</h2>
-                            </div>
-
-                            <div class="control-group">
-                                <input type="password" class="login-field" id="login-pass" name="contra">
-                                <label class="login-field-icon fui-lock" for="login-pass"></label>
-                            </div>
-
-                            <input type="submit" value="Entrar" class="btn btn-primary btn-large btn-block"/>
-                        </form>
-
-                    </main>
-
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <?php
-        function alertMessage($msg) {
-            echo "
-            <div class='modal fade' id='exampleModal' tabindex='-1' aria-labelledby='exampleModalLabel' aria-hidden='false'>
-              <div class='modal-dialog'>
-                <div class='modal-content'>
-                  <div class='modal-header'>
-                    <h1 class='modal-title fs-5' id='exampleModalLabel'>Modal title</h1>
-                    <button type='button' class='btn-close' data-bs-dismiss='modal' aria-label='Close'></button>
-                  </div>
-                  <div class='modal-body'>
-                    ...
-                  </div>
-                  <div class='modal-footer'>
-                    <button type='button' class='btn btn-secondary' data-bs-dismiss='modal'>Close</button>
-                    <button type='button' class='btn btn-primary'>Save changes</button>
-                  </div>
-                </div>
+          <div>
+              <img id='logo' src="./images/uv.png">
+          </div>
+          <form method="POST" action="">
+            <div class="field">
+              <div class="control">
+                <input name="username" class="input is-medium is-rounded" type="text" placeholder="Introduzca su usuario" autocomplete="username" required />
               </div>
             </div>
-        ";
+            <div class="field">
+              <div class="control">
+                <input name="contra" class="input is-medium is-rounded" type="password" placeholder="Introduzca su contraseña" autocomplete="current-password" required />
+              </div>
+            </div>
+            <br />
+            <button class="button is-block is-fullwidth is-primary is-medium is-rounded" type="submit">
+              Login
+            </button>
+          </form>
+          <br>
+        </div>
+      </div>
+    </section>
+
+</div>
+  <!-- Modal -->
+  <?php 
+      if(isset($_SESSION['message'])){
+          ?>
+            <!-- Intento de modal -->
+            <div class="modal is-active">
+              <div class="modal-background"></div>
+              <div class="modal-content">
+                <header class="modal-card-head">
+                  <p class="modal-card-title">Alerta</p>
+                  <button class="delete" aria-label="close"></button>
+                </header>
+                <section class="modal-card-body">
+                  <?php echo $_SESSION['message']; ?>
+                </section>
+                <footer class="modal-card-foot">
+                  <?php 
+                    if(isset($_SESSION['success'])){
+                      ?>
+                        <button class="button is-success">Aceptar</button>
+                      <?php
+                      unset($_SESSION['success']);
+                    } else {
+                      ?>
+                        <button class="button is-danger">Cerrar</button>
+                      <?php
+                    }
+                  ?>
+                </footer>
+              </div>
+              <button class="modal-close is-large" aria-label="close"></button>
+            </div>
+          <?php
+
+          unset($_SESSION['message']);
+      }
+  ?>
+
+  <!-- Modal Script -->
+  <script type="text/javascript">
+    document.addEventListener('DOMContentLoaded', () => {
+      // Functions to open and close a modal
+      function openModal($el) {
+        $el.classList.add('is-active');
+      }
+
+      function closeModal($el) {
+        $el.classList.remove('is-active');
+      }
+
+      function closeAllModals() {
+        (document.querySelectorAll('.modal') || []).forEach(($modal) => {
+          closeModal($modal);
+        });
+      }
+
+      // Add a click event on buttons to open a specific modal
+      (document.querySelectorAll('.js-modal-trigger') || []).forEach(($trigger) => {
+        const modal = $trigger.dataset.target;
+        const $target = document.getElementById(modal);
+
+        $trigger.addEventListener('click', () => {
+          openModal($target);
+        });
+      });
+
+      // Add a click event on various child elements to close the parent modal
+      (document.querySelectorAll('.modal-background, .modal-close, .modal-card-head .delete, .modal-card-foot .button') || []).forEach(($close) => {
+        const $target = $close.closest('.modal');
+
+        $close.addEventListener('click', () => {
+          closeModal($target);
+        });
+      });
+
+      // Add a keyboard event to close all modals
+      document.addEventListener('keydown', (event) => {
+        const e = event || window.event;
+
+        if (e.keyCode === 27) { // Escape key
+          closeAllModals();
         }
-    ?>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
+      });
+    });
+  </script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
 </body>
 </html>

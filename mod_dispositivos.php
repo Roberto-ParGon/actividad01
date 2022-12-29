@@ -13,42 +13,76 @@
   }  
 
   include_once('public/php/mod-dispositivos/ModDispositivoController.php');
+  include_once('./public/php/connection.php');
+  $database = new Connection();
+  $db = $database->open();
+
+  $tiposDispositivo = getTiposDispositivo($db);
+  function getTiposDispositivo($db) {
+    $_GRABAR_SQL = "SELECT * FROM tipo_dispositivo";   
+    $data = $db->query( $_GRABAR_SQL);
+    $hi = $data -> fetchAll();
+
+    if($hi){
+      return $hi;
+    } else{
+      return false;  
+    }
+  }
 
   $controller = new ModDispositivoController();
   if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (isset($_POST['mod_device'])) {
       $id = $_POST['id'];
-      $nombre = $_POST['nombre_dispositivo'];
       $cantidad = $_POST['cantidad_dispositivo'];
       $observaciones = $_POST['comentarios_dispositivo'];
+      $postTipo = $_POST["tipo"];
+      $onlyNombre = $_POST["nombre_dispositivo"];
+      $nombre = $_POST["tipo"]." ".$_POST["nombre_dispositivo"]; 
 
       $actualNombre = $_POST['actual_nombre'];
       $actualCantidad = $_POST['actual_cantidad'];
       $actualObservaciones = $_POST['actual_comentarios'];
 
-      if ($actualNombre === $nombre && $actualCantidad === $cantidad && $actualObservaciones === $observaciones) {
-        $_SESSION['actualID'] = $id;
-        $_SESSION['message'] = "No se modificó algún campo";
+      if ($postTipo === "Elige un tipo") {
+        $_SESSION['message'] = "Seleccione un tipo"; 
       } else {
-        if (empty($nombre) || empty($cantidad)) {
-          $_SESSION['actualID'] = $id;
-          $_SESSION['message'] = "No dejes campos vacios";
-        } else {
-          $existNombre = $controller -> existNombre($nombre, $id);
+        $isRepeated = false;
 
-          if (!$existNombre['exist']) {
-            $res = $controller -> setDispositivoInfo($nombre, $cantidad, $observaciones, $id);
-            if ($res) {
-              $_SESSION['actualID'] = $id;
-              $_SESSION['message'] = "Dispositivo modificado con éxito";
-              $_SESSION['success'] = true;
-            } else {
-              $_SESSION['actualID'] = $id;
-              $_SESSION['message'] = "Algo salió mal al intentar modificar el dispositivo";
-            }
-          } else {
+        foreach($tiposDispositivo as $tippo) {
+          if (strtolower($onlyNombre) === strtolower($tippo['nombre'])) {
+            $isRepeated = true;
+          }
+        }
+
+        if ($isRepeated) {
+          $_SESSION['message'] = "El nombre del dispositivo no puede ser igual a alguno de los tipos de dispositivo"; 
+        } else {
+          if ($actualNombre === $onlyNombre && $actualCantidad === $cantidad && $actualObservaciones === $observaciones) {
             $_SESSION['actualID'] = $id;
-            $_SESSION['message'] = $existNombre['msg'];
+            $_SESSION['message'] = "No se modificó algún campo";
+          } else {
+            if (empty($nombre) || empty($cantidad)) {
+              $_SESSION['actualID'] = $id;
+              $_SESSION['message'] = "No dejes campos vacios";
+            } else {
+              $existNombre = $controller -> existNombre($nombre, $id);
+
+              if (!$existNombre['exist']) {
+                $res = $controller -> setDispositivoInfo($nombre, $cantidad, $observaciones, $id);
+                if ($res) {
+                  $_SESSION['actualID'] = $id;
+                  $_SESSION['message'] = "Dispositivo modificado con éxito";
+                  $_SESSION['success'] = true;
+                } else {
+                  $_SESSION['actualID'] = $id;
+                  $_SESSION['message'] = "Algo salió mal al intentar modificar el dispositivo";
+                }
+              } else {
+                $_SESSION['actualID'] = $id;
+                $_SESSION['message'] = $existNombre['msg'];
+              }
+            }
           }
         }
       }
@@ -92,17 +126,6 @@
   
   <style>
     .container-main {
-      background: linear-gradient(0deg, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("./images/mountain_day.png");
-      background-size: cover;
-      background-repeat: no-repeat;
-      background-position: center;
-      background-attachment: fixed;
-    }
-
-    .btn-salir {
-      background: #7F7FD5;  /* fallback for old browsers */
-      background: -webkit-linear-gradient(to right, #91EAE4, #86A8E7, #7F7FD5);  /* Chrome 10-25, Safari 5.1-6 */
-      background: linear-gradient(to right, #91EAE4, #86A8E7, #7F7FD5); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
     }
   </style>
 </head>
@@ -139,7 +162,25 @@
             <div class="field">
               <label class="label">Nombre</label>
               <div class="control">
-                <input class="input" type="text" name="nombre_dispositivo" placeholder="Nombre" value="<?= $dispositivo['nombre'] ?>">
+                <div class="select is-normal" style="margin-bottom: 5px;">
+                    <select name="tipo">
+                      <option>Elige un tipo</option>
+                      <?php 
+                        $nameArr = explode(" ", $dispositivo['nombre']);
+                        $tipppo = $nameArr[0];
+
+                        unset($nameArr[0]);
+                        $nomb = implode(" ", $nameArr);
+                        foreach ($tiposDispositivo as $tipo) {
+                          ?>
+                            <option <?= $tipppo == $tipo['nombre'] ? "selected": "" ?> ><?= $tipo['nombre'] ?></option>
+                          <?php
+                        }
+                        ?>
+                      ?>
+                    </select>
+                  </div>
+                <input class="input" type="text" name="nombre_dispositivo" placeholder="Nombre" value="<?= $nomb ?>">
               </div>
             </div>
 
@@ -158,7 +199,7 @@
             </div>
 
             <div class="f-center">
-              <input class="btn-salir" type="submit" value="Modificar" name="mod_device">
+              <input style="background: #3781e0" class="btn-salir" type="submit" value="Modificar" name="mod_device">
               <!-- 
                 <input class="btn-atras" type="submit" value="Eliminar" name="del_device">
               -->
@@ -166,7 +207,7 @@
 
             <!-- Actual Values -->
             <input type="hidden" name="id" value="<?= $dispositivo['id'] ?>" />
-            <input type="hidden" name="actual_nombre" value="<?= $dispositivo['nombre'] ?>">
+            <input type="hidden" name="actual_nombre" value="<?= $nomb ?>">
             <input type="hidden" name="actual_cantidad" value="<?= $dispositivo['cantidad'] ?>">
             <input type="hidden" name="actual_comentarios" value="<?= $dispositivo['observaciones'] ?>">
           </form>

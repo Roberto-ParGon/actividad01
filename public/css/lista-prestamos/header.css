@@ -3,6 +3,7 @@
 header {
   display: grid;
   grid-template-columns: repeat(2, 33.3%) 1fr;
+  background-color: #3781e0;
 }
 
 .title-wrapper {
@@ -16,9 +17,7 @@ header {
   color: #fafafa;
   border: 0;
   padding: .5rem 1.4rem;
-  background: #8e2de2; /* fallback for old browsers */
-  background: -webkit-linear-gradient(to right, #8e2de2, #4a00e0); /* Chrome 10-25, Safari 5.1-6 */
-  background: linear-gradient(to right, #8e2de2, #4a00e0); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  background-color: #ff7961;  
 }
 
 .btn-atras {
@@ -27,9 +26,7 @@ header {
   color: #fafafa;
   border: 0;
   padding: .5rem 1.4rem;
-  background: #CB356B;  /* fallback for old browsers */
-  background: -webkit-linear-gradient(to right, #BD3F32, #CB356B);  /* Chrome 10-25, Safari 5.1-6 */
-  background: linear-gradient(to right, #BD3F32, #CB356B); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  background-color: #56d783;
 }
 
 .t-medium {

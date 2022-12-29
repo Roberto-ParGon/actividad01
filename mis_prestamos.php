@@ -54,27 +54,8 @@
   <link rel="stylesheet" type="text/css" href="public/css/lista-prestamos/header.css">
 
   <style type="text/css">
-    .container-main {
-      background: linear-gradient(0deg, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("./images/summerbeach.jpg");
-      background-size: cover;
-      background-repeat: no-repeat;
-      background-position: center;
-      background-attachment: fixed;
-    }
-
-    .btn-salir {
-      background: #B24592;  /* fallback for old browsers */
-      background: -webkit-linear-gradient(to right, #F15F79, #B24592);  /* Chrome 10-25, Safari 5.1-6 */
-      background: linear-gradient(to right, #F15F79, #B24592); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-
-    }
-
-    .loans-container table td, th {
-      padding: 1.5vh 2vh;
-    }
-
     .loans-container table tr td ul li {
-      color: #fafafa;
+      color: #616161;
     }
   </style>
 </head>
@@ -109,7 +90,7 @@
           <?php 
             if (sizeof($prestamos) == 0) {
               ?>
-                <span class="t-medium" style="color: #c4c4c4; font-size: 20px;">No hay préstamos activos para mostrar</span>
+                <span class="t-medium" style="color: #28AD56; font-size: 20px;">No hay préstamos activos para mostrar</span>
               <?php                
             }
           ?>
@@ -163,7 +144,7 @@
                           ?>
                           <td>
                             <form method="POST" action="<?php echo $_SERVER['PHP_SELF'];?>">
-                              <input class="btn-salir" type="submit" value="Regresar" name="<?= $prestamo['id'] ?>">
+                              <input class="btn-salir" type="submit" value="Devolver" name="<?= $prestamo['id'] ?>">
                             </form>
                           </td>
                           <?php

@@ -87,22 +87,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <link rel="stylesheet" type="text/css" href="public/css/lista-prestamos/lista-prestamos.css">
     <link rel="stylesheet" type="text/css" href="public/css/mod-dispositivos/mod-dispositivos.css">
     <link rel="stylesheet" type="text/css" href="public/css/lista-prestamos/header.css">
-    
-    <style>
-      .container-main {
-        background: linear-gradient(0deg, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("./images/tropical_sunset.jpg");
-        background-size: cover;
-        background-repeat: no-repeat;
-        background-position: center;
-        background-attachment: fixed;
-      }
 
-      .btn-salir {
-        background: #f12711;  /* fallback for old browsers */
-        background: -webkit-linear-gradient(to right, #f5af19, #f12711);  /* Chrome 10-25, Safari 5.1-6 */
-        background: linear-gradient(to right, #f5af19, #f12711); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-      }
-    </style>
   </head>
 
   <body>
@@ -178,7 +163,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
               </div>
 
               <div class="f-center">
-                <input class="btn-salir" type="submit" value="Agregar" name="add_device">
+                <input class="btn-atras" type="submit" value="Agregar" name="add_device">
               </div>
 
             </form>

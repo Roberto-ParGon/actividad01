@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 
 <?php
@@ -10,7 +11,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $db = $database->open();
     
     try{
-        
+    
         $username = $_POST["username"];
         $contra = $_POST["contra"];
         
@@ -43,177 +44,179 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 <html lang="es">
 
 <head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Préstamos de dispositivos UV</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
-  <style>
-     @import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
-     *{
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-        font-family: 'Poppins', sans-serif;
-    }
-    body{
-        display: flex;
-        justify-content: center;
-        align-items: center;  
-        height: 100vh;  
-        background-image: url("./images/ocean_sky.png");
-        background-repeat: no-repeat;
-        background-size: cover;
-    }
+    <meta charset="UTF-8">
+    <title>Préstamos UV</title>
 
-    #logo{
-        padding: 20px;
-        width: 200px;
-        height: 200px;
-        display: block;
-        margin-left: auto;
-        margin-right: auto;
-        margin-bottom: 20px;    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
 
-    }
+    <style>
+        * {
+            margin: 0;
+            box-sizing: border-box;
+        }
 
-    .container{
-        background: rgb(25, 25, 25);
-        width: 350px;
-        height: 570px;
-        border-radius: 20px;
-        display: flex;
-        justify-content: center;
-        flex-direction: column;
-        color: white;
-        padding: 2em;
-    }
+        *:focus {
+            outline: none;
+        }
 
+        body {
+            font-family: Arial;
+        }
 
-    .heading{
-        font-size: 2em;
-        margin-bottom: 0.1em;
-        margin: auto;
-    }
-    .box {
-        margin: 0.2em 0;
-    }
-    .container .box p{
-        color: rgba(255, 255, 255, 0.781);
-    }
-    .container .box div{
-        position: relative;
-        width: 100%;
-        height: 40px;
-        margin: 0.5em 0;
-    }
-    .container .box input{
-        position: absolute;
-        width: 100%;
-        height: 100%;
-        background: rgb(19, 19, 19);
-        color: white;
-        border: none;
-        outline: none;
-        padding-left: 0.8em;
-        border-radius: 10px;
-        transition: all .4s
-    }
+        .principal {
+            display: flex;
+        }
 
-    .container .box input:focus::placeholder{
-        color: white;
-    }
-    .container .box div::before{
-        content: '';
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        width: 102%;
-        height: 105%;
-        border-radius: 10px;
-        background: linear-gradient(to right, #18529D, #28AD56);
-    }
-    .loginBtn{
-        width: 102%;
-        height: 40px;
-        border: none;
-        border-radius: 10px;
-        margin: 0.5em 0;
-        transform: translate(-1%);
-        cursor: pointer;
-        color: white;
-        background: linear-gradient(to right, #18529D, #28AD56);
-        transition: all .4s;
-    }
+        .imagen {
+            text-align: center;
+            
+            height: 100vh;
+            width: 55vw;
+        }
 
-    .loginBtn:hover{
-        transform: translate(-1%, 5%);
-        box-shadow: 0 0 10px #FFFFFF;
-    }
-    .text{
-        font-size: 0.8em;
-        margin-top: 0.5em;
-        text-align: center;
-        color: rgba(255, 255, 255, 0.623);
-    }
-    .text a{
-        color: rgba(255, 255, 255, 0.911);
-    }
-</style>
+        .fondo{
+            margin-top: 17%;
+            width: 100%;
+        }
 
+        .login {
+            text-align: center;
+            background-color: #a1a1a1;
+            height: 100vh;
+            width: 45vw;
+        }
+
+        .user{
+            margin-top: 5%;
+            margin-bottom: 5%;
+            width: 30%;
+            height: 25%;
+        }
+
+        .login-screen {
+            
+            margin-left: 20px;
+            margin-right: 20px;
+            margin-top: 6%;
+            background-color: white;
+            padding: 10px;
+            border-radius: 25px
+            
+        }
+
+        .app-title {
+            text-align: left;
+            margin-left: 0;
+            color: black;
+        }
+
+        .login-form {
+            text-align: center;
+        }
+
+        .control-group {
+            margin-bottom: 10px;
+        }
+
+        input {
+            text-align: left;
+            background-color: #ECF0F1;
+            border: 2px solid transparent;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 200px;
+            padding: 10px 0;
+            width: 38vw;
+            transition: border .5s;
+            
+        }
+
+        input:focus {
+            border: 2px solid #3498DB;
+            box-shadow: none;
+        }
+
+        .btn {
+            text-align: center;
+            border: 2px solid transparent;
+            background: #3498DB;
+            color: white;
+            font-size: 20px;
+            line-height: 15px;
+            padding: 10px 0;
+            text-decoration: none;
+            text-shadow: none;
+            border-radius: 10px;
+            box-shadow: none;
+            transition: 0.25s;
+            display: block;
+            width: 100px;
+            margin: 0 auto;
+        }
+
+        .btn:hover {
+            background-color: #2980B9;
+        }
+
+        .login-link {
+            text-align: center;
+            font-size: 12px;
+            color: #444;
+            display: block;
+            margin-top: 12px;
+        }
+    </style>
 </head>
 
 <body>
+    <div class="principal">
 
-   <div class="container">
-    <div><img id='logo' src="./images/uv.png"></div>
-    <p class="heading">Inicio de sesión</p>
+        <div class="imagen">
+            <img src="images/fondo.png" alt="fondo" class="fondo">
+        </div>
+        
+        <div class="login">
+            
+            <img src="images/user.png" alt="user" class="user">
 
-    <form method="POST" action="">
+            <h1>Iniciar Sesión</h1>
 
-        <div class="box">
-            <p>Usuario</p>
-            <div>
-                <input type="text" name="username" id="login-name" placeholder="Introduzca su usuario">
+            <div class="login-screen">
+
+                <div class="login-form">
+
+                    <main>
+
+                        <form method="POST" action="">
+
+                            <div class="app-title">
+                                <h2>Nickname</h2>
+                            </div>
+
+                            <div class="control-group">
+                                <input type="text" class="login-field" id="login-name" name="username">
+                                <label class="login-field-icon fui-user" for="login-name"></label>
+                            </div>
+
+                            <div class="app-title">
+                                <h2>Contraseña</h2>
+                            </div>
+
+                            <div class="control-group">
+                                <input type="password" class="login-field" id="login-pass" name="contra">
+                                <label class="login-field-icon fui-lock" for="login-pass"></label>
+                            </div>
+
+                            <input type="submit" value="Entrar" class="btn btn-primary btn-large btn-block"/>
+                        </form>
+
+                    </main>
+
+                </div>
             </div>
         </div>
-        <div class="box">
-            <p>Contraseña</p>
-            <div>
-                <input type="password" name="contra" id="login-pass" placeholder="Introduzca su contraseña">
-            </div>
-        </div> 
-        <a href="#">
-            <button type="submit" class="loginBtn" value="Entrar">Iniciar sesión</button>         
-        </a>
-    </form>
+    </div>
 
-</div>
-<?php
-function alertMessage($msg) {
-    echo "
-
-    <div class='modal fade' id='exampleModal' tabindex='-1' aria-labelledby='exampleModalLabel' aria-hidden='false'>
-    <div class='modal-dialog'>
-    <div class='modal-content'>
-    <div class='modal-header'>
-    <h1 class='modal-title fs-5' id='exampleModalLabel'>Modal title</h1>
-    <button type='button' class='btn-close' data-bs-dismiss='modal' aria-label='Close'></button>
-    </div>
-    <div class='modal-body'>
-    ...
-    </div>
-    <div class='modal-footer'>
-    <button type='button' class='btn btn-secondary' data-bs-dismiss='modal'>Close</button>
-    <button type='button' class='btn btn-primary'>Save changes</button>
-    </div>
-    </div>
-    </div>
-    </div>
-    ";
-}
-?>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
 </body>
 </html>

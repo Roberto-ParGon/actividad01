@@ -1,4 +1,5 @@
 const CreateLoanFeature = () => {
+  const [isRedirect, setIsRedirect] = React.useState(false);
   const [selectedDevices, setSelectedDevices] = React.useState([]);
   const [maestro, setMaestro] = React.useState({});
   const [alumno, setAlumno] = React.useState({
@@ -18,6 +19,24 @@ const CreateLoanFeature = () => {
     },
   });
 
+  const [title, setTitle] = React.useState('');
+  const [isOpen, setIsOpen] = React.useState(false);
+  const [description, setDescription] = React.useState('');
+
+  const close = () => {
+    setIsOpen(false);
+  };
+
+  const redirect = () => {
+    location.href = "home.php";
+  }
+
+  const openDialog = (title, descripcion) => {
+    setTitle(title);
+    setDescription(descripcion);
+    setIsOpen(true);
+  }
+
   const onClick = (e) => {
     e.preventDefault();
 
@@ -26,17 +45,20 @@ const CreateLoanFeature = () => {
     const rootDoc = document.querySelector('#app');
 
     if(!horas.inicio.label || !horas.fin.label || !ee.nrc || !aula.id || !maestro.noPersonal || !selectedDevices.length) {
-      alert("No dejes campos vacios");
+      setIsRedirect(false);
+      openDialog("Alerta", "No dejes campos vacios");
       return;
     }
 
     if (horas.inicio.value === horas.fin.value) {
-      alert("La hora de inicio no puede ser igual a la hora de fin");
+      setIsRedirect(false);
+      openDialog("Alerta", "La hora de inicio no puede ser igual a la hora de fin");
       return;
     }    
 
     if (horas.inicio.value > horas.fin.value) {
-      alert("La hora de inicio no puede ser mayor a la hora de fin");
+      setIsRedirect(false);
+      openDialog("Alerta", "La hora de inicio no puede ser mayor a la hora de fin");
       return;
     }
 
@@ -70,17 +92,19 @@ const CreateLoanFeature = () => {
     })
     .then(data => {
       if (data.success) {
-        alert('Prestamo realizado con exito');
-        location.reload();
+        setIsRedirect(true);
+        openDialog('Genial', 'Prestamo realizado con exito');
         return;
       }
 
       console.log(data);
-      alert('Algo salió mal');
+      setIsRedirect(false);
+      openDialog('Error', 'Algo salió mal');
     })
     .catch(err => {
       console.log(err);
-      alert('Algo salió mal');
+      setIsRedirect(false);
+      openDialog('Error', 'Algo salió mal');
     });
   }
 
@@ -106,24 +130,24 @@ const CreateLoanFeature = () => {
         </div>
 
         {/* Horas */}
-        <HoursSelector horas={horas} setHoras={setHoras}/>
+        <HoursSelector horas={horas} setHoras={setHoras} openDialog={openDialog} />
 
         {/* Nombre del maestro */}
-        <TeacherSelector maestro={maestro} setMaestro={setMaestro} />
+        <TeacherSelector maestro={maestro} setMaestro={setMaestro} openDialog={openDialog} />
 
         {/* Nombre de alumno */}
-        <StudentSelector alumno={alumno} setAlumno={setAlumno} />
+        <StudentSelector alumno={alumno} setAlumno={setAlumno} openDialog={openDialog} />
 
         {/* Experiencia Educativa */}
-        <CoursesSelector ee={ee} setEE={setEE} />
+        <CoursesSelector ee={ee} setEE={setEE} openDialog={openDialog} />
         
         {/* Aula */}
-        <ClassroomsSelector aula={aula} setAula={setAula} />
+        <ClassroomsSelector aula={aula} setAula={setAula} openDialog={openDialog} />
 
         {/* Dispositivos */}
         <DeviceSelector 
           values={selectedDevices}
-          setValues={setSelectedDevices} />
+          setValues={setSelectedDevices} openDialog={openDialog} />
 
         <div
           style={{
@@ -136,6 +160,11 @@ const CreateLoanFeature = () => {
           </MaterialUI.Button>
         </div>
       </form>
+      <AlertDialog 
+        isOpen={isOpen}
+        title={title}
+        description={description}
+        handleClose={isRedirect ? redirect: close} />
     </div>
   );
 }

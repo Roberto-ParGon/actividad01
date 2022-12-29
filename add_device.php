@@ -14,36 +14,65 @@
   }
 
   include_once('./public/php/connection.php');
+  $database = new Connection();
+  $db = $database->open();
+
+  $tiposDispositivo = getTiposDispositivo($db);
+  function getTiposDispositivo($db) {
+    $_GRABAR_SQL = "SELECT * FROM tipo_dispositivo";   
+    $data = $db->query( $_GRABAR_SQL);
+    $hi = $data -> fetchAll();
+
+    if($hi){
+      return $hi;
+    } else{
+      return false;  
+    }
+  }
 
   if ($_SERVER["REQUEST_METHOD"] == "POST") {
-  
-    $database = new Connection();
-    $db = $database->open();
-    
     try{
-        $id = $_POST["id"];   
-        $nombre = $_POST["nombre"];   
+        $id = $_POST["id"];    
         $cantidad = $_POST["cantidad"];   
         $observaciones = $_POST["observaciones"];   
-           
-        if (trim($id) === "" || trim($nombre) === "" || trim($cantidad) === "") {
-          $_SESSION['message'] = "No deje campos vacios"; 
+        $postTipo = $_POST["tipo"];
+        $onlyNombre = $_POST["nombre"];
+        $nombre = $_POST["tipo"]." ".$_POST["nombre"]; 
+
+        if ($postTipo === "Elige un tipo") {
+          $_SESSION['message'] = "Seleccione un tipo"; 
         } else {
-          $confirm = check($db, $id, $nombre);
+          $isRepeated = false;
 
-          if (!$confirm['error']) {
-            $_GRABAR_SQL = "INSERT INTO dispositivo VALUES ('{$id}','{$nombre}','{$cantidad}', 0, '{$observaciones}')";   
-            $data = $db->query( $_GRABAR_SQL);  
-            $hi = $data -> fetchAll();
-
-            if(!$hi){
-              $_SESSION['message'] = "Usuario guardado con éxito";
-              $_SESSION['success'] = true;
-            } else{
-              $_SESSION['message'] = "Error al guardar el usuario";   
+          foreach($tiposDispositivo as $tippo) {
+            if (strtolower($onlyNombre) === strtolower($tippo['nombre'])) {
+              $isRepeated = true;
             }
+          }
+
+          if ($isRepeated) {
+            $_SESSION['message'] = "El nombre del dispositivo no puede ser igual a alguno de los tipos de dispositivo"; 
           } else {
-            $_SESSION["message"] = $confirm['msg'];
+            if (trim($id) === "" || trim($nombre) === "" || trim($cantidad) === "") {
+              $_SESSION['message'] = "No deje campos vacios"; 
+            } else {
+              $confirm = check($db, $id, $nombre);
+
+              if (!$confirm['error']) {
+                $_GRABAR_SQL = "INSERT INTO dispositivo VALUES ('{$id}','{$nombre}','{$cantidad}', 0, '{$observaciones}')";   
+                $data = $db->query( $_GRABAR_SQL);  
+                $hi = $data -> fetchAll();
+
+                if(!$hi){
+                  $_SESSION['message'] = "Usuario guardado con éxito";
+                  $_SESSION['success'] = true;
+                } else{
+                  $_SESSION['message'] = "Error al guardar el usuario";   
+                }
+              } else {
+                $_SESSION["message"] = $confirm['msg'];
+              }
+            }
           }
         }
     }
@@ -55,25 +84,25 @@
     $database->close();
 }
 
-function check($db, $dataID, $dataNombre){
-  $_GRABAR_SQL = "SELECT * FROM dispositivo WHERE id='$dataID'";
-  $data = $db->query( $_GRABAR_SQL);
-  $hi = $data -> fetchAll();
-
-  if (sizeof($hi) === 0) {
-    $_GRABAR_SQL = "SELECT * FROM dispositivo WHERE nombre='$dataNombre'";
+  function check($db, $dataID, $dataNombre){
+    $_GRABAR_SQL = "SELECT * FROM dispositivo WHERE id='$dataID'";
     $data = $db->query( $_GRABAR_SQL);
     $hi = $data -> fetchAll();
 
-    if (sizeof($hi) > 0) {
-      return ["error" => true, "msg" => "Ya existe un dispositivo con ese nombre"];
-    }
-  } else {
-    return ["error" => true, "msg" => "Ya existe un dispositivo con ese id"];
-  }
+    if (sizeof($hi) === 0) {
+      $_GRABAR_SQL = "SELECT * FROM dispositivo WHERE nombre='$dataNombre'";
+      $data = $db->query( $_GRABAR_SQL);
+      $hi = $data -> fetchAll();
 
-  return ["error" => false];
-}
+      if (sizeof($hi) > 0) {
+        return ["error" => true, "msg" => "Ya existe un dispositivo con ese nombre"];
+      }
+    } else {
+      return ["error" => true, "msg" => "Ya existe un dispositivo con ese id"];
+    }
+
+    return ["error" => false];
+  }
 ?>
 <html lang="es">
 <head>
@@ -100,17 +129,7 @@ function check($db, $dataID, $dataNombre){
   
   <style>
     .container-main {
-      background: linear-gradient(0deg, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("./images/mountains_clouds.jpg");
-      background-size: cover;
-      background-repeat: no-repeat;
-      background-position: center;
-      background-attachment: fixed;
-    }
-
-    .btn-salir {
-      background: #FC5C7D;  /* fallback for old browsers */
-      background: -webkit-linear-gradient(to left, #6A82FB, #FC5C7D);  /* Chrome 10-25, Safari 5.1-6 */
-      background: linear-gradient(to left, #6A82FB, #FC5C7D); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+      background-color: #c5dbf6;
     }
   </style>
 </head>
@@ -154,6 +173,20 @@ function check($db, $dataID, $dataNombre){
               <div class="field">
                 <label class="label">Nombre</label>
                 <div class="control">
+                  <div class="select is-normal" style="margin-bottom: 5px;">
+                    <select name="tipo">
+                      <option>Elige un tipo</option>
+                      <?php 
+                        foreach ($tiposDispositivo as $tipo) {
+                          ?>
+                            <option><?= $tipo['nombre'] ?></option>
+                          <?php
+                        }
+                        ?>
+                      ?>
+                    </select>
+                  </div>
+
                   <input class="input" type="text" id="nombre" name="nombre" placeholder="Nombre">
                 </div>
               </div>
@@ -173,7 +206,7 @@ function check($db, $dataID, $dataNombre){
               </div>
 
               <div class="f-center">
-                <input class="btn-salir" type="submit" value="Agregar" name="add_device">
+                <input style="background: #3781e0" class="btn-salir" type="submit" value="Agregar" name="add_device">
               </div>
 
             </form>

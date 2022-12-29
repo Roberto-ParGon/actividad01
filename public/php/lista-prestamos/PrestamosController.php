@@ -45,7 +45,7 @@ class PrestamosController {
   }
 
   public function getAllPrestamosInfo() {
-    $sql = "SELECT * FROM prestamo";
+    $sql = "SELECT * FROM prestamo ORDER BY is_active DESC";
     return $this -> getPrestamos($sql);
   }
 
@@ -55,7 +55,7 @@ class PrestamosController {
   }
 
   public function getAllMyPrestamosInfo($id) {
-    $sql = "SELECT * FROM prestamo WHERE id_usuario={$id}";
+    $sql = "SELECT * FROM prestamo WHERE id_usuario={$id} ORDER BY is_active DESC";
     return $this -> getPrestamos($sql);
   }
 

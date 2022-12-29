@@ -34,6 +34,11 @@ create table materia (
   nombre varchar(255) not null
 );
 
+create table tipo_dispositivo(
+  id int not null auto_increment primary key,
+  nombre varchar(255) not null
+);
+
 # time=hh:mm date=YYYY-MM-DD
 create table prestamo(
   id int not null auto_increment primary key,
@@ -248,7 +253,7 @@ insert into materia values ("12348", "Bases de datos");
 insert into materia values ("12349", "Bases de datos avanzadas");
 insert into materia values ("12350", "Computación básica");
 insert into materia values ("12351", "Desarrollo de software");
-insert into materia values ("12352", "Desarollo movil");
+insert into materia values ("12352", "Desarrollo movil");
 insert into materia values ("12353", "Estructura de datos");
 insert into materia values ("12354", "Ética y legislación informática");
 insert into materia values ("12355", "Fundamentos de matemáticas");
@@ -277,6 +282,14 @@ insert into materia values ("12377", "Sistemas web");
 insert into materia values ("12378", "Tecnologías de información para la innovación");
 insert into materia values ("12379", "Tecnologías para la integración de soluciones");
 insert into materia values ("12380", "Tecnologías web");
+
+# Tipo dispositivo
+insert into tipo_dispositivo (nombre) values ("Control");
+insert into tipo_dispositivo (nombre) values ("HDMI");
+insert into tipo_dispositivo (nombre) values ("Laptop");
+insert into tipo_dispositivo (nombre) values ("Cámara");
+insert into tipo_dispositivo (nombre) values ("Adaptador");
+insert into tipo_dispositivo (nombre) values ("Proyector");
 
 #######################################################################
 

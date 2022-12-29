@@ -67,19 +67,10 @@
   <link rel="stylesheet" type="text/css" href="public/css/lista-prestamos/header.css">
   <link rel="stylesheet" type="text/css" href="public/css/mod-dispositivos/mod-dispositivos.css">
 
-  <style>
+  <style type="text/css">
     .container-main {
-      background: linear-gradient(0deg, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("./images/flower.jpg");
-      background-size: cover;
-      background-repeat: no-repeat;
-      background-position: center;
-      background-attachment: fixed;
-    }
-
-    .btn-salir {
-      background: #485563;  /* fallback for old browsers */
-      background: -webkit-linear-gradient(to right, #29323c, #485563);  /* Chrome 10-25, Safari 5.1-6 */
-      background: linear-gradient(to right, #29323c, #485563); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+      /*85*/
+      background-color: #daf6e4;
     }
   </style>
 </head>
@@ -89,7 +80,7 @@
       <header>
         <div class="title-wrapper f-start">
             <span>
-                <button type="button" class="btn-atras mrgn-left" onclick="location.href='home.php'">Atrás</button>
+                <button style="background: #56d783" type="button" class="btn-atras mrgn-left" onclick="location.href='home.php'">Atrás</button>
             </span>
         </div>
 
@@ -143,8 +134,8 @@
                   <form method="POST" action="<?php echo $_SERVER['PHP_SELF'];?>">
                     <input type="hidden" name="id_usuario" value="<?php echo $usuario['id']?>">
 
-                    <button type="button" class="btn-salir mrgn-right" onclick="location.href='/prestamos/mod_usuarios.php?id=<?= $usuario['id'] ?>'">Editar</button>
-                    <button type="submit" class="btn-atras">Borrar</button>
+                    <button style="background: #6edd94" type="button" class="btn-atras mrgn-right" onclick="location.href='/prestamos/mod_usuarios.php?id=<?= $usuario['id'] ?>'">Editar</button>
+                    <button type="submit" class="btn-salir">Borrar</button>
                   </form>
                 </td>
               </tr>
