@@ -57,35 +57,86 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     <link rel="stylesheet" type="text/css" href="public/css/mod-dispositivos/mod-dispositivos.css">
 
     <style type="text/css">
+      .login-container {
+        display: grid;
+        grid-template-columns: 33.33% 1fr 33.33%;
+
+        height: 100vh;
+        width: 100vw;
+        background-color: #c5dbf6;
+
+        background:linear-gradient(0deg, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)),  url('images/login.jpg');
+        background-attachment: fixed;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+
+        backdrop-filter: blur(5px);
+      }
+
+      .login {
+        background-color: #fafafa;
+        box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+        padding: 1rem;
+        border-radius: 10px;
+      }
+
+      .img {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-bottom: 15px;
+      }
+
+      .f-center {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .f-column {
+        flex-flow: column;
+      }
+
+      .som {
+        color: #fff;
+        font-size: 30px;
+      }
     </style>
 </head>
 
 <body>
-
     <section class="hero is-fullheight">
-      <div class="hero-body has-text-centered">
-        <div class="login">
-          <div>
-              <img id='logo' src="./images/uv.png">
-          </div>
-          <form method="POST" action="">
-            <div class="field">
-              <div class="control">
-                <input name="username" class="input is-medium is-rounded" type="text" placeholder="Introduzca su usuario" autocomplete="username" required />
-              </div>
-            </div>
-            <div class="field">
-              <div class="control">
-                <input name="contra" class="input is-medium is-rounded" type="password" placeholder="Introduzca su contraseña" autocomplete="current-password" required />
-              </div>
-            </div>
-            <br />
-            <button class="button is-block is-fullwidth is-primary is-medium is-rounded" type="submit">
-              Login
-            </button>
-          </form>
-          <br>
+      <div class="login-container">
+        <div class="f-center f-column">
+          <span class="som">Sistema de préstamos del</span>
+          <span class="som">centro de cómputo</span>
         </div>
+        <div class="f-center">
+          <div class="login">
+            <div class="img">
+              <img width="160" id='logo' src="./images/uv.png">
+            </div>
+            <form method="POST" action="">
+              <div class="field">
+                <div class="control">
+                  <input style="border-radius: 7px;" name="username" class="input is-medium" type="text" placeholder="Introduzca su usuario" autocomplete="username" required />
+                </div>
+              </div>
+              <div class="field">
+                <div class="control">
+                  <input style="border-radius: 7px;" name="contra" class="input is-medium" type="password" placeholder="Introduzca su contraseña" autocomplete="current-password" required />
+                </div>
+              </div>
+              <br />
+              <button style="border-radius: 7px;background-color: #1a59ab;color: #fff;" class="button is-block is-fullwidth is-medium" type="submit">
+                Login
+              </button>
+            </form>
+            <br>
+          </div>
+        </div>
+        <div></div>
       </div>
     </section>
 
