@@ -120,7 +120,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <!-- Loans Table -->
         <div class="loans-container scrollbar f-center">
           <div class="add-card">
-            <form method="POST" action="<?php echo $_SERVER['PHP_SELF'];?>">
+            <form autocomplete="off" method="POST" action="<?php echo $_SERVER['PHP_SELF'];?>">
 
               <div class="field">
                 <label class="label">Nombre</label>
