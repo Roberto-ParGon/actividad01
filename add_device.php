@@ -64,10 +64,10 @@
                 $hi = $data -> fetchAll();
 
                 if(!$hi){
-                  $_SESSION['message'] = "Usuario guardado con éxito";
+                  $_SESSION['message'] = "Dispositivo guardado con éxito";
                   $_SESSION['success'] = true;
                 } else{
-                  $_SESSION['message'] = "Error al guardar el usuario";   
+                  $_SESSION['message'] = "Error al guardar el dispositivo";   
                 }
               } else {
                 $_SESSION["message"] = $confirm['msg'];
@@ -194,7 +194,7 @@
               <div class="field">
                 <label class="label">Cantidad</label>
                 <div class="control">
-                  <input class="input" type="number" id ="cantidad" name="cantidad" min="0" max="100" placeholder="Cantidad">
+                  <input class="input" type="number" id ="cantidad" name="cantidad" min="0" max="100" placeholder="Cantidad" oninput="this.value = !!this.value && Math.abs(this.value) >= 0 ? Math.abs(this.value) : null">
                 </div>
               </div>
 
